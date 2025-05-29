@@ -13,10 +13,11 @@
       color: #f1f1f1;
     }
     header {
-      background: url(https://i.imgur.com/OaMmDs5.jpeg) no-repeat center center;
+      /* A opacidade da imagem de fundo foi aplicada aqui */
+      background: rgba(0, 0, 0, 0.6) url(https://i.imgur.com/OaMmDs5.jpeg) no-repeat center center;
+      background-blend-mode: darken; /* Melhora o efeito de escurecimento */
       background-size: cover;
-      /* Padding superior aumentado para mover o texto para baixo */
-      padding: 360px 20px 40px 20px; 
+      padding: 360px 20px 40px 20px;
       text-align: center;
       color: #fff;
       position: relative;
@@ -63,7 +64,7 @@
       margin: auto;
     }
     section:first-of-type {
-      padding-top: 100px; 
+      padding-top: 100px;
     }
     h2 {
       border-bottom: 2px solid #444;
@@ -109,9 +110,8 @@
         top: 210px;
       }
       section:first-of-type {
-        padding-top: 80px; 
+        padding-top: 80px;
       }
-      /* Ajusta o padding do header em telas menores para o texto não ficar tão baixo */
       header {
         padding: 320px 20px 40px 20px;
       }
