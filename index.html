@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Site oficial de Feqzin, artista de trap da Zona Norte de São Paulo. Ouça o último lançamento e siga nas redes sociais.">
   <title>Feqzin | Site Oficial</title>
   <style>
     body {
@@ -12,7 +13,8 @@
       color: #f1f1f1;
     }
     header {
-      background: url('/mnt/data/CAPA se a bag pesar Youtube.jpg') no-repeat center center;
+      /* SUGESTÃO: Substitua pela URL da sua imagem de capa hospedada online */
+      background: url('URL_DA_SUA_IMAGEM_DE_CAPA_AQUI.jpg') no-repeat center center;
       background-size: cover;
       padding: 120px 20px;
       text-align: center;
@@ -50,10 +52,15 @@
     a {
       color: #1db954;
       text-decoration: none;
+      transition: color 0.3s;
+    }
+    a:hover {
+      color: #fff;
     }
     .socials a {
       margin-right: 15px;
       color: #f1f1f1;
+      font-size: 1.1em;
     }
     .player {
       margin: 20px 0;
@@ -88,7 +95,7 @@
     <p>Trap sem peso, só progresso</p>
   </header>
 
-  <img src="/mnt/data/CAPA FEQ.jpg" alt="Feqzin" class="profile-pic">
+  <img src="URL_DA_SUA_FOTO_DE_PERFIL_AQUI.jpg" alt="Feqzin" class="profile-pic">
 
   <section>
     <h2>Sobre</h2>
@@ -98,7 +105,7 @@
   <section>
     <h2>Último Lançamento</h2>
     <div class="player">
-    <iframe style="border-radius:12px" src="https://open.spotify.com/embed/album/0bPCF6VbnttHv8NxUltJGy?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+      <iframe style="border-radius:12px" src="https://open.spotify.com/embed/album/0bPCF6VbnttHv8NxUltJGy?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
     </div>
     <div class="countdown" id="countdown"></div>
   </section>
@@ -108,17 +115,18 @@
     <div class="socials">
       <a href="https://www.instagram.com/feqzinn/" target="_blank">Instagram</a>
       <a href="https://www.tiktok.com/@feqzinn" target="_blank">TikTok</a>
-      <a href="https://www.youtube.com/@feqzin" target="_blank">YouTube</a>
-      <a href="https://open.spotify.com/intl-pt/artist/56eMJpXmR5veK1kOi2apO4" target="_blank">Spotify</a>
+      <a href="URL_DO_SEU_YOUTUBE_AQUI" target="_blank">YouTube</a>
+      <a href="URL_DO_SEU_SPOTIFY_AQUI" target="_blank">Spotify</a>
       <a href="https://soundcloud.com/discordia-urban" target="_blank">SoundCloud</a>
     </div>
   </section>
 
   <footer>
-    &copy; 2025 Feqzin. Todos os direitos reservados.
+    © 2025 Feqzin. Todos os direitos reservados.
   </footer>
 
   <script>
+    // A data de lançamento está definida para 31 de maio de 2025
     const launchDate = new Date("2025-05-31T00:00:00").getTime();
     const countdown = document.getElementById("countdown");
 
@@ -126,16 +134,16 @@
       const now = new Date().getTime();
       const distance = launchDate - now;
 
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-      countdown.innerHTML = `Faltam ${days}d ${hours}h ${minutes}m ${seconds}s para o lançamento.`;
-
       if (distance < 0) {
         clearInterval(interval);
         countdown.innerHTML = "A faixa já está disponível!";
+      } else {
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        
+        countdown.innerHTML = `Faltam ${days}d ${hours}h ${minutes}m ${seconds}s para o lançamento.`;
       }
     }, 1000);
   </script>
