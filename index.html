@@ -160,10 +160,9 @@
   <script>
     // SCRIPT PARA CONECTAR COM O CONTENTFUL
     // COLE SUAS CHAVES DE ACESSO AQUI:
-    const SPACE_ID = 'w37b9rauibj0';
-    const ACCESS_TOKEN = 'Vk6TIlkNPKkUu_3DSG78I_5AQnp-X02xQhtj_VgrdKw';
-    const CONTENT_TYPE_ID = 'configuracoesDoSite'; // Este é o API ID do seu Content Model
-
+   const SPACE_ID = 'w37b9rauibj0';
+const ACCESS_TOKEN = 'Vk6TIlkNPKkUu_3DSG78I_5AQnp-X02xQhtj_VgrdKw';
+const CONTENT_TYPE_ID = 'configuracoesDoSite';
     // Função que busca os dados no Contentful e atualiza o site
     async function carregarConfiguracoes() {
       const url = `https://cdn.contentful.com/spaces/${SPACE_ID}/environments/master/entries?access_token=${ACCESS_TOKEN}&content_type=${CONTENT_TYPE_ID}`;
