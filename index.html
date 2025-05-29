@@ -13,13 +13,28 @@
       color: #f1f1f1;
     }
     header {
-      /* 1. COLE AQUI O LINK DIRETO DA SUA IMAGEM DE CAPA (SE A BAG PESAR) */
+      /* Imagem de capa com posicionamento ajustado */
       background: url(https://i.imgur.com/OaMmDs5.jpeg) no-repeat center center;
       background-size: cover;
-      padding: 120px 20px;
+      padding: 120px 20px 80px 20px; /* Padding ajustado para o degradê */
       text-align: center;
       color: #fff;
+      position: relative; /* Essencial para o posicionamento da foto e do degradê */
+    }
+    /* Efeito de degradê na parte inferior da capa */
+    header::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100px; /* Altura do degradê */
+      background: linear-gradient(to bottom, rgba(14, 14, 14, 0), rgba(14, 14, 14, 1));
+      z-index: 1;
+    }
+    header h1, header p {
       position: relative;
+      z-index: 2; /* Garante que o texto fique acima do degradê */
     }
     header h1 {
       font-size: 3em;
@@ -33,16 +48,25 @@
       width: 150px;
       height: 150px;
       border-radius: 50%;
-      margin: -75px auto 20px;
       display: block;
       border: 3px solid #1db954;
       object-fit: cover;
       background-color: #000;
+      /* Posicionamento da foto de perfil sobre a capa */
+      position: absolute;
+      top: 190px; /* Ajuste a distância do topo para mover a foto para cima ou para baixo */
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 3; /* Garante que a foto fique no topo de tudo */
     }
     section {
       padding: 40px 20px;
       max-width: 900px;
       margin: auto;
+    }
+    /* Adiciona um espaço no topo da primeira seção para a foto de perfil não sobrepor o texto */
+    section:first-of-type {
+      padding-top: 100px; 
     }
     h2 {
       border-bottom: 2px solid #444;
@@ -85,6 +109,10 @@
       .profile-pic {
         width: 120px;
         height: 120px;
+        top: 210px; /* Ajusta a posição da foto em telas menores */
+      }
+      section:first-of-type {
+        padding-top: 80px; 
       }
     }
   </style>
