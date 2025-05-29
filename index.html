@@ -17,6 +17,7 @@
       padding: 120px 20px;
       text-align: center;
       color: #fff;
+      position: relative;
     }
     header h1 {
       font-size: 3em;
@@ -30,10 +31,11 @@
       width: 150px;
       height: 150px;
       border-radius: 50%;
-      margin: 20px auto;
+      margin: -75px auto 20px;
       display: block;
       border: 3px solid #1db954;
       object-fit: cover;
+      background-color: #000;
     }
     section {
       padding: 40px 20px;
@@ -56,6 +58,12 @@
     .player {
       margin: 20px 0;
     }
+    .countdown {
+      text-align: center;
+      font-size: 2em;
+      margin: 30px 0;
+      color: #1db954;
+    }
     footer {
       background: #111;
       text-align: center;
@@ -63,12 +71,21 @@
       font-size: 0.9em;
       color: #777;
     }
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 2em;
+      }
+      .profile-pic {
+        width: 120px;
+        height: 120px;
+      }
+    }
   </style>
 </head>
 <body>
   <header>
     <h1>Feqzin</h1>
-    <p>Todos os direitos reservados Discordia Urban</p>
+    <p>Trap sem peso, só progresso</p>
   </header>
 
   <img src="/mnt/data/CAPA FEQ.jpg" alt="Feqzin" class="profile-pic">
@@ -81,8 +98,9 @@
   <section>
     <h2>Último Lançamento</h2>
     <div class="player">
-      <p><em>Link do clipe ou player aqui...</em></p>
+      <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/0YpB8ysnDWWErUceGE3d9T?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
     </div>
+    <div class="countdown" id="countdown"></div>
   </section>
 
   <section>
@@ -99,5 +117,27 @@
   <footer>
     &copy; 2025 Feqzin. Todos os direitos reservados.
   </footer>
+
+  <script>
+    const launchDate = new Date("2025-05-31T00:00:00").getTime();
+    const countdown = document.getElementById("countdown");
+
+    const interval = setInterval(() => {
+      const now = new Date().getTime();
+      const distance = launchDate - now;
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      countdown.innerHTML = `Faltam ${days}d ${hours}h ${minutes}m ${seconds}s para o lançamento.`;
+
+      if (distance < 0) {
+        clearInterval(interval);
+        countdown.innerHTML = "A faixa já está disponível!";
+      }
+    }, 1000);
+  </script>
 </body>
 </html>
