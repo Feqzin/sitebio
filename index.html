@@ -11,11 +11,14 @@
       font-family: Arial, sans-serif;
       background: #0e0e0e;
       color: #f1f1f1;
+      transition: opacity 0.5s ease-in-out;
     }
     header {
-      background: rgba(0, 0, 0, 0.6) url(https://i.imgur.com/OaMmDs5.jpeg) no-repeat center center;
+      /* A imagem de fundo será inserida via JavaScript */
+      background-color: #0e0e0e; /* Cor de fallback */
       background-blend-mode: darken;
       background-size: cover;
+      background-position: center center;
       padding: 360px 20px 40px 20px;
       text-align: center;
       color: #fff;
@@ -44,6 +47,7 @@
       color: #ddd;
     }
     .profile-pic {
+      /* O src da imagem será inserido via JavaScript */
       width: 150px;
       height: 150px;
       border-radius: 50%;
@@ -118,12 +122,12 @@
   </style>
 </head>
 <body>
-  <header>
+  <header id="header-capa">
     <h1>Feqzin</h1>
     <p>Trap sem peso, só progresso</p>
   </header>
 
-  <img src="https://i.imgur.com/lqIBLRG.png" alt="Feqzin" class="profile-pic">
+  <img src="" alt="Feqzin" class="profile-pic" id="foto-perfil">
 
   <section>
     <h2>Sobre</h2>
@@ -154,6 +158,49 @@
   </footer>
 
   <script>
+    // SCRIPT PARA CONECTAR COM O CONTENTFUL
+    // COLE SUAS CHAVES DE ACESSO AQUI:
+    const SPACE_ID = 'w37b9rauibj0';
+    const ACCESS_TOKEN = 'Vk6TIlkNPKkUu_3DSG78I_5AQnp-X02xQhtj_VgrdKw';
+    const CONTENT_TYPE_ID = 'configuracoesDoSite'; // Este é o API ID do seu Content Model
+
+    // Função que busca os dados no Contentful e atualiza o site
+    async function carregarConfiguracoes() {
+      const url = `https://cdn.contentful.com/spaces/${SPACE_ID}/environments/master/entries?access_token=${ACCESS_TOKEN}&content_type=${CONTENT_TYPE_ID}`;
+
+      try {
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error('Não foi possível conectar ao CMS.');
+        }
+        const data = await response.json();
+        
+        // Pega os campos do primeiro (e único) item que criamos
+        const campos = data.items[0].fields;
+        
+        const urlCapa = campos.imagemDeCapa;
+        const urlPerfil = campos.fotoDePerfil;
+
+        // Atualiza os elementos no site
+        const headerCapa = document.getElementById('header-capa');
+        const fotoPerfil = document.getElementById('foto-perfil');
+
+        headerCapa.style.backgroundImage = `url(${urlCapa})`;
+        headerCapa.style.backgroundBlendMode = 'darken';
+        headerCapa.style.backgroundColor = 'rgba(0, 0, 0, 0.6)';
+
+        fotoPerfil.src = urlPerfil;
+      } catch (error) {
+        console.error('Erro ao carregar configurações do site:', error);
+        // Você pode adicionar uma mensagem de erro no site aqui se quiser
+      }
+    }
+
+    // Chama a função para carregar tudo assim que a página estiver pronta
+    document.addEventListener('DOMContentLoaded', carregarConfiguracoes);
+
+
+    // SCRIPT DO COUNTDOWN (continua o mesmo)
     const launchDate = new Date("2025-05-31T00:00:00").getTime();
     const countdown = document.getElementById("countdown");
 
