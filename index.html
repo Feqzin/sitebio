@@ -6,119 +6,8 @@
   <meta name="description" content="Site oficial de Feqzin, artista de trap da Zona Norte de São Paulo. Ouça o último lançamento e siga nas redes sociais.">
   <title>Feqzin | Site Oficial</title>
   <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0e0e0e;
-      color: #f1f1f1;
-      transition: opacity 0.5s ease-in-out;
-    }
-    header {
-      /* A imagem de fundo será inserida via JavaScript */
-      background-color: #0e0e0e; /* Cor de fallback */
-      background-blend-mode: darken;
-      background-size: cover;
-      background-position: center center;
-      padding: 360px 20px 40px 20px;
-      text-align: center;
-      color: #fff;
-      position: relative;
-    }
-    header::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 100px;
-      background: linear-gradient(to bottom, rgba(14, 14, 14, 0), rgba(14, 14, 14, 1));
-      z-index: 1;
-    }
-    header h1, header p {
-      position: relative;
-      z-index: 2;
-    }
-    header h1 {
-      font-size: 3em;
-      margin-bottom: 10px;
-    }
-    header p {
-      font-size: 1.2em;
-      color: #ddd;
-    }
-    .profile-pic {
-      /* O src da imagem será inserido via JavaScript */
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
-      display: block;
-      border: 3px solid #1db954;
-      object-fit: cover;
-      background-color: #000;
-      position: absolute;
-      top: 190px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 3;
-    }
-    section {
-      padding: 40px 20px;
-      max-width: 900px;
-      margin: auto;
-    }
-    section:first-of-type {
-      padding-top: 100px;
-    }
-    h2 {
-      border-bottom: 2px solid #444;
-      padding-bottom: 10px;
-      margin-bottom: 20px;
-    }
-    a {
-      color: #1db954;
-      text-decoration: none;
-      transition: color 0.3s;
-    }
-    a:hover {
-      color: #fff;
-    }
-    .socials a {
-      margin-right: 15px;
-      color: #f1f1f1;
-      font-size: 1.1em;
-    }
-    .player {
-      margin: 20px 0;
-    }
-    .countdown {
-      text-align: center;
-      font-size: 2em;
-      margin: 30px 0;
-      color: #1db954;
-    }
-    footer {
-      background: #111;
-      text-align: center;
-      padding: 20px;
-      font-size: 0.9em;
-      color: #777;
-    }
-    @media (max-width: 600px) {
-      header h1 {
-        font-size: 2em;
-      }
-      .profile-pic {
-        width: 120px;
-        height: 120px;
-        top: 210px;
-      }
-      section:first-of-type {
-        padding-top: 80px;
-      }
-      header {
-        padding: 320px 20px 40px 20px;
-      }
-    }
+    /* O CSS continua o mesmo */
+    body{margin:0;font-family:Arial,sans-serif;background:#0e0e0e;color:#f1f1f1;transition:opacity .5s ease-in-out}header{background-color:#0e0e0e;background-blend-mode:darken;background-size:cover;background-position:center center;padding:360px 20px 40px;text-align:center;color:#fff;position:relative}header::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:100px;background:linear-gradient(to bottom,rgba(14,14,14,0),#0e0e0e);z-index:1}header h1,header p{position:relative;z-index:2}header h1{font-size:3em;margin-bottom:10px}header p{font-size:1.2em;color:#ddd}.profile-pic{width:150px;height:150px;border-radius:50%;display:block;border:3px solid #1db954;object-fit:cover;background-color:#000;position:absolute;top:190px;left:50%;transform:translateX(-50%);z-index:3}section{padding:40px 20px;max-width:900px;margin:auto}section:first-of-type{padding-top:100px}h2{border-bottom:2px solid #444;padding-bottom:10px;margin-bottom:20px}a{color:#1db954;text-decoration:none;transition:color .3s}a:hover{color:#fff}.socials a{margin-right:15px;color:#f1f1f1;font-size:1.1em}.player{margin:20px 0}.countdown{text-align:center;font-size:2em;margin:30px 0;color:#1db954}footer{background:#111;text-align:center;padding:20px;font-size:.9em;color:#777}@media (max-width:600px){header h1{font-size:2em}.profile-pic{width:120px;height:120px;top:210px}section:first-of-type{padding-top:80px}header{padding:320px 20px 40px}}
   </style>
 </head>
 <body>
@@ -126,14 +15,11 @@
     <h1>Feqzin</h1>
     <p>Trap sem peso, só progresso</p>
   </header>
-
   <img src="" alt="Feqzin" class="profile-pic" id="foto-perfil">
-
   <section>
     <h2>Sobre</h2>
     <p>Feqzin é um artista nascido na zona norte de São Paulo, mais precisamente no bairro do Jardim Brasil. Desde 2017 canetando, iniciou sua trajetória oficialmente em 2022 com a primeira track produzida no celular. Traz autenticidade no vocal e está sempre inovando em suas produções.</p>
   </section>
-
   <section>
     <h2>Último Lançamento</h2>
     <div class="player">
@@ -141,7 +27,6 @@
     </div>
     <div class="countdown" id="countdown"></div>
   </section>
-
   <section>
     <h2>Redes Sociais</h2>
     <div class="socials">
@@ -152,62 +37,73 @@
       <a href="https://soundcloud.com/discordia-urban" target="_blank">SoundCloud</a>
     </div>
   </section>
-
   <footer>
     © 2025 Feqzin. Todos os direitos reservados.
   </footer>
 
   <script>
-    // SCRIPT PARA CONECTAR COM O CONTENTFUL
-    // COLE SUAS CHAVES DE ACESSO AQUI:
-    const SPACE_ID = 'w37b9rauibj0';
-    const ACCESS_TOKEN = 'Vk6TIlkNPKkUu_3DSG78I_5AQnp-X02xQhtj_VgrdKw';
-    const CONTENT_TYPE_ID = 'configuraesDoSite'; // Este é o API ID do seu Content Model
+    // --- SCRIPT ATUALIZADO PARA LER IMAGENS (ASSETS) ---
 
-    // Função que busca os dados no Contentful e atualiza o site
+    // Use as mesmas chaves de antes. Crie novas apenas se quiser por segurança.
+    const SPACE_ID = 'SEU_SPACE_ID_AQUI';
+    const ACCESS_TOKEN = 'SEU_ACCESS_TOKEN_AQUI';
+    const CONTENT_TYPE_ID = 'configuraesDoSite'; // Verifique se este ID não mudou
+
+    // Função atualizada que busca os dados no Contentful
     async function carregarConfiguracoes() {
-      const url = `https://cdn.contentful.com/spaces/${SPACE_ID}/environments/master/entries?access_token=${ACCESS_TOKEN}&content_type=${CONTENT_TYPE_ID}`;
+      // Adicionamos `&include=1` ao final da URL. Isso é ESSENCIAL!
+      // Diz ao Contentful para incluir os dados dos arquivos de mídia na resposta.
+      const url = `https://cdn.contentful.com/spaces/${SPACE_ID}/environments/master/entries?access_token=${ACCESS_TOKEN}&content_type=${CONTENT_TYPE_ID}&include=1`;
 
       try {
         const response = await fetch(url);
-        if (!response.ok) {
-          throw new Error('Não foi possível conectar ao CMS.');
-        }
+        if (!response.ok) throw new Error('Não foi possível conectar ao CMS.');
+        
         const data = await response.json();
         
-        // Pega os campos do primeiro (e único) item que criamos
-        const campos = data.items[0].fields;
-        
-        const urlCapa = campos.imagemDeCapa;
-        const urlPerfil = campos.fotoDePerfil;
+        // O primeiro item da nossa entrada principal
+        const entradaPrincipal = data.items[0];
+
+        // Função auxiliar para encontrar o arquivo de imagem dentro da resposta
+        const encontrarUrlDoAsset = (assetId) => {
+          const asset = data.includes.Asset.find(a => a.sys.id === assetId);
+          return asset ? 'https:' + asset.fields.file.url : '';
+        };
+
+        // Pega o ID da imagem de capa e de perfil
+        const idCapa = entradaPrincipal.fields.imagemDeCapa.sys.id;
+        const idPerfil = entradaPrincipal.fields.fotoDePerfil.sys.id;
+
+        // Encontra as URLs usando os IDs
+        const urlCapa = encontrarUrlDoAsset(idCapa);
+        const urlPerfil = encontrarUrlDoAsset(idPerfil);
 
         // Atualiza os elementos no site
         const headerCapa = document.getElementById('header-capa');
         const fotoPerfil = document.getElementById('foto-perfil');
 
-        headerCapa.style.backgroundImage = `url(${urlCapa})`;
-        headerCapa.style.backgroundBlendMode = 'darken';
-        headerCapa.style.backgroundColor = 'rgba(0, 0, 0, 0.6)';
+        if (urlCapa) {
+          headerCapa.style.backgroundImage = `url(${urlCapa})`;
+          headerCapa.style.backgroundBlendMode = 'darken';
+          headerCapa.style.backgroundColor = 'rgba(0, 0, 0, 0.6)';
+        }
+        if (urlPerfil) {
+          fotoPerfil.src = urlPerfil;
+        }
 
-        fotoPerfil.src = urlPerfil;
       } catch (error) {
         console.error('Erro ao carregar configurações do site:', error);
-        // Você pode adicionar uma mensagem de erro no site aqui se quiser
       }
     }
 
-    // Chama a função para carregar tudo assim que a página estiver pronta
     document.addEventListener('DOMContentLoaded', carregarConfiguracoes);
 
-
-    // SCRIPT DO COUNTDOWN (continua o mesmo)
+    // --- SCRIPT DO COUNTDOWN (continua o mesmo) ---
     const launchDate = new Date("2025-05-31T00:00:00").getTime();
     const countdown = document.getElementById("countdown");
-
     const interval = setInterval(() => {
       const now = new Date().getTime();
       const distance = launchDate - now;
-
       if (distance < 0) {
         clearInterval(interval);
         countdown.innerHTML = "A faixa já está disponível!";
@@ -216,7 +112,6 @@
         const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-        
         countdown.innerHTML = `Faltam ${days}d ${hours}h ${minutes}m ${seconds}s para o lançamento.`;
       }
     }, 1000);
