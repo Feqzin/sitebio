@@ -176,7 +176,7 @@
           const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
           const seconds = Math.floor((distance % (1000 * 60)) / 1000);
           // 3. TEXTO DA CONTAGEM REGRESSIVA ALTERADO AQUI
-          countdown.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s <br><span style="font-size: 0.5em; color: #1db954;">Para o próximo lançamento.</span>`;
+          countdown.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s <br><span style="font-size: 0.5em; color: #f5f5f5;">Para o próximo lançamento.</span>`;
         }
       }, 1000);
     }
