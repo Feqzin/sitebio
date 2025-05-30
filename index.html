@@ -10,21 +10,20 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <style>
-    /* ---- PALETA DE CORES ATUALIZADA ---- */
+    /* ---- PALETA DE CORES CENTRALIZADA ---- */
     :root {
-      /* COR ALTERADA PARA VERDE */
-      --cor-destaque: #1DB954; /* Verde Spotify */
-      --cor-destaque-hover: #1ED760; /* Verde mais claro para hover */
+      --cor-destaque: #FF4500; 
+      --cor-destaque-hover: #ff703a; 
       --cor-texto: #f1f1f1;
       --cor-fundo: #0e0e0e;
       --cor-fundo-secundario: #111;
       --cor-borda-suave: #444;
     }
 
-    /* ---- ESTILOS GERAIS ---- */
+    /* ---- ESTILOS GERAIS COM FONTE PADRÃO ---- */
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
+      font-family: Arial, sans-serif; /* FONTE REVERTIDA PARA A PADRÃO */
       background: var(--cor-fundo);
       color: var(--cor-texto);
       line-height: 1.6;
@@ -55,7 +54,7 @@
       z-index: 2;
     }
     header h1 {
-      font-size: 3em;
+      font-size: 3em; /* Tamanho da fonte revertido */
       margin-bottom: 10px;
     }
     header p {
@@ -88,7 +87,7 @@
     }
     
     h2 {
-      border-bottom: 2px solid var(--cor-borda-suave);
+      border-bottom: 2px solid var(--cor-borda-suave); /* Estilo do H2 revertido */
       padding-bottom: 10px;
       margin-bottom: 20px;
     }
@@ -101,19 +100,19 @@
       color: #fff;
     }
     
-    /* ---- CSS PARA OS ÍCONES DE REDES SOCIAIS ---- */
+    /* ---- CSS ATUALIZADO PARA OS ÍCONES ---- */
     .socials {
-        text-align: center;
+        text-align: center; /* Centraliza os ícones */
     }
     .socials a {
-      margin: 0 15px;
+      margin: 0 15px; /* Espaçamento entre os ícones */
       color: var(--cor-texto);
-      font-size: 2em;
+      font-size: 2em; /* Tamanho dos ícones */
       transition: all .3s;
     }
     .socials a:hover {
       color: var(--cor-destaque);
-      transform: translateY(-5px);
+      transform: translateY(-5px); /* Efeito de levantar ao passar o mouse */
     }
 
     .player { margin: 20px 0; }
@@ -122,7 +121,6 @@
       text-align: center;
       font-size: 2em;
       margin: 20px 0 10px 0;
-      /* A contagem regressiva agora usará a cor de destaque (verde) */
       color: var(--cor-destaque);  
       line-height: 1.2;
     }
@@ -266,7 +264,7 @@
             const wrapper = document.getElementById('youtube-carousel-wrapper');
             wrapper.innerHTML = '';
 
-            if (data.items && data.items.length > 0) {
+            if (data.items) {
                 data.items.forEach(item => {
                     const videoId = item.id.videoId;
                     const slideHTML = `
