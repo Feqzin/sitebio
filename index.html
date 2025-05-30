@@ -6,7 +6,7 @@
   <title>Feqzin | Site Oficial</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
   <style>
-    /* O CSS continua o mesmo */
+    /* O CSS continua o mesmo, funciona perfeitamente com a nova configuração */
     body{margin:0;font-family:Arial,sans-serif;background:#0e0e0e;color:#f1f1f1;}header{background-color:#0e0e0e;background-blend-mode:darken;background-size:cover;background-position:center center;padding:360px 20px 40px;text-align:center;color:#fff;position:relative}header::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:100px;background:linear-gradient(to bottom,rgba(14,14,14,0),#0e0e0e);z-index:1}header h1,header p{position:relative;z-index:2}header h1{font-size:3em;margin-bottom:10px}header p{font-size:1.2em;color:#ddd}.profile-pic{width:150px;height:150px;border-radius:50%;display:block;border:3px solid #1db954;object-fit:cover;background-color:#000;position:absolute;top:190px;left:50%;transform:translateX(-50%);z-index:3}section{padding:40px 20px;max-width:900px;margin:auto}section:first-of-type{padding-top:100px}h2{border-bottom:2px solid #444;padding-bottom:10px;margin-bottom:20px}a{color:#1db954;text-decoration:none;transition:color .3s}a:hover{color:#fff}.socials a{margin-right:15px;color:#f1f1f1;font-size:1.1em}.player{margin:20px 0}.countdown{text-align:center;font-size:2em;margin:30px 0;color:#1db954}footer{background:#111;text-align:center;padding:20px;font-size:.9em;color:#777}
     .swiper{width:100%;padding-top:20px;padding-bottom:50px}.swiper-slide{background-position:center;background-size:cover;width:100%}.video-container{position:relative;width:100%;padding-top:56.25%}.video-container iframe{position:absolute;top:0;left:0;width:100%;height:100%;border-radius:12px;border:0}.swiper-button-next,.swiper-button-prev{color:#1db954}.swiper-pagination-bullet-active{background:#1db954}
     @media (max-width:600px){header h1{font-size:2em}.profile-pic{width:120px;height:120px;top:210px}section:first-of-type{padding-top:80px}header{padding:320px 20px 40px}}
@@ -69,8 +69,9 @@
 
     // --- FUNÇÕES ---
 
-    // Função para carregar as configurações do Contentful (CORRIGIDA)
+    // Função para carregar as configurações do Contentful
     async function carregarConfiguracoes() {
+      // (Esta função continua a mesma e funciona como antes)
       const url = `https://cdn.contentful.com/spaces/${SPACE_ID}/environments/master/entries?access_token=${ACCESS_TOKEN}&content_type=${CONTENTFUL_CONTENT_TYPE_ID}&include=1`;
       try {
         const response = await fetch(url);
@@ -87,12 +88,9 @@
           const idPerfil = entradaPrincipal.fields.fotoDePerfil?.sys.id;
           const urlCapa = encontrarUrlDoAsset(idCapa);
           const urlPerfil = encontrarUrlDoAsset(idPerfil);
-
-          // Lógica da imagem de capa (CORRIGIDA)
           if (urlCapa) {
             const headerCapa = document.getElementById('header-capa');
             headerCapa.style.backgroundImage = `url(${urlCapa})`;
-            // ESTAS DUAS LINHAS FORAM ADICIONADAS DE VOLTA:
             headerCapa.style.backgroundColor = 'rgba(0, 0, 0, 0.6)';
             headerCapa.style.backgroundBlendMode = 'darken';
           }
@@ -105,13 +103,11 @@
 
     // Função para carregar os vídeos do YouTube
     async function carregarVideosDoYouTube() {
-      // PREENCHA SUAS CREDENCIAIS DO YOUTUBE PARA ESTA FUNÇÃO FUNCIONAR
       if (!YOUTUBE_API_KEY || !YOUTUBE_CHANNEL_ID || YOUTUBE_API_KEY === 'SUA_CHAVE_DE_API_DO_YOUTUBE_AQUI') {
         console.warn("Credenciais do YouTube não configuradas. O carrossel de vídeos não será carregado.");
         return;
       }
-      
-      const url = `https://www.googleapis.com/youtube/v3/search?key=${YOUTUBE_API_KEY}&channelId=${YOUTUBE_CHANNEL_ID}&part=snippet,id&order=date&maxResults=10&type=video`;
+      const url = `https://www.googleapis.com/youtube/v3/search?key=${YOUTUBE_API_KEY}&channelId=${YOUTUBE_CHANNEL_ID}&part=snippet,id&order=date&maxResults=12&type=video`;
       try {
         const response = await fetch(url);
         if (!response.ok) throw new Error('YouTube API Error');
@@ -123,20 +119,42 @@
           const slideHTML = `
             <div class="swiper-slide">
               <div class="video-container">
-                <iframe src="https://www.youtube.com/embed/${item.id.videoId}" title="${item.snippet.title}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <iframe src="https://www.youtube.com/embed/${item.id.videoId}" title="${item.snippet.title}" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
               </div>
             </div>`;
           wrapper.innerHTML += slideHTML;
         });
         
+        // --- CONFIGURAÇÃO DO CARROSSEL ATUALIZADA ---
         new Swiper('.swiper', {
-          effect: 'coverflow',
-          grabCursor: true,
-          centeredSlides: true,
-          slidesPerView: 'auto',
+          // Efeito padrão de slide
           loop: true,
-          pagination: { el: '.swiper-pagination', clickable: true },
-          navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+          spaceBetween: 20, // Espaço entre os slides
+          
+          // Define quantos slides aparecem com base no tamanho da tela
+          slidesPerView: 1, // Padrão para telas pequenas
+          breakpoints: {
+            // para telas com 768px ou mais de largura
+            768: {
+              slidesPerView: 2,
+              spaceBetween: 20
+            },
+            // para telas com 1024px ou mais de largura
+            1024: {
+              slidesPerView: 4,
+              spaceBetween: 30
+            }
+          },
+
+          // Controles de Navegação
+          pagination: { 
+            el: '.swiper-pagination',
+            clickable: true,
+          },
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          },
         });
       } catch (error) { console.error('Erro ao carregar vídeos do YouTube:', error); }
     }
