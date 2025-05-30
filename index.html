@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -252,7 +253,7 @@
                 const urlPerfil = encontrarUrlDoAsset(idPerfil);
 
                 if (urlCapa) {
-                    document.getElementById('header-capa').style.backgroundImage = url(${urlCapa});
+                    document.getElementById('header-capa').style.backgroundImage = `url(${urlCapa})`;
                 }
                 if (urlPerfil) {
                     document.getElementById('foto-perfil').src = urlPerfil;
@@ -275,12 +276,12 @@
             if (data.items && data.items.length > 0) {
                 data.items.forEach(item => {
                     const videoId = item.id.videoId;
-                    const slideHTML = 
+                    const slideHTML = `
                     <div class="swiper-slide">
                       <div class="video-container">
                         <iframe src="https://www.youtube.com/embed/${videoId}" title="${item.snippet.title}" frameborder="0" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                       </div>
-                    </div>;
+                    </div>`;
                     wrapper.innerHTML += slideHTML;
                 });
 
@@ -321,7 +322,7 @@
                 const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                 const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-                countdown.innerHTML = ${days}d ${hours}h ${minutes}m ${seconds}s <br><span style="font-size: 0.5em; color: #ccc;">Para o próximo lançamento.</span>;
+                countdown.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s <br><span style="font-size: 0.5em; color: #ccc;">Para o próximo lançamento.</span>`;
             }
         }, 1000);
     }
