@@ -4,20 +4,29 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Feqzin | Site Oficial</title>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
   <style>
-    body{margin:0;font-family:Arial,sans-serif;background:#0e0e0e;color:#f1f1f1;}header{background-color:#0e0e0e;background-blend-mode:darken;background-size:cover;background-position:center center;padding:360px 20px 40px;text-align:center;color:#fff;position:relative}header::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:100px;background:linear-gradient(to bottom,rgba(14,14,14,0),#0e0e0e);z-index:1}header h1,header p{position:relative;z-index:2}header h1{font-size:3em;margin-bottom:10px}header p{font-size:1.2em;color:#ddd}.profile-pic{width:150px;height:150px;border-radius:50%;display:block;border:3px solid #1db954;object-fit:cover;background-color:#000;position:absolute;top:190px;left:50%;transform:translateX(-50%);z-index:3}section{padding:40px 20px;max-width:900px;margin:auto}section:first-of-type{padding-top:100px}h2{border-bottom:2px solid #444;padding-bottom:10px;margin-bottom:20px}a{color:#1db954;text-decoration:none;transition:color .3s}a:hover{color:#fff}.socials a{margin-right:15px;color:#f1f1f1;font-size:1.1em}.player{margin:20px 0}
+    body{margin:0;font-family:Arial,sans-serif;background:#0e0e0e;color:#f1f1f1;}header{background-color:#0e0e0e;background-blend-mode:darken;background-size:cover;background-position:center center;padding:360px 20px 40px;text-align:center;color:#fff;position:relative}header::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:100px;background:linear-gradient(to bottom,rgba(14,14,14,0),#0e0e0e);z-index:1}header h1,header p{position:relative;z-index:2}header h1{font-size:3em;margin-bottom:10px}header p{font-size:1.2em;color:#ddd}.profile-pic{width:150px;height:150px;border-radius:50%;display:block;border:3px solid #1db954;object-fit:cover;background-color:#000;position:absolute;top:190px;left:50%;transform:translateX(-50%);z-index:3}section{padding:40px 20px;max-width:900px;margin:auto}section:first-of-type{padding-top:100px}h2{border-bottom:2px solid #444;padding-bottom:10px;margin-bottom:20px}a{color:#1db954;text-decoration:none;transition:color .3s}a:hover{color:#fff}
     
-    .countdown{
-      text-align:center;
-      font-size:2em;
-      margin:20px 0 10px 0;
-      /* COR DA CONTAGEM REGRESSIVA ALTERADA AQUI */
-      color: #E60000; 
-      line-height:1.2;
+    /* 2. CSS DOS ÍCONES SOCIAIS ATUALIZADO */
+    .socials {
+      text-align: center; /* Centraliza os ícones */
+    }
+    .socials a {
+      margin: 0 15px; /* Espaçamento horizontal entre os ícones */
+      color: #f1f1f1;
+      font-size: 1.8em; /* Tamanho dos ícones */
+      transition: color 0.3s, transform 0.2s;
+    }
+    .socials a:hover {
+      color: #1db954; /* Muda para verde ao passar o mouse */
+      transform: scale(1.1); /* Efeito de zoom suave */
     }
     
-    footer{background:#111;text-align:center;padding:20px;font-size:.9em;color:#777}
+    .player{margin:20px 0}.countdown{text-align:center;font-size:2em;margin:20px 0 10px 0;color:#E60000;line-height:1.2;}footer{background:#111;text-align:center;padding:20px;font-size:.9em;color:#777}
     .swiper{width:100%;padding-top:20px;padding-bottom:50px}.swiper-slide{background-position:center;background-size:cover;width:100%}.video-container{position:relative;width:100%;padding-top:56.25%}.video-container iframe{position:absolute;top:0;left:0;width:100%;height:100%;border-radius:12px;border:0}.swiper-button-next,.swiper-button-prev{color:#1db954}.swiper-pagination-bullet-active{background:#1db954}
     .pre-save-button{display:inline-block;background-color:#1db954;color:#fff;padding:15px 35px;border-radius:50px;text-decoration:none;font-weight:bold;font-size:1.1em;margin-top:20px;transition:background-color .3s,transform .2s}.pre-save-button:hover{background-color:#1ed760;transform:scale(1.05);color:#fff}
     @media (max-width:600px){header h1{font-size:2em}.profile-pic{width:120px;height:120px;top:210px}section:first-of-type{padding-top:80px}header{padding:320px 20px 40px}}
@@ -26,7 +35,7 @@
 <body>
   <header id="header-capa">
     <h1>Feqzin</h1>
-    <p>🎒💰 </p>
+    <p>Trap sem peso, só progresso</p>
   </header>
   <img src="" alt="Feqzin" class="profile-pic" id="foto-perfil">
 
@@ -38,8 +47,7 @@
   <section>
     <h2>Meus Vídeos</h2>
     <div class="swiper">
-      <div class="swiper-wrapper" id="youtube-carousel-wrapper">
-        </div>
+      <div class="swiper-wrapper" id="youtube-carousel-wrapper"></div>
       <div class="swiper-pagination"></div>
       <div class="swiper-button-prev"></div>
       <div class="swiper-button-next"></div>
@@ -59,11 +67,11 @@
   <section>
     <h2>Redes Sociais</h2>
     <div class="socials">
-      <a href="https://www.instagram.com/feqzinn/" target="_blank">Instagram</a>
-      <a href="https://www.tiktok.com/@feqzinn" target="_blank">TikTok</a>
-      <a href="https://www.youtube.com/@feqzin" target="_blank">YouTube</a>
-      <a href="https://open.spotify.com/intl-pt/artist/56eMJpXmR5veK1kOi2apO4" target="_blank">Spotify</a>
-      <a href="https://soundcloud.com/discordia-urban" target="_blank">SoundCloud</a>
+      <a href="https://www.instagram.com/feqzinn/" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+      <a href="https://www.tiktok.com/@feqzinn" target="_blank" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+      <a href="https://www.youtube.com/@feqzin" target="_blank" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
+      <a href="https://open.spotify.com/intl-pt/artist/56eMJpXmR5veK1kOi2apO4" target="_blank" title="Spotify"><i class="fa-brands fa-spotify"></i></a>
+      <a href="https://soundcloud.com/discordia-urban" target="_blank" title="SoundCloud"><i class="fa-brands fa-soundcloud"></i></a>
     </div>
   </section>
   <footer>
@@ -163,7 +171,7 @@
           const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
           const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
           const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-          countdown.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s <br><span style="font-size: 0.5em; color: #ccc;">Para o próximo lançamento.</span>`;
+          countdown.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s <br><span style="font-size: 0.5em; color: #ccc;">para o próximo lançamento.</span>`;
         }
       }, 1000);
     }
