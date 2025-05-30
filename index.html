@@ -272,20 +272,26 @@
         }
     }
 
-    async function carregarVideosDoYouTube() {
-        try {
-            const response = await fetch('/api/getYoutubeVideos');
-            if (!response.ok) throw new Error('Falha ao carregar vídeos do nosso servidor.');
-            const data = await response.json();
-            
-            const wrapper = document.getElementById('youtube-carousel-wrapper');
-            wrapper.innerHTML = '';
+   // SUBSTITUA A SUA FUNÇÃO ATUAL POR ESTA VERSÃO CORRIGIDA
+async function carregarVideosDoYouTube() {
+    try {
+        const response = await fetch('/api/getYoutubeVideos');
+        if (!response.ok) throw new Error('Falha ao carregar vídeos do nosso servidor.');
+        const data = await response.json();
+        
+        const wrapper = document.getElementById('youtube-carousel-wrapper');
+        wrapper.innerHTML = '';
+
+        // Verificamos se 'data.items' existe antes de continuar
+        if (data.items) {
             data.items.forEach(item => {
                 const videoId = item.id.videoId;
+                
+                // **** LINHA CORRIGIDA COM A URL CERTA DO YOUTUBE EMBED ****
                 const slideHTML = `
                 <div class="swiper-slide">
                   <div class="video-container">
-                    <iframe src="https://www.youtube.com/embed/${videoId}" title="${item.snippet.title}" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    <iframe src="https://www.youtube.com/embed/${videoId}" title="${item.snippet.title}" frameborder="0" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                   </div>
                 </div>`;
                 wrapper.innerHTML += slideHTML;
@@ -302,10 +308,15 @@
                 pagination: { el: '.swiper-pagination', clickable: true },
                 navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
             });
-        } catch (error) {
-            console.error('Erro ao carregar vídeos do YouTube:', error);
+        } else {
+            // Se não houver vídeos, podemos mostrar uma mensagem
+            console.warn("A API do YouTube não retornou vídeos (data.items está vazio).");
+            wrapper.innerHTML = "<p style='text-align:center;'>Não foi possível carregar os vídeos no momento.</p>";
         }
+    } catch (error) {
+        console.error('Erro ao carregar vídeos do YouTube:', error);
     }
+}
 
     function iniciarCountdown() {
         const countdown = document.getElementById("countdown");
