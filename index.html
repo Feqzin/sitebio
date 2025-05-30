@@ -7,26 +7,23 @@
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
   
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <style>
     /* ---- PALETA DE CORES CENTRALIZADA ---- */
     :root {
-      /* Altere a cor aqui para mudar no site inteiro! */
-      --cor-destaque: #FF4500; /* Laranja Vibrante como exemplo */
-      --cor-destaque-hover: #ff703a; /* Tom mais claro para hover */
+      --cor-destaque: #FF4500; 
+      --cor-destaque-hover: #ff703a; 
       --cor-texto: #f1f1f1;
       --cor-fundo: #0e0e0e;
       --cor-fundo-secundario: #111;
       --cor-borda-suave: #444;
     }
 
-    /* ---- ESTILOS GERAIS E NOVAS FONTES ---- */
+    /* ---- ESTILOS GERAIS COM FONTE PADRÃO ---- */
     body {
       margin: 0;
-      font-family: 'Inter', sans-serif; 
+      font-family: Arial, sans-serif; /* FONTE REVERTIDA PARA A PADRÃO */
       background: var(--cor-fundo);
       color: var(--cor-texto);
       line-height: 1.6;
@@ -57,11 +54,8 @@
       z-index: 2;
     }
     header h1 {
-      font-family: 'Bebas Neue', sans-serif;
-      letter-spacing: 2px;
-      font-size: 5.5em;
+      font-size: 3em; /* Tamanho da fonte revertido */
       margin-bottom: 10px;
-      text-shadow: 2px 2px 15px rgba(0,0,0,0.7);
     }
     header p {
       font-size: 1.2em;
@@ -92,16 +86,10 @@
       padding-top: 100px;
     }
     
-    /* ---- ESTILO MODERNO PARA TÍTULOS E LINKS ---- */
     h2 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 2.8em;
-      letter-spacing: 1.5px;
-      border-left: 4px solid var(--cor-destaque);
-      padding-left: 15px;
-      margin-bottom: 30px;
-      border-bottom: none;
-      padding-bottom: 0;
+      border-bottom: 2px solid var(--cor-borda-suave); /* Estilo do H2 revertido */
+      padding-bottom: 10px;
+      margin-bottom: 20px;
     }
     a {
       color: var(--cor-destaque);
@@ -112,22 +100,19 @@
       color: #fff;
     }
     
+    /* ---- CSS ATUALIZADO PARA OS ÍCONES ---- */
+    .socials {
+        text-align: center; /* Centraliza os ícones */
+    }
     .socials a {
-      margin-right: 10px;
-      margin-bottom: 10px;
-      display: inline-block;
+      margin: 0 15px; /* Espaçamento entre os ícones */
       color: var(--cor-texto);
-      background-color: #222;
-      padding: 10px 20px;
-      border-radius: 50px;
-      font-size: 0.9em;
-      font-weight: bold;
+      font-size: 2em; /* Tamanho dos ícones */
       transition: all .3s;
     }
     .socials a:hover {
-      color: var(--cor-fundo);
-      background-color: var(--cor-destaque);
-      transform: translateY(-3px);
+      color: var(--cor-destaque);
+      transform: translateY(-5px); /* Efeito de levantar ao passar o mouse */
     }
 
     .player { margin: 20px 0; }
@@ -148,7 +133,6 @@
       color: #777;
     }
 
-    /* ---- ESTILOS DO CARROSSEL E BOTÕES ---- */
     .swiper { width: 100%; padding-top: 20px; padding-bottom: 50px; }
     .swiper-slide { background-position: center; background-size: cover; width: 100%; }
     .video-container { position: relative; width: 100%; padding-top: 56.25%; }
@@ -174,9 +158,8 @@
       color: #fff;
     }
     
-    /* ---- AJUSTES PARA CELULAR (MEDIA QUERIES) ---- */
     @media (max-width: 600px) {
-      header h1 { font-size: 3.5em; }
+      header h1 { font-size: 2em; }
       .profile-pic { width: 120px; height: 120px; top: 210px; }
       section:first-of-type { padding-top: 80px; }
       header { padding: 320px 20px 40px; }
@@ -200,7 +183,7 @@
     <h2>Meus Vídeos</h2>
     <div class="swiper">
       <div class="swiper-wrapper" id="youtube-carousel-wrapper">
-        </div>
+      </div>
       <div class="swiper-pagination"></div>
       <div class="swiper-button-prev"></div>
       <div class="swiper-button-next"></div>
@@ -221,11 +204,11 @@
   <section>
     <h2>Redes Sociais</h2>
     <div class="socials">
-      <a href="https://www.instagram.com/feqzinn/" target="_blank">Instagram</a>
-      <a href="https://www.tiktok.com/@feqzinn" target="_blank">TikTok</a>
-      <a href="https://www.youtube.com/@feqzin" target="_blank">YouTube</a>
-      <a href="https://open.spotify.com/intl-pt/artist/56eMJpXmR5veK1kOi2apO4" target="_blank">Spotify</a>
-      <a href="https://soundcloud.com/discordia-urban" target="_blank">SoundCloud</a>
+      <a href="https://www.instagram.com/feqzinn/" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+      <a href="https://www.tiktok.com/@feqzinn" target="_blank" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+      <a href="https://www.youtube.com/@feqzin" target="_blank" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+      <a href="https://open.spotify.com/intl-pt/artist/56eMJpXmR5veK1kOi2apO4" target="_blank" aria-label="Spotify"><i class="fa-brands fa-spotify"></i></a>
+      <a href="https://soundcloud.com/discordia-urban" target="_blank" aria-label="SoundCloud"><i class="fa-brands fa-soundcloud"></i></a>
     </div>
   </section>
 
@@ -272,51 +255,46 @@
         }
     }
 
-   // SUBSTITUA A SUA FUNÇÃO ATUAL POR ESTA VERSÃO CORRIGIDA
-async function carregarVideosDoYouTube() {
-    try {
-        const response = await fetch('/api/getYoutubeVideos');
-        if (!response.ok) throw new Error('Falha ao carregar vídeos do nosso servidor.');
-        const data = await response.json();
-        
-        const wrapper = document.getElementById('youtube-carousel-wrapper');
-        wrapper.innerHTML = '';
+    async function carregarVideosDoYouTube() {
+        try {
+            const response = await fetch('/api/getYoutubeVideos');
+            if (!response.ok) throw new Error('Falha ao carregar vídeos do nosso servidor.');
+            const data = await response.json();
+            
+            const wrapper = document.getElementById('youtube-carousel-wrapper');
+            wrapper.innerHTML = '';
 
-        // Verificamos se 'data.items' existe antes de continuar
-        if (data.items) {
-            data.items.forEach(item => {
-                const videoId = item.id.videoId;
-                
-                // **** LINHA CORRIGIDA COM A URL CERTA DO YOUTUBE EMBED ****
-                const slideHTML = `
-                <div class="swiper-slide">
-                  <div class="video-container">
-                    <iframe src="https://www.youtube.com/embed/${videoId}" title="${item.snippet.title}" frameborder="0" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                  </div>
-                </div>`;
-                wrapper.innerHTML += slideHTML;
-            });
+            if (data.items) {
+                data.items.forEach(item => {
+                    const videoId = item.id.videoId;
+                    const slideHTML = `
+                    <div class="swiper-slide">
+                      <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/${videoId}" title="${item.snippet.title}" frameborder="0" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                      </div>
+                    </div>`;
+                    wrapper.innerHTML += slideHTML;
+                });
 
-            new Swiper('.swiper', {
-                loop: true,
-                spaceBetween: 20,
-                slidesPerView: 1,
-                breakpoints: {
-                    768: { slidesPerView: 2, spaceBetween: 30 },
-                    1024: { slidesPerView: 3, spaceBetween: 30 }
-                },
-                pagination: { el: '.swiper-pagination', clickable: true },
-                navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
-            });
-        } else {
-            // Se não houver vídeos, podemos mostrar uma mensagem
-            console.warn("A API do YouTube não retornou vídeos (data.items está vazio).");
-            wrapper.innerHTML = "<p style='text-align:center;'>Não foi possível carregar os vídeos no momento.</p>";
+                new Swiper('.swiper', {
+                    loop: true,
+                    spaceBetween: 20,
+                    slidesPerView: 1,
+                    breakpoints: {
+                        768: { slidesPerView: 2, spaceBetween: 30 },
+                        1024: { slidesPerView: 3, spaceBetween: 30 }
+                    },
+                    pagination: { el: '.swiper-pagination', clickable: true },
+                    navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+                });
+            } else {
+                console.warn("A API do YouTube não retornou vídeos (data.items está vazio).");
+                wrapper.innerHTML = "<p style='text-align:center;'>Não foi possível carregar os vídeos no momento.</p>";
+            }
+        } catch (error) {
+            console.error('Erro ao carregar vídeos do YouTube:', error);
         }
-    } catch (error) {
-        console.error('Erro ao carregar vídeos do YouTube:', error);
     }
-}
 
     function iniciarCountdown() {
         const countdown = document.getElementById("countdown");
