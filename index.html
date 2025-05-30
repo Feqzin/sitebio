@@ -1,32 +1,193 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Feqzin | Site Oficial</title>
+
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+
   <style>
-    body{margin:0;font-family:Arial,sans-serif;background:#0e0e0e;color:#f1f1f1;}header{background-color:#0e0e0e;background-blend-mode:darken;background-size:cover;background-position:center center;padding:360px 20px 40px;text-align:center;color:#fff;position:relative}header::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:100px;background:linear-gradient(to bottom,rgba(14,14,14,0),#0e0e0e);z-index:1}header h1,header p{position:relative;z-index:2}header h1{font-size:3em;margin-bottom:10px}header p{font-size:1.2em;color:#ddd}.profile-pic{width:150px;height:150px;border-radius:50%;display:block;border:3px solid #1db954;object-fit:cover;background-color:#000;position:absolute;top:190px;left:50%;transform:translateX(-50%);z-index:3}section{padding:40px 20px;max-width:900px;margin:auto}section:first-of-type{padding-top:100px}h2{border-bottom:2px solid #444;padding-bottom:10px;margin-bottom:20px}a{color:#1db954;text-decoration:none;transition:color .3s}a:hover{color:#fff}.socials a{margin-right:15px;color:#f1f1f1;font-size:1.1em}.player{margin:20px 0}
-    
-    .countdown{
-      text-align:center;
-      font-size:2em;
-      margin:20px 0 10px 0;
-      /* COR DA CONTAGEM REGRESSIVA ALTERADA AQUI */
-      color: #E60000; 
-      line-height:1.2;
+    /* ---- PALETA DE CORES CENTRALIZADA ---- */
+    :root {
+      /* Altere a cor aqui para mudar no site inteiro! */
+      --cor-destaque: #FF4500; /* Laranja Vibrante como exemplo */
+      --cor-destaque-hover: #ff703a; /* Tom mais claro para hover */
+      --cor-texto: #f1f1f1;
+      --cor-fundo: #0e0e0e;
+      --cor-fundo-secundario: #111;
+      --cor-borda-suave: #444;
+    }
+
+    /* ---- ESTILOS GERAIS E NOVAS FONTES ---- */
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif; 
+      background: var(--cor-fundo);
+      color: var(--cor-texto);
+      line-height: 1.6;
+    }
+
+    header {
+      background-color: rgba(0, 0, 0, 0.6);
+      background-blend-mode: darken;
+      background-size: cover;
+      background-position: center center;
+      padding: 360px 20px 40px;
+      text-align: center;
+      color: #fff;
+      position: relative;
+    }
+    header::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100px;
+      background: linear-gradient(to bottom, rgba(14,14,14,0), var(--cor-fundo));
+      z-index: 1;
+    }
+    header h1, header p {
+      position: relative;
+      z-index: 2;
+    }
+    header h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      letter-spacing: 2px;
+      font-size: 5.5em;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 15px rgba(0,0,0,0.7);
+    }
+    header p {
+      font-size: 1.2em;
+      color: #ddd;
+    }
+
+    .profile-pic {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      display: block;
+      border: 4px solid var(--cor-destaque);
+      object-fit: cover;
+      background-color: #000;
+      position: absolute;
+      top: 190px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
+    }
+
+    section {
+      padding: 40px 20px;
+      max-width: 900px;
+      margin: auto;
+    }
+    section:first-of-type {
+      padding-top: 100px;
     }
     
-    footer{background:#111;text-align:center;padding:20px;font-size:.9em;color:#777}
-    .swiper{width:100%;padding-top:20px;padding-bottom:50px}.swiper-slide{background-position:center;background-size:cover;width:100%}.video-container{position:relative;width:100%;padding-top:56.25%}.video-container iframe{position:absolute;top:0;left:0;width:100%;height:100%;border-radius:12px;border:0}.swiper-button-next,.swiper-button-prev{color:#1db954}.swiper-pagination-bullet-active{background:#1db954}
-    .pre-save-button{display:inline-block;background-color:#1db954;color:#fff;padding:15px 35px;border-radius:50px;text-decoration:none;font-weight:bold;font-size:1.1em;margin-top:20px;transition:background-color .3s,transform .2s}.pre-save-button:hover{background-color:#1ed760;transform:scale(1.05);color:#fff}
-    @media (max-width:600px){header h1{font-size:2em}.profile-pic{width:120px;height:120px;top:210px}section:first-of-type{padding-top:80px}header{padding:320px 20px 40px}}
+    /* ---- ESTILO MODERNO PARA TÍTULOS E LINKS ---- */
+    h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.8em;
+      letter-spacing: 1.5px;
+      border-left: 4px solid var(--cor-destaque);
+      padding-left: 15px;
+      margin-bottom: 30px;
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+    a {
+      color: var(--cor-destaque);
+      text-decoration: none;
+      transition: color .3s;
+    }
+    a:hover {
+      color: #fff;
+    }
+    
+    .socials a {
+      margin-right: 10px;
+      margin-bottom: 10px;
+      display: inline-block;
+      color: var(--cor-texto);
+      background-color: #222;
+      padding: 10px 20px;
+      border-radius: 50px;
+      font-size: 0.9em;
+      font-weight: bold;
+      transition: all .3s;
+    }
+    .socials a:hover {
+      color: var(--cor-fundo);
+      background-color: var(--cor-destaque);
+      transform: translateY(-3px);
+    }
+
+    .player { margin: 20px 0; }
+    
+    .countdown {
+      text-align: center;
+      font-size: 2em;
+      margin: 20px 0 10px 0;
+      color: var(--cor-destaque);  
+      line-height: 1.2;
+    }
+    
+    footer {
+      background: var(--cor-fundo-secundario);
+      text-align: center;
+      padding: 20px;
+      font-size: .9em;
+      color: #777;
+    }
+
+    /* ---- ESTILOS DO CARROSSEL E BOTÕES ---- */
+    .swiper { width: 100%; padding-top: 20px; padding-bottom: 50px; }
+    .swiper-slide { background-position: center; background-size: cover; width: 100%; }
+    .video-container { position: relative; width: 100%; padding-top: 56.25%; }
+    .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 12px; border: 0; }
+    .swiper-button-next, .swiper-button-prev { color: var(--cor-destaque); }
+    .swiper-pagination-bullet-active { background: var(--cor-destaque); }
+
+    .pre-save-button {
+      display: inline-block;
+      background-color: var(--cor-destaque);
+      color: #fff;
+      padding: 15px 35px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.1em;
+      margin-top: 20px;
+      transition: background-color .3s, transform .2s;
+    }
+    .pre-save-button:hover {
+      background-color: var(--cor-destaque-hover);
+      transform: scale(1.05);
+      color: #fff;
+    }
+    
+    /* ---- AJUSTES PARA CELULAR (MEDIA QUERIES) ---- */
+    @media (max-width: 600px) {
+      header h1 { font-size: 3.5em; }
+      .profile-pic { width: 120px; height: 120px; top: 210px; }
+      section:first-of-type { padding-top: 80px; }
+      header { padding: 320px 20px 40px; }
+    }
   </style>
 </head>
 <body>
+
   <header id="header-capa">
     <h1>Feqzin</h1>
-    <p>🎒💰 </p>
+    <p>🎒💰</p>
   </header>
   <img src="" alt="Feqzin" class="profile-pic" id="foto-perfil">
 
@@ -56,6 +217,7 @@
       <a href="https://distrokid.com/hyperfollow/feqzin/se-a-bag-pesar" target="_blank" class="pre-save-button">FAÇA O PRE-SAVE</a>
     </div>
   </section>
+
   <section>
     <h2>Redes Sociais</h2>
     <div class="socials">
@@ -66,152 +228,106 @@
       <a href="https://soundcloud.com/discordia-urban" target="_blank">SoundCloud</a>
     </div>
   </section>
+
   <footer>
     © 2025 Feqzin. Todos os direitos reservados.
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
-  <script>   
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        carregarConfiguracoes();
+        carregarVideosDoYouTube();
+        iniciarCountdown();
+    });
 
-// Esta é a nova função no seu HTML
-async function carregarConfiguracoes() {
-  try {
-    // 1. O site faz a chamada para a SUA API segura
-    const response = await fetch('/api/getContentfulConfig');
-    if (!response.ok) throw new Error('Falha ao carregar configurações do nosso servidor.');
-
-    // 2. Recebemos os dados seguros
-    const data = await response.json();
-
-    // 3. O resto do seu código para usar os dados continua igual!
-    if (data.items.length > 0) {
-      const entradaPrincipal = data.items[0];
-      const encontrarUrlDoAsset = (assetId) => {
-        if (!assetId || !data.includes || !data.includes.Asset) return '';
-        const asset = data.includes.Asset.find(a => a.sys.id === assetId);
-        return asset ? 'https:' + asset.fields.file.url : '';
-      };
-      const idCapa = entradaPrincipal.fields.imagemDeCapa?.sys.id;
-      const idPerfil = entradaPrincipal.fields.fotoDePerfil?.sys.id;
-      const urlCapa = encontrarUrlDoAsset(idCapa);
-      const urlPerfil = encontrarUrlDoAsset(idPerfil);
-
-      if (urlCapa) {
-        const headerCapa = document.getElementById('header-capa');
-        headerCapa.style.backgroundImage = `url(${urlCapa})`;
-        headerCapa.style.backgroundColor = 'rgba(0, 0, 0, 0.6)';
-        headerCapa.style.backgroundBlendMode = 'darken';
-      }
-      if (urlPerfil) {
-        document.getElementById('foto-perfil').src = urlPerfil;
-      }
-    }
-  } catch (error) {
-    console.error('Erro ao carregar configs:', error);
-  }
-}
-      
-    // --- FUNÇÕES ---
     async function carregarConfiguracoes() {
-      const url = `https://cdn.contentful.com/spaces/${SPACE_ID}/environments/master/entries?access_token=${ACCESS_TOKEN}&content_type=${CONTENTFUL_CONTENT_TYPE_ID}&include=1`;
-      try {
-        const response = await fetch(url);
-        if (!response.ok) throw new Error('CMS Config Error');
-        const data = await response.json();
-        if (data.items.length > 0) {
-          const entradaPrincipal = data.items[0];
-          const encontrarUrlDoAsset = (assetId) => {
-            if (!assetId || !data.includes || !data.includes.Asset) return '';
-            const asset = data.includes.Asset.find(a => a.sys.id === assetId);
-            return asset ? 'https:' + asset.fields.file.url : '';
-          };
-          const idCapa = entradaPrincipal.fields.imagemDeCapa?.sys.id;
-          const idPerfil = entradaPrincipal.fields.fotoDePerfil?.sys.id;
-          const urlCapa = encontrarUrlDoAsset(idCapa);
-          const urlPerfil = encontrarUrlDoAsset(idPerfil);
-          if (urlCapa) {
-            const headerCapa = document.getElementById('header-capa');
-            headerCapa.style.backgroundImage = `url(${urlCapa})`;
-            headerCapa.style.backgroundColor = 'rgba(0, 0, 0, 0.6)';
-            headerCapa.style.backgroundBlendMode = 'darken';
-          }
-          if (urlPerfil) {
-            document.getElementById('foto-perfil').src = urlPerfil;
-          }
+        try {
+            const response = await fetch('/api/getContentfulConfig');
+            if (!response.ok) throw new Error('Falha ao carregar configurações do nosso servidor.');
+            const data = await response.json();
+
+            if (data.items.length > 0) {
+                const entradaPrincipal = data.items[0];
+                const encontrarUrlDoAsset = (assetId) => {
+                    if (!assetId || !data.includes || !data.includes.Asset) return '';
+                    const asset = data.includes.Asset.find(a => a.sys.id === assetId);
+                    return asset ? 'https:' + asset.fields.file.url : '';
+                };
+                const idCapa = entradaPrincipal.fields.imagemDeCapa?.sys.id;
+                const idPerfil = entradaPrincipal.fields.fotoDePerfil?.sys.id;
+                const urlCapa = encontrarUrlDoAsset(idCapa);
+                const urlPerfil = encontrarUrlDoAsset(idPerfil);
+
+                if (urlCapa) {
+                    document.getElementById('header-capa').style.backgroundImage = `url(${urlCapa})`;
+                }
+                if (urlPerfil) {
+                    document.getElementById('foto-perfil').src = urlPerfil;
+                }
+            }
+        } catch (error) {
+            console.error('Erro ao carregar configs:', error);
         }
-      } catch (error) { console.error('Erro ao carregar configs do Contentful:', error); }
     }
 
-   // Esta é a nova função no seu HTML
-async function carregarVideosDoYouTube() {
-  try {
-    // 1. O site faz uma chamada para a SUA API segura que você criou
-    const response = await fetch('/api/getYoutubeVideos'); // Note o caminho!
-    if (!response.ok) throw new Error('Falha ao carregar vídeos do nosso servidor.');
-    
-    // 2. Recebemos os dados limpos e seguros
-    const data = await response.json();
-    
-    // 3. O resto do seu código para criar o carrossel continua igual!
-    const wrapper = document.getElementById('youtube-carousel-wrapper');
-    wrapper.innerHTML = '';
-    data.items.forEach(item => {
-      const slideHTML = `
-        <div class="swiper-slide">
-          <div class="video-container">
-            <iframe src="https://www.youtube.com/embed/${item.id.videoId}" title="${item.snippet.title}" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-          </div>
-        </div>`;
-      wrapper.innerHTML += slideHTML;
-    });
+    async function carregarVideosDoYouTube() {
+        try {
+            const response = await fetch('/api/getYoutubeVideos');
+            if (!response.ok) throw new Error('Falha ao carregar vídeos do nosso servidor.');
+            const data = await response.json();
+            
+            const wrapper = document.getElementById('youtube-carousel-wrapper');
+            wrapper.innerHTML = '';
+            data.items.forEach(item => {
+                const videoId = item.id.videoId;
+                const slideHTML = `
+                <div class="swiper-slide">
+                  <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/${videoId}" title="${item.snippet.title}" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                  </div>
+                </div>`;
+                wrapper.innerHTML += slideHTML;
+            });
 
-    new Swiper('.swiper', {
-      // Suas configurações do Swiper continuam aqui...
-      loop: true,
-      spaceBetween: 20,
-      slidesPerView: 1,
-      breakpoints: {
-        768: { slidesPerView: 2, spaceBetween: 30 },
-        1024: { slidesPerView: 3, spaceBetween: 30 }
-      },
-      pagination: { el: '.swiper-pagination', clickable: true },
-      navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
-    });
-  } catch (error) {
-    console.error('Erro ao carregar vídeos do YouTube:', error);
-    // Você pode até mostrar uma mensagem de erro na tela aqui
-  }
-}
+            new Swiper('.swiper', {
+                loop: true,
+                spaceBetween: 20,
+                slidesPerView: 1,
+                breakpoints: {
+                    768: { slidesPerView: 2, spaceBetween: 30 },
+                    1024: { slidesPerView: 3, spaceBetween: 30 }
+                },
+                pagination: { el: '.swiper-pagination', clickable: true },
+                navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+            });
+        } catch (error) {
+            console.error('Erro ao carregar vídeos do YouTube:', error);
+        }
+    }
 
     function iniciarCountdown() {
-       const countdown = document.getElementById("countdown");
-       if (!countdown) return;
-       const launchDate = new Date("2025-05-31T00:00:00").getTime();
-       const interval = setInterval(() => {
-        const now = new Date().getTime();
-        const distance = launchDate - now;
-        if (distance < 0) {
-          clearInterval(interval);
-          countdown.innerHTML = "Já disponível em todas as plataformas!";
-          const preSaveButton = document.querySelector('.pre-save-button');
-          if (preSaveButton) preSaveButton.style.display = 'none';
-        } else {
-          const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-          const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-          const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-          const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-          countdown.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s <br><span style="font-size: 0.5em; color: #ccc;">Para o próximo lançamento.</span>`;
-        }
-      }, 1000);
+        const countdown = document.getElementById("countdown");
+        if (!countdown) return;
+        const launchDate = new Date("2025-05-31T00:00:00").getTime();
+        const interval = setInterval(() => {
+            const now = new Date().getTime();
+            const distance = launchDate - now;
+            if (distance < 0) {
+                clearInterval(interval);
+                countdown.innerHTML = "Já disponível em todas as plataformas!";
+                const preSaveButton = document.querySelector('.pre-save-button');
+                if (preSaveButton) preSaveButton.style.display = 'none';
+            } else {
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                countdown.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s <br><span style="font-size: 0.5em; color: #ccc;">Para o próximo lançamento.</span>`;
+            }
+        }, 1000);
     }
-
-    // --- INICIA TUDO ---
-    document.addEventListener('DOMContentLoaded', () => {
-      carregarConfiguracoes();
-      carregarVideosDoYouTube();
-      iniciarCountdown();
-    });
   </script>
 </body>
 </html>
