@@ -1,266 +1,45 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Feqzin | Site Oficial</title>
-  
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-    integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
-    crossorigin="anonymous"
-    referrerpolicy="no-referrer"
-  />
-  
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
   <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0e0e0e;
-      color: #f1f1f1;
+    body{margin:0;font-family:Arial,sans-serif;background:#0e0e0e;color:#f1f1f1;}header{background-color:#0e0e0e;background-blend-mode:darken;background-size:cover;background-position:center center;padding:360px 20px 40px;text-align:center;color:#fff;position:relative}header::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:100px;background:linear-gradient(to bottom,rgba(14,14,14,0),#0e0e0e);z-index:1}header h1,header p{position:relative;z-index:2}header h1{font-size:3em;margin-bottom:10px}header p{font-size:1.2em;color:#ddd}.profile-pic{width:150px;height:150px;border-radius:50%;display:block;border:3px solid #1db954;object-fit:cover;background-color:#000;position:absolute;top:190px;left:50%;transform:translateX(-50%);z-index:3}section{padding:40px 20px;max-width:900px;margin:auto}section:first-of-type{padding-top:100px}h2{border-bottom:2px solid #444;padding-bottom:10px;margin-bottom:20px}a{color:#1db954;text-decoration:none;transition:color .3s}a:hover{color:#fff}.socials a{margin-right:15px;color:#f1f1f1;font-size:1.1em}.player{margin:20px 0}
+    
+    .countdown{
+      text-align:center;
+      font-size:2em;
+      margin:20px 0 10px 0;
+      /* COR DA CONTAGEM REGRESSIVA ALTERADA AQUI */
+      color: #E60000; 
+      line-height:1.2;
     }
-    header {
-      background-color: #0e0e0e;
-      background-blend-mode: darken;
-      background-size: cover;
-      background-position: center center;
-      padding: 360px 20px 40px;
-      text-align: center;
-      color: #fff;
-      position: relative;
-    }
-    header::after {
-      content: "";
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 100px;
-      background: linear-gradient(to bottom, rgba(14, 14, 14, 0), #0e0e0e);
-      z-index: 1;
-    }
-    header h1,
-    header p {
-      position: relative;
-      z-index: 2;
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
-    }
-    header h1 {
-      font-size: 3em;
-      margin-bottom: 10px;
-      font-family: "Orbitron", sans-serif;
-      letter-spacing: 1.5px;
-    }
-    header p {
-      font-size: 1.2em;
-      color: #ddd;
-    }
-    .profile-pic {
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
-      display: block;
-      border: 3px solid #1db954;
-      object-fit: cover;
-      background-color: #000;
-      position: absolute;
-      top: 190px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 3;
-      transition: transform 0.3s ease;
-    }
-    .profile-pic:hover {
-      transform: translateX(-50%) scale(1.05);
-    }
-    section {
-      padding: 40px 20px;
-      max-width: 900px;
-      margin: auto;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: all 0.6s ease;
-    }
-    section.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    section:first-of-type {
-      padding-top: 100px;
-    }
-    h2 {
-      border-bottom: 2px solid #444;
-      padding-bottom: 10px;
-      margin-bottom: 20px;
-    }
-    a {
-      color: #1db954;
-      text-decoration: none;
-      transition: color 0.3s;
-    }
-    a:hover {
-      color: #fff;
-    }
-    .socials {
-      text-align: center;
-    }
-    .socials a {
-      margin: 0 15px;
-      color: #f1f1f1;
-      font-size: 1.8em;
-      transition: color 0.3s, transform 0.2s;
-    }
-    .socials a:hover {
-      color: #1db954;
-      transform: scale(1.1);
-    }
-    .player {
-      margin: 20px 0;
-    }
-    .countdown {
-      text-align: center;
-      font-size: 2em;
-      margin: 20px 0 10px 0;
-      color: #e60000;
-      line-height: 1.2;
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
-    }
-    footer {
-      background: #111;
-      text-align: center;
-      padding: 20px;
-      font-size: 0.9em;
-      color: #777;
-    }
-    .swiper {
-      width: 100%;
-      padding-top: 20px;
-      padding-bottom: 50px;
-    }
-    .swiper-slide {
-      background-position: center;
-      background-size: cover;
-      width: 100%;
-    }
-    .video-container {
-      position: relative;
-      width: 100%;
-      padding-top: 56.25%;
-    }
-    .video-container iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border-radius: 12px;
-      border: 0;
-    }
-    .swiper-button-next,
-    .swiper-button-prev {
-      color: #1db954;
-    }
-    .swiper-pagination-bullet-active {
-      background: #1db954;
-    }
-    .pre-save-button {
-      display: inline-block;
-      background: linear-gradient(135deg, #1db954, #1ed760);
-      color: #fff;
-      padding: 15px 35px;
-      border-radius: 50px;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 1.1em;
-      margin-top: 20px;
-      transition: background-color 0.3s, transform 0.2s;
-      box-shadow: 0 4px 12px rgba(29, 185, 84, 0.4);
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
-    }
-    .pre-save-button:hover {
-      background-color: #1ed760;
-      transform: scale(1.05);
-      color: #fff;
-    }
-    @media (max-width: 600px) {
-      header h1 {
-        font-size: 2em;
-      }
-      .profile-pic {
-        width: 120px;
-        height: 120px;
-        top: 210px;
-      }
-      section:first-of-type {
-        padding-top: 80px;
-      }
-      header {
-        padding: 320px 20px 40px;
-      }
-    }
-
-    /* Estilos específicos para a seção Eventos, mantendo fontes originais */
-    .eventos-swiper .swiper-slide {
-      background: #121212;
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
-      color: #eee;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      text-align: center;
-    }
-
-    .eventos-swiper h3 {
-      margin-bottom: 10px;
-      font-weight: 600;
-      color: #1db954;
-    }
-
-    .eventos-swiper p {
-      margin: 5px 0;
-      font-size: 0.95em;
-      color: #ccc;
-    }
+    
+    footer{background:#111;text-align:center;padding:20px;font-size:.9em;color:#777}
+    .swiper{width:100%;padding-top:20px;padding-bottom:50px}.swiper-slide{background-position:center;background-size:cover;width:100%}.video-container{position:relative;width:100%;padding-top:56.25%}.video-container iframe{position:absolute;top:0;left:0;width:100%;height:100%;border-radius:12px;border:0}.swiper-button-next,.swiper-button-prev{color:#1db954}.swiper-pagination-bullet-active{background:#1db954}
+    .pre-save-button{display:inline-block;background-color:#1db954;color:#fff;padding:15px 35px;border-radius:50px;text-decoration:none;font-weight:bold;font-size:1.1em;margin-top:20px;transition:background-color .3s,transform .2s}.pre-save-button:hover{background-color:#1ed760;transform:scale(1.05);color:#fff}
+    @media (max-width:600px){header h1{font-size:2em}.profile-pic{width:120px;height:120px;top:210px}section:first-of-type{padding-top:80px}header{padding:320px 20px 40px}}
   </style>
 </head>
 <body>
   <header id="header-capa">
     <h1>Feqzin</h1>
-    <p>💰🫰</p>
+    <p>🎒💰 </p>
   </header>
-  <img src="" alt="Feqzin" class="profile-pic" id="foto-perfil" />
+  <img src="" alt="Feqzin" class="profile-pic" id="foto-perfil">
 
   <section>
     <h2>Sobre</h2>
-    <p>
-      Feqzin é um artista nascido na zona norte de São Paulo, mais
-      precisamente no bairro do Jardim Brasil. Desde 2017 canetando,
-      iniciou sua trajetória oficialmente em 2022 com a primeira track
-      produzida no celular. Traz autenticidade no vocal e está sempre
-      inovando em suas produções.
-    </p>
+    <p>Feqzin é um artista nascido na zona norte de São Paulo, mais precisamente no bairro do Jardim Brasil. Desde 2017 canetando, iniciou sua trajetória oficialmente em 2022 com a primeira track produzida no celular. Traz autenticidade no vocal e está sempre inovando em suas produções.</p>
   </section>
 
   <section>
     <h2>Meus Vídeos</h2>
     <div class="swiper">
-      <div class="swiper-wrapper" id="youtube-carousel-wrapper"></div>
-      <div class="swiper-pagination"></div>
-      <div class="swiper-button-prev"></div>
-      <div class="swiper-button-next"></div>
-    </div>
-  </section>
-
-  <!-- Nova seção Eventos -->
-  <section>
-    <h2>Eventos</h2>
-    <div class="swiper eventos-swiper">
-      <div class="swiper-wrapper" id="eventos-carousel-wrapper"></div>
+      <div class="swiper-wrapper" id="youtube-carousel-wrapper">
+        </div>
       <div class="swiper-pagination"></div>
       <div class="swiper-button-prev"></div>
       <div class="swiper-button-next"></div>
@@ -270,181 +49,130 @@
   <section>
     <h2>Último Lançamento</h2>
     <div class="player">
-      <iframe
-        style="border-radius: 12px"
-        src="https://open.spotify.com/embed/album/0bPCF6VbnttHv8NxUltJGy?utm_source=generator"
-        width="100%"
-        height="152"
-        frameborder="0"
-        allowfullscreen=""
-        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-        loading="lazy"
-      ></iframe>
+      <iframe style="border-radius:12px" src="https://open.spotify.com/embed/album/0bPCF6VbnttHv8NxUltJGy?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
     </div>
-    <a
-      href="https://distrokid.com/hyperfollow/feqzin/se-a-bag-pesar"
-      target="_blank"
-      rel="noopener noreferrer"
-      class="pre-save-button"
-      >Pre-Save no Spotify</a
-    >
+    <div class="countdown" id="countdown"></div>
+    <div style="text-align: center;">
+      <a href="https://distrokid.com/hyperfollow/feqzin/se-a-bag-pesar" target="_blank" class="pre-save-button">FAÇA O PRE-SAVE</a>
+    </div>
   </section>
-
   <section>
-    <h2>Próximo Lançamento</h2>
-    <div class="countdown" id="countdown">Carregando...</div>
-  </section>
-
-  <section class="socials">
     <h2>Redes Sociais</h2>
-    <a href="https://instagram.com/feqzin" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-    <a href="https://youtube.com/feqzin" target="_blank" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
-    <a href="https://open.spotify.com/artist/7jvMIbWLZxQFkqLjZTIBhl" target="_blank" aria-label="Spotify"><i class="fa-brands fa-spotify"></i></a>
+    <div class="socials">
+      <a href="https://www.instagram.com/feqzinn/" target="_blank">Instagram</a>
+      <a href="https://www.tiktok.com/@feqzinn" target="_blank">TikTok</a>
+      <a href="https://www.youtube.com/@feqzin" target="_blank">YouTube</a>
+      <a href="https://open.spotify.com/intl-pt/artist/56eMJpXmR5veK1kOi2apO4" target="_blank">Spotify</a>
+      <a href="https://soundcloud.com/discordia-urban" target="_blank">SoundCloud</a>
+    </div>
   </section>
-
   <footer>
-    <p>© 2025 Feqzin. Todos os direitos reservados.</p>
+    © 2025 Feqzin. Todos os direitos reservados.
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-  <script>
-    const SPACE_ID = "g3f0zfqa7wgz";
-    const ACCESS_TOKEN = "jmIxg0SML3Q6UfS5u9vxxWmS7yQbRB3VYmQgiCXrhH4";
 
+  <script>
+    // --- CREDENCIAIS ---
+    const SPACE_ID = 'w37b9rauibj0';
+    const ACCESS_TOKEN = 'Vk6TIlkNPKkUu_3DSG78I_5AQnp-X02xQhtj_VgrdKw';
+    const CONTENTFUL_CONTENT_TYPE_ID = 'configuraesDoSite';
+    const YOUTUBE_API_KEY = 'AIzaSyDpdIWaCM66C8voM_dsSz6QbK7HcedL0tg';
+    const YOUTUBE_CHANNEL_ID = 'UCzixfPx7Cr1pqm_GM5V3n-A';
+
+    // --- FUNÇÕES ---
     async function carregarConfiguracoes() {
-      // Seu código existente para carregar configurações (se houver)
+      const url = `https://cdn.contentful.com/spaces/${SPACE_ID}/environments/master/entries?access_token=${ACCESS_TOKEN}&content_type=${CONTENTFUL_CONTENT_TYPE_ID}&include=1`;
+      try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error('CMS Config Error');
+        const data = await response.json();
+        if (data.items.length > 0) {
+          const entradaPrincipal = data.items[0];
+          const encontrarUrlDoAsset = (assetId) => {
+            if (!assetId || !data.includes || !data.includes.Asset) return '';
+            const asset = data.includes.Asset.find(a => a.sys.id === assetId);
+            return asset ? 'https:' + asset.fields.file.url : '';
+          };
+          const idCapa = entradaPrincipal.fields.imagemDeCapa?.sys.id;
+          const idPerfil = entradaPrincipal.fields.fotoDePerfil?.sys.id;
+          const urlCapa = encontrarUrlDoAsset(idCapa);
+          const urlPerfil = encontrarUrlDoAsset(idPerfil);
+          if (urlCapa) {
+            const headerCapa = document.getElementById('header-capa');
+            headerCapa.style.backgroundImage = `url(${urlCapa})`;
+            headerCapa.style.backgroundColor = 'rgba(0, 0, 0, 0.6)';
+            headerCapa.style.backgroundBlendMode = 'darken';
+          }
+          if (urlPerfil) {
+            document.getElementById('foto-perfil').src = urlPerfil;
+          }
+        }
+      } catch (error) { console.error('Erro ao carregar configs do Contentful:', error); }
     }
 
     async function carregarVideosDoYouTube() {
-      const url = `https://cdn.contentful.com/spaces/${SPACE_ID}/environments/master/entries?access_token=${ACCESS_TOKEN}&content_type=videosDoFeqzin&order=fields.ordem`;
+      if (!YOUTUBE_API_KEY || !YOUTUBE_CHANNEL_ID || YOUTUBE_API_KEY === 'SUA_CHAVE_DE_API_DO_YOUTUBE_AQUI') {
+        console.warn("Credenciais do YouTube não configuradas. O carrossel de vídeos não será carregado.");
+        return;
+      }
+      const url = `https://www.googleapis.com/youtube/v3/search?key=${YOUTUBE_API_KEY}&channelId=${YOUTUBE_CHANNEL_ID}&part=snippet,id&order=date&maxResults=12&type=video`;
       try {
         const response = await fetch(url);
-        if (!response.ok) throw new Error("Erro ao carregar vídeos do Contentful");
+        if (!response.ok) throw new Error('YouTube API Error');
         const data = await response.json();
-        const wrapper = document.getElementById("youtube-carousel-wrapper");
-        wrapper.innerHTML = "";
-        data.items.forEach((item) => {
-          const videoId = item.fields.videoId;
-          if (!videoId) return;
+        const wrapper = document.getElementById('youtube-carousel-wrapper');
+        wrapper.innerHTML = '';
+        data.items.forEach(item => {
           const slideHTML = `
             <div class="swiper-slide">
               <div class="video-container">
-                <iframe
-                  src="https://www.youtube.com/embed/${videoId}"
-                  frameborder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowfullscreen
-                  loading="lazy"
-                ></iframe>
+                <iframe src="https://www.youtube.com/embed/${item.id.videoId}" title="${item.snippet.title}" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
               </div>
             </div>`;
           wrapper.innerHTML += slideHTML;
         });
-
-        new Swiper(".swiper", {
+        new Swiper('.swiper', {
           loop: true,
           spaceBetween: 20,
           slidesPerView: 1,
           breakpoints: {
             768: { slidesPerView: 2, spaceBetween: 30 },
-            1024: { slidesPerView: 3, spaceBetween: 30 },
+            1024: { slidesPerView: 3, spaceBetween: 30 }
           },
-          pagination: { el: ".swiper-pagination", clickable: true },
-          navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
+          pagination: { el: '.swiper-pagination', clickable: true },
+          navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
         });
-      } catch (error) {
-        console.error(error);
-      }
-    }
-
-    async function carregarEventos() {
-      const url = `https://cdn.contentful.com/spaces/${SPACE_ID}/environments/master/entries?access_token=${ACCESS_TOKEN}&content_type=eventosDoFeqzin&order=fields.data`;
-      try {
-        const response = await fetch(url);
-        if (!response.ok) throw new Error("Erro ao carregar eventos do Contentful");
-        const data = await response.json();
-        const wrapper = document.getElementById("eventos-carousel-wrapper");
-        wrapper.innerHTML = "";
-
-        data.items.forEach((item) => {
-          const nome = item.fields.nome || "Evento sem nome";
-          const local = item.fields.local || "Local não informado";
-          const dataISO = item.fields.data || "";
-          const dataFormatada = dataISO
-            ? new Date(dataISO).toLocaleDateString("pt-BR", {
-                day: "2-digit",
-                month: "short",
-                year: "numeric",
-              })
-            : "Data não definida";
-
-          const slideHTML = `
-            <div class="swiper-slide">
-              <h3>${nome}</h3>
-              <p><strong>Data:</strong> ${dataFormatada}</p>
-              <p><strong>Local:</strong> ${local}</p>
-            </div>`;
-          wrapper.innerHTML += slideHTML;
-        });
-
-        new Swiper(".eventos-swiper", {
-          loop: false,
-          spaceBetween: 20,
-          slidesPerView: 1,
-          breakpoints: {
-            768: { slidesPerView: 2, spaceBetween: 30 },
-            1024: { slidesPerView: 3, spaceBetween: 30 },
-          },
-          pagination: { el: ".eventos-swiper .swiper-pagination", clickable: true },
-          navigation: { nextEl: ".eventos-swiper .swiper-button-next", prevEl: ".eventos-swiper .swiper-button-prev" },
-        });
-      } catch (error) {
-        console.error(error);
-      }
+      } catch (error) { console.error('Erro ao carregar vídeos do YouTube:', error); }
     }
 
     function iniciarCountdown() {
-      const targetDate = new Date("2025-06-30T00:00:00");
-      const countdownEl = document.getElementById("countdown");
-
-      function updateCountdown() {
-        const now = new Date();
-        const diff = targetDate - now;
-
-        if (diff <= 0) {
-          countdownEl.textContent = "Lançamento disponível!";
-          clearInterval(intervalId);
-          return;
+       const countdown = document.getElementById("countdown");
+       if (!countdown) return;
+       const launchDate = new Date("2025-05-31T00:00:00").getTime();
+       const interval = setInterval(() => {
+        const now = new Date().getTime();
+        const distance = launchDate - now;
+        if (distance < 0) {
+          clearInterval(interval);
+          countdown.innerHTML = "Já disponível em todas as plataformas!";
+          const preSaveButton = document.querySelector('.pre-save-button');
+          if (preSaveButton) preSaveButton.style.display = 'none';
+        } else {
+          const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+          const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+          const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+          countdown.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s <br><span style="font-size: 0.5em; color: #ccc;">Para o próximo lançamento.</span>`;
         }
-
-        const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const horas = Math.floor((diff / (1000 * 60 * 60)) % 24);
-        const minutos = Math.floor((diff / (1000 * 60)) % 60);
-        const segundos = Math.floor((diff / 1000) % 60);
-
-        countdownEl.textContent = `${dias}d ${horas}h ${minutos}m ${segundos}s`;
-      }
-
-      updateCountdown();
-      const intervalId = setInterval(updateCountdown, 1000);
+      }, 1000);
     }
 
-    document.addEventListener("DOMContentLoaded", () => {
+    // --- INICIA TUDO ---
+    document.addEventListener('DOMContentLoaded', () => {
       carregarConfiguracoes();
       carregarVideosDoYouTube();
-      carregarEventos();
       iniciarCountdown();
-
-      const sections = document.querySelectorAll("section");
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) entry.target.classList.add("visible");
-          });
-        },
-        { threshold: 0.1 }
-      );
-      sections.forEach((section) => observer.observe(section));
     });
   </script>
 </body>
