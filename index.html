@@ -5,9 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Site oficial de Feqzin, artista de trap da Zona Norte de São Paulo. Ouça o último lançamento e siga nas redes sociais.">
   <title>Feqzin | Site Oficial</title>
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+
   <style>
-    /* O CSS continua o mesmo */
-    body{margin:0;font-family:Arial,sans-serif;background:#0e0e0e;color:#f1f1f1;transition:opacity .5s ease-in-out}header{background-color:#0e0e0e;background-blend-mode:darken;background-size:cover;background-position:center center;padding:360px 20px 40px;text-align:center;color:#fff;position:relative}header::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:100px;background:linear-gradient(to bottom,rgba(14,14,14,0),#0e0e0e);z-index:1}header h1,header p{position:relative;z-index:2}header h1{font-size:3em;margin-bottom:10px}header p{font-size:1.2em;color:#ddd}.profile-pic{width:150px;height:150px;border-radius:50%;display:block;border:3px solid #1db954;object-fit:cover;background-color:#000;position:absolute;top:190px;left:50%;transform:translateX(-50%);z-index:3}section{padding:40px 20px;max-width:900px;margin:auto}section:first-of-type{padding-top:100px}h2{border-bottom:2px solid #444;padding-bottom:10px;margin-bottom:20px}a{color:#1db954;text-decoration:none;transition:color .3s}a:hover{color:#fff}.socials a{margin-right:15px;color:#f1f1f1;font-size:1.1em}.player{margin:20px 0}.countdown{text-align:center;font-size:2em;margin:30px 0;color:#1db954}footer{background:#111;text-align:center;padding:20px;font-size:.9em;color:#777}@media (max-width:600px){header h1{font-size:2em}.profile-pic{width:120px;height:120px;top:210px}section:first-of-type{padding-top:80px}header{padding:320px 20px 40px}}
+    /* O CSS base continua o mesmo, com adições para o carrossel */
+    body{margin:0;font-family:Arial,sans-serif;background:#0e0e0e;color:#f1f1f1;transition:opacity .5s ease-in-out}header{background-color:#0e0e0e;background-blend-mode:darken;background-size:cover;background-position:center center;padding:360px 20px 40px;text-align:center;color:#fff;position:relative}header::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:100px;background:linear-gradient(to bottom,rgba(14,14,14,0),#0e0e0e);z-index:1}header h1,header p{position:relative;z-index:2}header h1{font-size:3em;margin-bottom:10px}header p{font-size:1.2em;color:#ddd}.profile-pic{width:150px;height:150px;border-radius:50%;display:block;border:3px solid #1db954;object-fit:cover;background-color:#000;position:absolute;top:190px;left:50%;transform:translateX(-50%);z-index:3}section{padding:40px 20px;max-width:900px;margin:auto}section:first-of-type{padding-top:100px}h2{border-bottom:2px solid #444;padding-bottom:10px;margin-bottom:20px}a{color:#1db954;text-decoration:none;transition:color .3s}a:hover{color:#fff}.socials a{margin-right:15px;color:#f1f1f1;font-size:1.1em}.player{margin:20px 0}.countdown{text-align:center;font-size:2em;margin:30px 0;color:#1db954}footer{background:#111;text-align:center;padding:20px;font-size:.9em;color:#777}
+    
+    /* ESTILOS PARA O CARROSSEL DE VÍDEOS */
+    .swiper {width:100%;padding-top:20px;padding-bottom:50px;}
+    .swiper-slide {background-position:center;background-size:cover;width:100%;}
+    .video-container {position:relative;width:100%;padding-top:56.25%;}
+    .video-container iframe {position:absolute;top:0;left:0;width:100%;height:100%;border-radius:12px;border:0;}
+    .swiper-button-next, .swiper-button-prev {color:#1db954;}
+    .swiper-pagination-bullet-active {background:#1db954;}
+
+    @media (max-width:600px){header h1{font-size:2em}.profile-pic{width:120px;height:120px;top:210px}section:first-of-type{padding-top:80px}header{padding:320px 20px 40px}}
   </style>
 </head>
 <body>
@@ -16,10 +29,23 @@
     <p>Trap sem peso, só progresso</p>
   </header>
   <img src="" alt="Feqzin" class="profile-pic" id="foto-perfil">
+
   <section>
     <h2>Sobre</h2>
     <p>Feqzin é um artista nascido na zona norte de São Paulo, mais precisamente no bairro do Jardim Brasil. Desde 2017 canetando, iniciou sua trajetória oficialmente em 2022 com a primeira track produzida no celular. Traz autenticidade no vocal e está sempre inovando em suas produções.</p>
   </section>
+
+  <section>
+    <h2>Meus Vídeos</h2>
+    <div class="swiper">
+      <div class="swiper-wrapper" id="youtube-carousel-wrapper">
+        </div>
+      <div class="swiper-pagination"></div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
+    </div>
+  </section>
+
   <section>
     <h2>Último Lançamento</h2>
     <div class="player">
@@ -41,80 +67,105 @@
     © 2025 Feqzin. Todos os direitos reservados.
   </footer>
 
-  <script>
-    // --- SCRIPT ATUALIZADO PARA LER IMAGENS (ASSETS) ---
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
-    // Use as mesmas chaves de antes. Crie novas apenas se quiser por segurança.
+  <script>
+    // --- CREDENCIAIS PARA AS DUAS APIS ---
+    // Chaves para o Contentful (para capa e perfil)
     const SPACE_ID = 'w37b9rauibj0';
     const ACCESS_TOKEN = 'Vk6TIlkNPKkUu_3DSG78I_5AQnp-X02xQhtj_VgrdKw';
-    const CONTENT_TYPE_ID = 'configuraesDoSite'; // Verifique se este ID não mudou
+    const CONTENTFUL_CONTENT_TYPE_ID = 'configuraesDoSite';
 
-    // Função atualizada que busca os dados no Contentful
+    // Chaves para o YouTube (para o carrossel de vídeos)
+    const YOUTUBE_API_KEY = 'AIzaSyDpdIWaCM66C8voM_dsSz6QbK7HcedL0tg';
+    const YOUTUBE_CHANNEL_ID = 'UCzixfPx7Cr1pqm_GM5V3n-A';
+
+    // --- FUNÇÕES ---
+
+    // Função para carregar as configurações do Contentful
     async function carregarConfiguracoes() {
-      // Adicionamos `&include=1` ao final da URL. Isso é ESSENCIAL!
-      // Diz ao Contentful para incluir os dados dos arquivos de mídia na resposta.
-      const url = `https://cdn.contentful.com/spaces/${SPACE_ID}/environments/master/entries?access_token=${ACCESS_TOKEN}&content_type=${CONTENT_TYPE_ID}&include=1`;
-
+      const url = `https://cdn.contentful.com/spaces/${SPACE_ID}/environments/master/entries?access_token=${ACCESS_TOKEN}&content_type=${CONTENTFUL_CONTENT_TYPE_ID}&include=1`;
       try {
         const response = await fetch(url);
-        if (!response.ok) throw new Error('Não foi possível conectar ao CMS.');
-        
+        if (!response.ok) throw new Error('CMS Config Error');
         const data = await response.json();
-        
-        // O primeiro item da nossa entrada principal
-        const entradaPrincipal = data.items[0];
-
-        // Função auxiliar para encontrar o arquivo de imagem dentro da resposta
-        const encontrarUrlDoAsset = (assetId) => {
-          const asset = data.includes.Asset.find(a => a.sys.id === assetId);
-          return asset ? 'https:' + asset.fields.file.url : '';
-        };
-
-        // Pega o ID da imagem de capa e de perfil
-        const idCapa = entradaPrincipal.fields.imagemDeCapa.sys.id;
-        const idPerfil = entradaPrincipal.fields.fotoDePerfil.sys.id;
-
-        // Encontra as URLs usando os IDs
-        const urlCapa = encontrarUrlDoAsset(idCapa);
-        const urlPerfil = encontrarUrlDoAsset(idPerfil);
-
-        // Atualiza os elementos no site
-        const headerCapa = document.getElementById('header-capa');
-        const fotoPerfil = document.getElementById('foto-perfil');
-
-        if (urlCapa) {
-          headerCapa.style.backgroundImage = `url(${urlCapa})`;
-          headerCapa.style.backgroundBlendMode = 'darken';
-          headerCapa.style.backgroundColor = 'rgba(0, 0, 0, 0.6)';
+        if (data.items.length > 0) {
+          const entradaPrincipal = data.items[0];
+          const encontrarUrlDoAsset = (assetId) => {
+            if (!assetId || !data.includes || !data.includes.Asset) return '';
+            const asset = data.includes.Asset.find(a => a.sys.id === assetId);
+            return asset ? 'https:' + asset.fields.file.url : '';
+          };
+          const idCapa = entradaPrincipal.fields.imagemDeCapa?.sys.id;
+          const idPerfil = entradaPrincipal.fields.fotoDePerfil?.sys.id;
+          const urlCapa = encontrarUrlDoAsset(idCapa);
+          const urlPerfil = encontrarUrlDoAsset(idPerfil);
+          if (urlCapa) document.getElementById('header-capa').style.backgroundImage = `url(${urlCapa})`;
+          if (urlPerfil) document.getElementById('foto-perfil').src = urlPerfil;
         }
-        if (urlPerfil) {
-          fotoPerfil.src = urlPerfil;
-        }
-
-      } catch (error) {
-        console.error('Erro ao carregar configurações do site:', error);
-      }
+      } catch (error) { console.error('Erro ao carregar configs do Contentful:', error); }
     }
 
-    document.addEventListener('DOMContentLoaded', carregarConfiguracoes);
+    // Função para carregar os vídeos do YouTube
+    async function carregarVideosDoYouTube() {
+      const url = `https://www.googleapis.com/youtube/v3/search?key=${YOUTUBE_API_KEY}&channelId=${YOUTUBE_CHANNEL_ID}&part=snippet,id&order=date&maxResults=10&type=video`;
+      try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error('YouTube API Error');
+        const data = await response.json();
+        const wrapper = document.getElementById('youtube-carousel-wrapper');
+        wrapper.innerHTML = '';
 
-    // --- SCRIPT DO COUNTDOWN (continua o mesmo) ---
-    const launchDate = new Date("2025-05-31T00:00:00").getTime();
-    const countdown = document.getElementById("countdown");
-    const interval = setInterval(() => {
-      const now = new Date().getTime();
-      const distance = launchDate - now;
-      if (distance < 0) {
-        clearInterval(interval);
-        countdown.innerHTML = "A faixa já está disponível!";
-      } else {
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-        countdown.innerHTML = `Faltam ${days}d ${hours}h ${minutes}m ${seconds}s para o lançamento.`;
-      }
-    }, 1000);
+        data.items.forEach(item => {
+          const slideHTML = `
+            <div class="swiper-slide">
+              <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/${item.id.videoId}" title="${item.snippet.title}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              </div>
+            </div>`;
+          wrapper.innerHTML += slideHTML;
+        });
+        
+        // Inicia o carrossel
+        new Swiper('.swiper', {
+          effect: 'coverflow',
+          grabCursor: true,
+          centeredSlides: true,
+          slidesPerView: 'auto',
+          loop: true,
+          pagination: { el: '.swiper-pagination', clickable: true },
+          navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+        });
+      } catch (error) { console.error('Erro ao carregar vídeos do YouTube:', error); }
+    }
+
+    // Função do Countdown
+    function iniciarCountdown() {
+       const countdown = document.getElementById("countdown");
+       if (!countdown) return;
+       const launchDate = new Date("2025-05-31T00:00:00").getTime();
+       const interval = setInterval(() => {
+        const now = new Date().getTime();
+        const distance = launchDate - now;
+        if (distance < 0) {
+          clearInterval(interval);
+          countdown.innerHTML = "A faixa já está disponível!";
+        } else {
+          const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+          const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+          const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+          countdown.innerHTML = `Faltam ${days}d ${hours}h ${minutes}m ${seconds}s para o lançamento.`;
+        }
+      }, 1000);
+    }
+
+    // --- INICIA TUDO ---
+    document.addEventListener('DOMContentLoaded', () => {
+      carregarConfiguracoes();
+      carregarVideosDoYouTube();
+      iniciarCountdown();
+    });
   </script>
 </body>
 </html>
