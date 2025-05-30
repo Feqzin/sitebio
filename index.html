@@ -74,6 +74,44 @@
 
   <script>   
 
+// Esta é a nova função no seu HTML
+async function carregarConfiguracoes() {
+  try {
+    // 1. O site faz a chamada para a SUA API segura
+    const response = await fetch('/api/getContentfulConfig');
+    if (!response.ok) throw new Error('Falha ao carregar configurações do nosso servidor.');
+
+    // 2. Recebemos os dados seguros
+    const data = await response.json();
+
+    // 3. O resto do seu código para usar os dados continua igual!
+    if (data.items.length > 0) {
+      const entradaPrincipal = data.items[0];
+      const encontrarUrlDoAsset = (assetId) => {
+        if (!assetId || !data.includes || !data.includes.Asset) return '';
+        const asset = data.includes.Asset.find(a => a.sys.id === assetId);
+        return asset ? 'https:' + asset.fields.file.url : '';
+      };
+      const idCapa = entradaPrincipal.fields.imagemDeCapa?.sys.id;
+      const idPerfil = entradaPrincipal.fields.fotoDePerfil?.sys.id;
+      const urlCapa = encontrarUrlDoAsset(idCapa);
+      const urlPerfil = encontrarUrlDoAsset(idPerfil);
+
+      if (urlCapa) {
+        const headerCapa = document.getElementById('header-capa');
+        headerCapa.style.backgroundImage = `url(${urlCapa})`;
+        headerCapa.style.backgroundColor = 'rgba(0, 0, 0, 0.6)';
+        headerCapa.style.backgroundBlendMode = 'darken';
+      }
+      if (urlPerfil) {
+        document.getElementById('foto-perfil').src = urlPerfil;
+      }
+    }
+  } catch (error) {
+    console.error('Erro ao carregar configs:', error);
+  }
+}
+      
     // --- FUNÇÕES ---
     async function carregarConfiguracoes() {
       const url = `https://cdn.contentful.com/spaces/${SPACE_ID}/environments/master/entries?access_token=${ACCESS_TOKEN}&content_type=${CONTENTFUL_CONTENT_TYPE_ID}&include=1`;
