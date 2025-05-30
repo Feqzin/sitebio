@@ -10,9 +10,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <style>
-    /* ---- PALETA DE CORES ATUALIZADA ---- */
+    /* ---- PALETA DE CORES ---- */
     :root {
-      /* COR ALTERADA PARA VERDE */
       --cor-destaque: #1DB954; /* Verde Spotify */
       --cor-destaque-hover: #1ED760; /* Verde mais claro para hover */
       --cor-texto: #f1f1f1;
@@ -63,6 +62,7 @@
       color: #ddd;
     }
 
+    /* ---- CSS ATUALIZADO PARA A FOTO DE PERFIL ---- */
     .profile-pic {
       width: 150px;
       height: 150px;
@@ -76,6 +76,14 @@
       left: 50%;
       transform: translateX(-50%);
       z-index: 3;
+      /* Propriedades para a animação */
+      transition: transform 0.4s ease-in-out;
+      transform-style: preserve-3d;
+    }
+    
+    .profile-pic:hover {
+      /* Efeito de rotação 3D ao passar o mouse */
+      transform: translateX(-50%) perspective(1000px) rotateY(25deg);
     }
 
     section {
@@ -101,7 +109,6 @@
       color: #fff;
     }
     
-    /* ---- CSS PARA OS ÍCONES DE REDES SOCIAIS ---- */
     .socials {
         text-align: center;
     }
@@ -122,7 +129,6 @@
       text-align: center;
       font-size: 2em;
       margin: 20px 0 10px 0;
-      /* A contagem regressiva agora usará a cor de destaque (verde) */
       color: var(--cor-destaque);  
       line-height: 1.2;
     }
