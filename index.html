@@ -77,8 +77,7 @@
     const SPACE_ID = 'w37b9rauibj0';
     const ACCESS_TOKEN = 'Vk6TIlkNPKkUu_3DSG78I_5AQnp-X02xQhtj_VgrdKw';
     const CONTENTFUL_CONTENT_TYPE_ID = 'configuraesDoSite';
-    const YOUTUBE_API_KEY = 'AIzaSyDpdIWaCM66C8voM_dsSz6QbK7HcedL0tg';
-    const YOUTUBE_CHANNEL_ID = 'UCzixfPx7Cr1pqm_GM5V3n-A';
+   
 
     // --- FUNÇÕES ---
     async function carregarConfiguracoes() {
@@ -111,40 +110,46 @@
       } catch (error) { console.error('Erro ao carregar configs do Contentful:', error); }
     }
 
-    async function carregarVideosDoYouTube() {
-      if (!YOUTUBE_API_KEY || !YOUTUBE_CHANNEL_ID || YOUTUBE_API_KEY === 'SUA_CHAVE_DE_API_DO_YOUTUBE_AQUI') {
-        console.warn("Credenciais do YouTube não configuradas. O carrossel de vídeos não será carregado.");
-        return;
-      }
-      const url = `https://www.googleapis.com/youtube/v3/search?key=${YOUTUBE_API_KEY}&channelId=${YOUTUBE_CHANNEL_ID}&part=snippet,id&order=date&maxResults=12&type=video`;
-      try {
-        const response = await fetch(url);
-        if (!response.ok) throw new Error('YouTube API Error');
-        const data = await response.json();
-        const wrapper = document.getElementById('youtube-carousel-wrapper');
-        wrapper.innerHTML = '';
-        data.items.forEach(item => {
-          const slideHTML = `
-            <div class="swiper-slide">
-              <div class="video-container">
-                <iframe src="https://www.youtube.com/embed/${item.id.videoId}" title="${item.snippet.title}" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-              </div>
-            </div>`;
-          wrapper.innerHTML += slideHTML;
-        });
-        new Swiper('.swiper', {
-          loop: true,
-          spaceBetween: 20,
-          slidesPerView: 1,
-          breakpoints: {
-            768: { slidesPerView: 2, spaceBetween: 30 },
-            1024: { slidesPerView: 3, spaceBetween: 30 }
-          },
-          pagination: { el: '.swiper-pagination', clickable: true },
-          navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
-        });
-      } catch (error) { console.error('Erro ao carregar vídeos do YouTube:', error); }
-    }
+   // Esta é a nova função no seu HTML
+async function carregarVideosDoYouTube() {
+  try {
+    // 1. O site faz uma chamada para a SUA API segura que você criou
+    const response = await fetch('/api/getYoutubeVideos'); // Note o caminho!
+    if (!response.ok) throw new Error('Falha ao carregar vídeos do nosso servidor.');
+    
+    // 2. Recebemos os dados limpos e seguros
+    const data = await response.json();
+    
+    // 3. O resto do seu código para criar o carrossel continua igual!
+    const wrapper = document.getElementById('youtube-carousel-wrapper');
+    wrapper.innerHTML = '';
+    data.items.forEach(item => {
+      const slideHTML = `
+        <div class="swiper-slide">
+          <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/${item.id.videoId}" title="${item.snippet.title}" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </div>`;
+      wrapper.innerHTML += slideHTML;
+    });
+
+    new Swiper('.swiper', {
+      // Suas configurações do Swiper continuam aqui...
+      loop: true,
+      spaceBetween: 20,
+      slidesPerView: 1,
+      breakpoints: {
+        768: { slidesPerView: 2, spaceBetween: 30 },
+        1024: { slidesPerView: 3, spaceBetween: 30 }
+      },
+      pagination: { el: '.swiper-pagination', clickable: true },
+      navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+    });
+  } catch (error) {
+    console.error('Erro ao carregar vídeos do YouTube:', error);
+    // Você pode até mostrar uma mensagem de erro na tela aqui
+  }
+}
 
     function iniciarCountdown() {
        const countdown = document.getElementById("countdown");
