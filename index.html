@@ -21,6 +21,40 @@
       --cor-borda-suave: #444;
     }
 
+    <section id="fan-dashboard">
+  <h2>Dashboard do Fã - Login / Cadastro</h2>
+  <form id="auth-form">
+    <input type="email" id="email" placeholder="Email" required />
+    <input type="password" id="password" placeholder="Senha" required minlength="6" />
+    <button type="submit" id="btn-login">Entrar</button>
+    <button type="button" id="btn-signup">Cadastrar</button>
+  </form>
+  <div id="auth-message"></div>
+</section>
+
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyBhSmocbaARqU_pPM0Tqki8d11jm97IE4M",
+  authDomain: "dashboardfeqzin.firebaseapp.com",
+  projectId: "dashboardfeqzin",
+  storageBucket: "dashboardfeqzin.firebasestorage.app",
+  messagingSenderId: "1042985498691",
+  appId: "1:1042985498691:web:16ab98f93f925ebf7b7cf6",
+  measurementId: "G-QZY8SDZX5T"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+
+    
     /* ---- ESTILOS GERAIS ---- */
     body {
       margin: 0;
