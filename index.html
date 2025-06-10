@@ -223,6 +223,29 @@
     </div>
   </section>
 
+  <!-- NOVA SEÇÃO: DASHBOARD DO FÃ -->
+  <section id="fan-dashboard">
+    <h2>Dashboard do Fã</h2>
+    <form id="auth-form">
+      <input
+        type="email"
+        id="email"
+        placeholder="Digite seu email"
+        required
+        autocomplete="username"
+      />
+      <input
+        type="password"
+        id="password"
+        placeholder="Digite sua senha"
+        required
+        autocomplete="current-password"
+      />
+      <button type="submit" id="btn-login">Entrar</button>
+      <button type="button" id="btn-signup">Cadastrar</button>
+    </form>
+    <div id="auth-message"></div>
+  </section>
   <footer>
     © 2025 Feqzin. Todos os direitos reservados.
   </footer>
@@ -330,5 +353,86 @@
     }
   </script>
 
+<!-- Firebase App (the core Firebase SDK) -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <!-- Firebase Authentication -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+
+  <script>
+    // TODO: Substitua os valores abaixo pelo seu próprio config do Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyBhSmocbaARqU_pPM0Tqki8d11jm97IE4M",
+  authDomain: "dashboardfeqzin.firebaseapp.com",
+  projectId: "dashboardfeqzin",
+  storageBucket: "dashboardfeqzin.firebasestorage.app",
+  messagingSenderId: "1042985498691",
+  appId: "1:1042985498691:web:16ab98f93f925ebf7b7cf6",
+  measurementId: "G-QZY8SDZX5T"
+    };
+
+    // Inicializa Firebase
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    // Elementos do DOM
+    const authForm = document.getElementById("auth-form");
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
+    const btnLogin = document.getElementById("btn-login");
+    const btnSignup = document.getElementById("btn-signup");
+    const authMessage = document.getElementById("auth-message");
+
+    // Login
+    authForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const email = emailInput.value;
+      const password = passwordInput.value;
+
+      auth.signInWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+          authMessage.style.color = "lightgreen";
+          authMessage.textContent = `Bem-vindo, ${userCredential.user.email}! Você está logado.`;
+          authForm.reset();
+        })
+        .catch((error) => {
+          authMessage.style.color = "tomato";
+          authMessage.textContent = `Erro no login: ${error.message}`;
+        });
+    });
+
+    // Cadastro
+    btnSignup.addEventListener("click", () => {
+      const email = emailInput.value;
+      const password = passwordInput.value;
+      if (!email || !password) {
+        authMessage.style.color = "tomato";
+        authMessage.textContent = "Preencha email e senha para cadastrar.";
+        return;
+      }
+
+      auth.createUserWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+          authMessage.style.color = "lightgreen";
+          authMessage.textContent = `Usuário criado: ${userCredential.user.email}. Agora faça login.`;
+          authForm.reset();
+        })
+        .catch((error) => {
+          authMessage.style.color = "tomato";
+          authMessage.textContent = `Erro no cadastro: ${error.message}`;
+        });
+    });
+
+    // Opcional: monitorar estado de autenticação
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        // Usuário logado
+        authMessage.style.color = "lightgreen";
+        authMessage.textContent = `Você está logado como ${user.email}`;
+      } else {
+        // Usuário deslogado
+        // authMessage.textContent = "";
+      }
+    });
+  </script>
 </body>
 </html>
