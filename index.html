@@ -54,6 +54,67 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 
+    // Inicializa Firebase
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+
+  // Elementos do DOM
+  const form = document.getElementById('auth-form');
+  const emailInput = document.getElementById('email');
+  const passwordInput = document.getElementById('password');
+  const loginBtn = document.getElementById('btn-login');
+  const signupBtn = document.getElementById('btn-signup');
+  const messageDiv = document.getElementById('auth-message');
+
+  // Função pra mostrar mensagens
+  function showMessage(msg, success = true) {
+    messageDiv.textContent = msg;
+    messageDiv.style.color = success ? 'lightgreen' : 'tomato';
+  }
+
+  // Login
+  loginBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    const email = emailInput.value;
+    const password = passwordInput.value;
+
+    auth.signInWithEmailAndPassword(email, password)
+      .then(userCredential => {
+        showMessage('Login feito com sucesso!');
+        // Aqui você pode chamar funções para mostrar conteúdo exclusivo
+      })
+      .catch(error => {
+        showMessage('Erro no login: ' + error.message, false);
+      });
+  });
+
+  // Cadastro
+  signupBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    const email = emailInput.value;
+    const password = passwordInput.value;
+
+    auth.createUserWithEmailAndPassword(email, password)
+      .then(userCredential => {
+        showMessage('Cadastro realizado com sucesso! Você já pode logar.');
+      })
+      .catch(error => {
+        showMessage('Erro no cadastro: ' + error.message, false);
+      });
+  });
+
+  // Opcional: acompanhar o estado do usuário logado
+  auth.onAuthStateChanged(user => {
+    if (user) {
+      showMessage(`Bem-vindo, ${user.email}`);
+      // Mostrar conteúdo exclusivo ou dashboard do fã
+    } else {
+      showMessage('Por favor, faça login ou cadastro.');
+    }
+  });
+</script>
+
+
     
     /* ---- ESTILOS GERAIS ---- */
     body {
