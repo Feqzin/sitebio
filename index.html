@@ -167,7 +167,86 @@
       transform: scale(1.05);
       color: #fff;
     }
+
     
+    /* Estilos da seção Dashboard do Fã */
+    #fan-dashboard {
+      background: #111;
+      border: 2px solid var(--cor-destaque);
+      border-radius: 12px;
+      padding: 20px;
+      max-width: 400px;
+      margin: 40px auto;
+      color: var(--cor-texto);
+      text-align: center;
+    }
+
+    #fan-dashboard form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    #fan-dashboard input[type="email"],
+    #fan-dashboard input[type="password"] {
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid var(--cor-borda-suave);
+      background-color: #222;
+      color: var(--cor-texto);
+      font-size: 1em;
+    }
+
+    #fan-dashboard button {
+      padding: 10px;
+      border-radius: 6px;
+      border: none;
+      font-weight: bold;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    #btn-login {
+      background-color: var(--cor-destaque);
+      color: #fff;
+    }
+    #btn-login:hover {
+      background-color: var(--cor-destaque-hover);
+    }
+    #btn-signup {
+      background-color: #555;
+      color: #ccc;
+    }
+    #btn-signup:hover {
+      background-color: #777;
+    }
+
+    #auth-message {
+      margin-top: 15px;
+      min-height: 1.2em;
+      font-weight: bold;
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 2em;
+      }
+      .profile-pic {
+        width: 120px;
+        height: 120px;
+        top: 210px;
+      }
+      section:first-of-type {
+        padding-top: 80px;
+      }
+      header {
+        padding: 320px 20px 40px;
+      }
+      #fan-dashboard {
+        max-width: 90%;
+        margin: 40px auto;
+      }
+    }
     @media (max-width: 600px) {
       header h1 { font-size: 2em; }
       .profile-pic { width: 120px; height: 120px; top: 210px; }
