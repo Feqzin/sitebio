@@ -176,6 +176,134 @@
   </style>
 </head>
 
+ <!-- INÍCIO: Novas funcionalidades diferenciadas -->
+
+<section style="max-width:900px; margin:auto; padding:40px 20px; background: #111; border-radius: 12px; margin-top: 50px;">
+  <h2>Notas de Voz Exclusivas</h2>
+  <p>Escute mensagens e ideias do Feqzin direto do estúdio.</p>
+  <ul style="list-style:none; padding-left:0;">
+    <li>
+      <button class="play-voice-btn" data-audio="audio1" style="background:var(--cor-destaque); color:#000; padding:10px 20px; border:none; border-radius: 30px; cursor:pointer; margin-bottom:10px;">
+        ▶️ Mensagem 1
+      </button>
+      <audio id="audio1" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+    </li>
+    <li>
+      <button class="play-voice-btn" data-audio="audio2" style="background:var(--cor-destaque); color:#000; padding:10px 20px; border:none; border-radius: 30px; cursor:pointer;">
+        ▶️ Mensagem 2
+      </button>
+      <audio id="audio2" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"></audio>
+    </li>
+  </ul>
+</section>
+
+<section style="max-width:900px; margin:auto; padding:40px 20px; background: #111; border-radius: 12px; margin-top: 40px;">
+  <h2>Mini Quiz - Desbloqueie Conteúdo Exclusivo</h2>
+  <p>Responda rápido: Qual bairro Feqzin nasceu?</p>
+  <button class="quiz-btn" data-answer="errado" style="margin-right: 15px; background:#444; color:#eee; border:none; padding: 10px 15px; border-radius: 10px; cursor:pointer;">Zona Sul</button>
+  <button class="quiz-btn" data-answer="certo" style="margin-right: 15px; background:var(--cor-destaque); color:#000; border:none; padding: 10px 15px; border-radius: 10px; cursor:pointer;">Jardim Brasil</button>
+  <button class="quiz-btn" data-answer="errado" style="background:#444; color:#eee; border:none; padding: 10px 15px; border-radius: 10px; cursor:pointer;">Zona Leste</button>
+
+  <div id="quiz-result" style="margin-top: 20px; font-weight: bold; color: var(--cor-destaque);"></div>
+  <div id="exclusive-content" style="display:none; margin-top: 20px; background:#222; padding: 15px; border-radius: 8px; color:#eee;">
+    🎧 Demo inédita desbloqueada! Escute agora:
+    <audio controls src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" style="width:100%; margin-top:10px;"></audio>
+  </div>
+</section>
+
+<!-- Dashboard simples de pontos do fã -->
+<div id="fan-dashboard" style="position: fixed; bottom: 20px; right: 20px; background: var(--cor-destaque); color: #000; padding: 10px 15px; border-radius: 50px; font-weight: bold; cursor: default; user-select:none; z-index: 1000;">
+  Pontos do fã: <span id="fan-points">0</span>
+</div>
+
+<!-- Player personalizado para último lançamento -->
+<section style="max-width:900px; margin:auto; padding:40px 20px; background:#111; border-radius:12px; margin-top:40px;">
+  <h2>Player Personalizado</h2>
+  <button id="play-btn" style="background:var(--cor-destaque); border:none; border-radius: 50%; width: 60px; height: 60px; cursor:pointer; font-size: 1.5em; color:#000;">▶️</button>
+  <span id="player-status" style="margin-left:15px; font-weight:bold; color: var(--cor-texto);">Paused</span>
+  <div style="display:none;">
+    <iframe id="spotify-embed" style="border-radius:12px" src="https://open.spotify.com/embed/album/0bPCF6VbnttHv8NxUltJGy?utm_source=generator" width="300" height="80" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+  </div>
+</section>
+
+<script>
+  // Notas de voz - tocar audio e pausar os outros
+  document.querySelectorAll('.play-voice-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const audioId = btn.dataset.audio;
+      const audio = document.getElementById(audioId);
+
+      // Pausar todos os audios
+      document.querySelectorAll('audio').forEach(a => {
+        if (a !== audio) a.pause();
+      });
+
+      if (audio.paused) {
+        audio.play();
+        btn.textContent = '⏸️ Pausar Mensagem';
+      } else {
+        audio.pause();
+        btn.textContent = '▶️ Mensagem ' + audioId.slice(-1);
+      }
+
+      audio.onended = () => {
+        btn.textContent = '▶️ Mensagem ' + audioId.slice(-1);
+      }
+    });
+  });
+
+  // Quiz para desbloquear conteúdo
+  const quizButtons = document.querySelectorAll('.quiz-btn');
+  const quizResult = document.getElementById('quiz-result');
+  const exclusiveContent = document.getElementById('exclusive-content');
+
+  quizButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (btn.dataset.answer === 'certo') {
+        quizResult.textContent = '✅ Acertou! Conteúdo desbloqueado.';
+        exclusiveContent.style.display = 'block';
+        aumentarPontos(10); // ganha 10 pontos por desbloquear
+      } else {
+        quizResult.textContent = '❌ Errado. Tente novamente.';
+      }
+    });
+  });
+
+  // Dashboard simples de pontos do fã
+  const fanPointsSpan = document.getElementById('fan-points');
+  let pontos = Number(localStorage.getItem('fanPoints') || 0);
+  fanPointsSpan.textContent = pontos;
+
+  function aumentarPontos(valor) {
+    pontos += valor;
+    fanPointsSpan.textContent = pontos;
+    localStorage.setItem('fanPoints', pontos);
+  }
+
+  // Aumentar pontos ao assistir vídeos do YouTube (simples aproximação)
+  const youtubeWrapper = document.getElementById('youtube-carousel-wrapper');
+  youtubeWrapper.addEventListener('click', () => {
+    aumentarPontos(5);
+  });
+
+  // Player personalizado controlando embed Spotify (simulação)
+  const playBtn = document.getElementById('play-btn');
+  const playerStatus = document.getElementById('player-status');
+  let tocando = false;
+
+  playBtn.addEventListener('click', () => {
+    // Como o iframe do Spotify não tem API direta sem SDK, só simulo o play/pause visualmente
+    tocando = !tocando;
+    playerStatus.textContent = tocando ? 'Playing...' : 'Paused';
+    playBtn.textContent = tocando ? '⏸️' : '▶️';
+
+    if (tocando) aumentarPontos(3); // ganha pontos por "ouvir"
+  });
+
+</script>
+
+<!-- FIM: Novas funcionalidades diferenciadas -->
+  
 <body>
 
   <header id="header-capa">
@@ -329,132 +457,5 @@
     }
   </script>
 
-   <!-- INÍCIO: Novas funcionalidades diferenciadas -->
-
-<section style="max-width:900px; margin:auto; padding:40px 20px; background: #111; border-radius: 12px; margin-top: 50px;">
-  <h2>Notas de Voz Exclusivas</h2>
-  <p>Escute mensagens e ideias do Feqzin direto do estúdio.</p>
-  <ul style="list-style:none; padding-left:0;">
-    <li>
-      <button class="play-voice-btn" data-audio="audio1" style="background:var(--cor-destaque); color:#000; padding:10px 20px; border:none; border-radius: 30px; cursor:pointer; margin-bottom:10px;">
-        ▶️ Mensagem 1
-      </button>
-      <audio id="audio1" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
-    </li>
-    <li>
-      <button class="play-voice-btn" data-audio="audio2" style="background:var(--cor-destaque); color:#000; padding:10px 20px; border:none; border-radius: 30px; cursor:pointer;">
-        ▶️ Mensagem 2
-      </button>
-      <audio id="audio2" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"></audio>
-    </li>
-  </ul>
-</section>
-
-<section style="max-width:900px; margin:auto; padding:40px 20px; background: #111; border-radius: 12px; margin-top: 40px;">
-  <h2>Mini Quiz - Desbloqueie Conteúdo Exclusivo</h2>
-  <p>Responda rápido: Qual bairro Feqzin nasceu?</p>
-  <button class="quiz-btn" data-answer="errado" style="margin-right: 15px; background:#444; color:#eee; border:none; padding: 10px 15px; border-radius: 10px; cursor:pointer;">Zona Sul</button>
-  <button class="quiz-btn" data-answer="certo" style="margin-right: 15px; background:var(--cor-destaque); color:#000; border:none; padding: 10px 15px; border-radius: 10px; cursor:pointer;">Jardim Brasil</button>
-  <button class="quiz-btn" data-answer="errado" style="background:#444; color:#eee; border:none; padding: 10px 15px; border-radius: 10px; cursor:pointer;">Zona Leste</button>
-
-  <div id="quiz-result" style="margin-top: 20px; font-weight: bold; color: var(--cor-destaque);"></div>
-  <div id="exclusive-content" style="display:none; margin-top: 20px; background:#222; padding: 15px; border-radius: 8px; color:#eee;">
-    🎧 Demo inédita desbloqueada! Escute agora:
-    <audio controls src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" style="width:100%; margin-top:10px;"></audio>
-  </div>
-</section>
-
-<!-- Dashboard simples de pontos do fã -->
-<div id="fan-dashboard" style="position: fixed; bottom: 20px; right: 20px; background: var(--cor-destaque); color: #000; padding: 10px 15px; border-radius: 50px; font-weight: bold; cursor: default; user-select:none; z-index: 1000;">
-  Pontos do fã: <span id="fan-points">0</span>
-</div>
-
-<!-- Player personalizado para último lançamento -->
-<section style="max-width:900px; margin:auto; padding:40px 20px; background:#111; border-radius:12px; margin-top:40px;">
-  <h2>Player Personalizado</h2>
-  <button id="play-btn" style="background:var(--cor-destaque); border:none; border-radius: 50%; width: 60px; height: 60px; cursor:pointer; font-size: 1.5em; color:#000;">▶️</button>
-  <span id="player-status" style="margin-left:15px; font-weight:bold; color: var(--cor-texto);">Paused</span>
-  <div style="display:none;">
-    <iframe id="spotify-embed" style="border-radius:12px" src="https://open.spotify.com/embed/album/0bPCF6VbnttHv8NxUltJGy?utm_source=generator" width="300" height="80" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-  </div>
-</section>
-
-<script>
-  // Notas de voz - tocar audio e pausar os outros
-  document.querySelectorAll('.play-voice-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const audioId = btn.dataset.audio;
-      const audio = document.getElementById(audioId);
-
-      // Pausar todos os audios
-      document.querySelectorAll('audio').forEach(a => {
-        if (a !== audio) a.pause();
-      });
-
-      if (audio.paused) {
-        audio.play();
-        btn.textContent = '⏸️ Pausar Mensagem';
-      } else {
-        audio.pause();
-        btn.textContent = '▶️ Mensagem ' + audioId.slice(-1);
-      }
-
-      audio.onended = () => {
-        btn.textContent = '▶️ Mensagem ' + audioId.slice(-1);
-      }
-    });
-  });
-
-  // Quiz para desbloquear conteúdo
-  const quizButtons = document.querySelectorAll('.quiz-btn');
-  const quizResult = document.getElementById('quiz-result');
-  const exclusiveContent = document.getElementById('exclusive-content');
-
-  quizButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      if (btn.dataset.answer === 'certo') {
-        quizResult.textContent = '✅ Acertou! Conteúdo desbloqueado.';
-        exclusiveContent.style.display = 'block';
-        aumentarPontos(10); // ganha 10 pontos por desbloquear
-      } else {
-        quizResult.textContent = '❌ Errado. Tente novamente.';
-      }
-    });
-  });
-
-  // Dashboard simples de pontos do fã
-  const fanPointsSpan = document.getElementById('fan-points');
-  let pontos = Number(localStorage.getItem('fanPoints') || 0);
-  fanPointsSpan.textContent = pontos;
-
-  function aumentarPontos(valor) {
-    pontos += valor;
-    fanPointsSpan.textContent = pontos;
-    localStorage.setItem('fanPoints', pontos);
-  }
-
-  // Aumentar pontos ao assistir vídeos do YouTube (simples aproximação)
-  const youtubeWrapper = document.getElementById('youtube-carousel-wrapper');
-  youtubeWrapper.addEventListener('click', () => {
-    aumentarPontos(5);
-  });
-
-  // Player personalizado controlando embed Spotify (simulação)
-  const playBtn = document.getElementById('play-btn');
-  const playerStatus = document.getElementById('player-status');
-  let tocando = false;
-
-  playBtn.addEventListener('click', () => {
-    // Como o iframe do Spotify não tem API direta sem SDK, só simulo o play/pause visualmente
-    tocando = !tocando;
-    playerStatus.textContent = tocando ? 'Playing...' : 'Paused';
-    playBtn.textContent = tocando ? '⏸️' : '▶️';
-
-    if (tocando) aumentarPontos(3); // ganha pontos por "ouvir"
-  });
-
-</script>
-
-<!-- FIM: Novas funcionalidades diferenciadas -->
 </body>
 </html>
