@@ -470,6 +470,7 @@
   const btnSignup = document.getElementById("btn-signup");
   const btnResetPassword = document.getElementById("btn-reset-password");
   const authMessage = document.getElementById("auth-message");
+  const btnLogout = document.getElementById("btnLogout");
 
 
     // Login
@@ -573,6 +574,33 @@ btnResetPassword.addEventListener("click", () => {
         // authMessage.textContent = "";
       }
     });
+
+    // Mostrar o botão logout se o usuário estiver logado
+auth.onAuthStateChanged((user) => {
+  if (user) {
+    btnLogout.style.display = "inline-block"; // Mostra o botão
+    authMessage.style.color = "lightgreen";
+    authMessage.textContent = "Usuário logado: " + user.email;
+  } else {
+    btnLogout.style.display = "none"; // Esconde se não estiver logado
+  }
+});
+
+// Lógica do botão de logout
+btnLogout.addEventListener("click", () => {
+  auth.signOut()
+    .then(() => {
+      authMessage.style.color = "lightgreen";
+      authMessage.textContent = "Logout realizado com sucesso.";
+      // Opcional: Atualiza a interface
+      passwordInput.value = "";
+    })
+    .catch((error) => {
+      console.error("Erro ao sair:", error);
+      authMessage.style.color = "tomato";
+      authMessage.textContent = "Erro ao sair da conta.";
+    });
+});
   </script>
 </body>
 </html>
