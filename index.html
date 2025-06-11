@@ -1,6 +1,7 @@
 
 
 
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -481,6 +482,7 @@
           authMessage.style.color = "tomato";
           authMessage.textContent = `Erro no login: ${error.message}`;
         });
+    });
 
     // Cadastro
     btnSignup.addEventListener("click", () => {
@@ -503,7 +505,7 @@
           authMessage.textContent = `Erro no cadastro: ${error.message}`;
         });
     });
-      
+
     // Opcional: monitorar estado de autenticação
     auth.onAuthStateChanged((user) => {
       if (user) {
