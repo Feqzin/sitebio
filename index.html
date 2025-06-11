@@ -455,16 +455,18 @@
     };
 
     // Inicializa Firebase
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
+    
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
 
-    // Elementos do DOM
-    const authForm = document.getElementById("auth-form");
-    const emailInput = document.getElementById("email");
-    const passwordInput = document.getElementById("password");
-    const btnLogin = document.getElementById("btn-login");
-    const btnSignup = document.getElementById("btn-signup");
-    const authMessage = document.getElementById("auth-message");
+  const authForm = document.getElementById("auth-form");
+  const emailInput = document.getElementById("email");
+  const passwordInput = document.getElementById("password");
+  const btnLogin = document.getElementById("btn-login");
+  const btnSignup = document.getElementById("btn-signup");
+  const btnResetPassword = document.getElementById("btn-reset-password");
+  const authMessage = document.getElementById("auth-message");
+
 
     // Login
     authForm.addEventListener("submit", (e) => {
