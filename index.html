@@ -1,21 +1,24 @@
-
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Feqzin | Site Oficial</title>
 
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
-  
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
 
   <style>
     /* ---- PALETA DE CORES ---- */
     :root {
-      --cor-destaque: #1DB954; /* Verde Spotify */
-      --cor-destaque-hover: #1ED760; /* Verde mais claro para hover */
+      --cor-destaque: #1db954; /* Verde Spotify */
+      --cor-destaque-hover: #1ed760; /* Verde mais claro para hover */
       --cor-texto: #f1f1f1;
       --cor-fundo: #0e0e0e;
       --cor-fundo-secundario: #111;
@@ -42,16 +45,17 @@
       position: relative;
     }
     header::after {
-      content: '';
+      content: "";
       position: absolute;
       bottom: 0;
       left: 0;
       width: 100%;
       height: 100px;
-      background: linear-gradient(to bottom, rgba(14,14,14,0), var(--cor-fundo));
+      background: linear-gradient(to bottom, rgba(14, 14, 14, 0), var(--cor-fundo));
       z-index: 1;
     }
-    header h1, header p {
+    header h1,
+    header p {
       position: relative;
       z-index: 2;
     }
@@ -64,7 +68,7 @@
       color: #ddd;
     }
 
-    /* ---- CSS ATUALIZADO PARA A FOTO DE PERFIL ---- */
+    /* ---- FOTO DE PERFIL ---- */
     .profile-pic {
       width: 150px;
       height: 150px;
@@ -78,13 +82,10 @@
       left: 50%;
       transform: translateX(-50%);
       z-index: 3;
-      /* Propriedades para a animação */
       transition: transform 0.4s ease-in-out;
       transform-style: preserve-3d;
     }
-    
     .profile-pic:hover {
-      /* Efeito de rotação 3D ao passar o mouse */
       transform: translateX(-50%) perspective(1000px) rotateY(25deg);
     }
 
@@ -96,7 +97,7 @@
     section:first-of-type {
       padding-top: 100px;
     }
-    
+
     h2 {
       border-bottom: 2px solid var(--cor-borda-suave);
       padding-bottom: 10px;
@@ -105,50 +106,77 @@
     a {
       color: var(--cor-destaque);
       text-decoration: none;
-      transition: color .3s;
+      transition: color 0.3s;
     }
     a:hover {
       color: #fff;
     }
-    
+
     .socials {
-        text-align: center;
+      text-align: center;
     }
     .socials a {
       margin: 0 15px;
       color: var(--cor-texto);
       font-size: 2em;
-      transition: all .3s;
+      transition: all 0.3s;
     }
     .socials a:hover {
       color: var(--cor-destaque);
       transform: translateY(-5px);
     }
 
-    .player { margin: 20px 0; }
-    
+    .player {
+      margin: 20px 0;
+    }
+
     .countdown {
       text-align: center;
       font-size: 2em;
       margin: 20px 0 10px 0;
-      color: var(--cor-destaque);  
+      color: var(--cor-destaque);
       line-height: 1.2;
     }
-    
+
     footer {
       background: var(--cor-fundo-secundario);
       text-align: center;
       padding: 20px;
-      font-size: .9em;
+      font-size: 0.9em;
       color: #777;
     }
 
-    .swiper { width: 100%; padding-top: 20px; padding-bottom: 50px; }
-    .swiper-slide { background-position: center; background-size: cover; width: 100%; }
-    .video-container { position: relative; width: 100%; padding-top: 56.25%; }
-    .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 12px; border: 0; }
-    .swiper-button-next, .swiper-button-prev { color: var(--cor-destaque); }
-    .swiper-pagination-bullet-active { background: var(--cor-destaque); }
+    .swiper {
+      width: 100%;
+      padding-top: 20px;
+      padding-bottom: 50px;
+    }
+    .swiper-slide {
+      background-position: center;
+      background-size: cover;
+      width: 100%;
+    }
+    .video-container {
+      position: relative;
+      width: 100%;
+      padding-top: 56.25%;
+    }
+    .video-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 12px;
+      border: 0;
+    }
+    .swiper-button-next,
+    .swiper-button-prev {
+      color: var(--cor-destaque);
+    }
+    .swiper-pagination-bullet-active {
+      background: var(--cor-destaque);
+    }
 
     .pre-save-button {
       display: inline-block;
@@ -160,7 +188,7 @@
       font-weight: bold;
       font-size: 1.1em;
       margin-top: 20px;
-      transition: background-color .3s, transform .2s;
+      transition: background-color 0.3s, transform 0.2s;
     }
     .pre-save-button:hover {
       background-color: var(--cor-destaque-hover);
@@ -168,7 +196,6 @@
       color: #fff;
     }
 
-    
     /* Estilos da seção Dashboard do Fã */
     #fan-dashboard {
       background: #111;
@@ -247,69 +274,71 @@
         margin: 40px auto;
       }
     }
-    @media (max-width: 600px) {
-      header h1 { font-size: 2em; }
-      .profile-pic { width: 120px; height: 120px; top: 210px; }
-      section:first-of-type { padding-top: 80px; }
-      header { padding: 320px 20px 40px; }
-    }
   </style>
 </head>
-  
-<body>
 
+<body>
   <header id="header-capa">
     <h1>Feqzin</h1>
-    <p>       </p>
+    <p></p>
   </header>
-  <img src="" alt="Feqzin" class="profile-pic" id="foto-perfil">
+  <img src="" alt="Feqzin" class="profile-pic" id="foto-perfil" />
 
   <section>
     <h2>Sobre</h2>
-    <p>Feqzin é um artista nascido na zona norte de São Paulo, mais precisamente no bairro do Jardim Brasil. Desde 2017 canetando, iniciou sua trajetória oficialmente em 2022 com a primeira track produzida no celular. Traz autenticidade no vocal e está sempre inovando em suas produções.</p>
+    <p>
+      Feqzin é um artista nascido na zona norte de São Paulo, mais
+      precisamente no bairro do Jardim Brasil. Desde 2017 canetando,
+      iniciou sua trajetória oficialmente em 2022 com a primeira track
+      produzida no celular. Traz autenticidade no vocal e está sempre
+      inovando em suas produções. Seu som tem a vibe underground e
+      estética trap.
+    </p>
   </section>
 
-  <section>
-    <h2>Meus Vídeos</h2>
-    <div class="swiper">
-      <div class="swiper-wrapper" id="youtube-carousel-wrapper">
-      </div>
-      <div class="swiper-pagination"></div>
-      <div class="swiper-button-prev"></div>
-      <div class="swiper-button-next"></div>
-    </div>
+  <section id="player-section">
+    <h2>Player</h2>
+    <div class="player" id="player"></div>
   </section>
 
-  <section>
-    <h2>Último Lançamento</h2>
-    <div class="player">
-      <iframe style="border-radius:12px" src="https://open.spotify.com/embed/album/0bPCF6VbnttHv8NxUltJGy?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-    </div>
-    <div class="countdown" id="countdown"></div>
-    <div style="text-align: center;">
-      <a href="https://distrokid.com/hyperfollow/feqzin/se-a-bag-pesar" target="_blank" class="pre-save-button">FAÇA O PRE-SAVE</a>
-    </div>
+  <section id="contagem-regressiva">
+    <h2>Contagem Regressiva</h2>
+    <div class="countdown" id="countdown-timer"></div>
   </section>
 
   <section>
     <h2>Redes Sociais</h2>
-    <div class="socials">
-      <a href="https://www.instagram.com/feqzinn/" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-      <a href="https://www.tiktok.com/@feqzinn" target="_blank" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
-      <a href="https://www.youtube.com/@feqzin" target="_blank" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
-      <a href="https://open.spotify.com/intl-pt/artist/56eMJpXmR5veK1kOi2apO4" target="_blank" aria-label="Spotify"><i class="fa-brands fa-spotify"></i></a>
-      <a href="https://soundcloud.com/discordia-urban" target="_blank" aria-label="SoundCloud"><i class="fa-brands fa-soundcloud"></i></a>
+    <div class="socials" id="social-icons"></div>
+  </section>
+
+  <section>
+    <h2>Videos</h2>
+    <div class="swiper mySwiper">
+      <div class="swiper-wrapper" id="video-swiper-wrapper"></div>
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-pagination"></div>
     </div>
   </section>
 
-  <!-- NOVA SEÇÃO: DASHBOARD DO FÃ -->
+  <section style="text-align: center;">
+    <a
+      href="https://feqzin.lnk.to/SeABagPesar"
+      class="pre-save-button"
+      target="_blank"
+      rel="noopener noreferrer"
+      >Pré-Save Se a bag pesar</a
+    >
+  </section>
+
+  <!-- DASHBOARD DO FÃ -->
   <section id="fan-dashboard">
     <h2>Dashboard do Fã</h2>
     <form id="auth-form">
       <input
         type="email"
         id="email"
-        placeholder="Digite seu email"
+        placeholder="Digite seu e-mail"
         required
         autocomplete="username"
       />
@@ -319,198 +348,279 @@
         placeholder="Digite sua senha"
         required
         autocomplete="current-password"
+        minlength="6"
       />
       <button type="submit" id="btn-login">Entrar</button>
       <button type="button" id="btn-signup">Cadastrar</button>
     </form>
     <div id="auth-message"></div>
+    <div id="user-info" style="margin-top: 20px;"></div>
+    <button id="btn-logout" style="display:none; margin-top: 15px;">Sair</button>
   </section>
+
   <footer>
-    © 2025 Feqzin. Todos os direitos reservados.
+    Feqzin &copy; 2025 - Todos os direitos reservados.
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        carregarConfiguracoes();
-        carregarVideosDoYouTube();
-        iniciarCountdown();
-    });
+    // --- Dados do site para preencher ---
+    const dadosSite = {
+      capa: {
+        background: "https://i.ibb.co/TWqRJ9F/capa-feqzin-v5-02.jpg",
+      },
+      fotoPerfil:
+        "https://i.ibb.co/mvVZk0M/feqzin-foto-perfil-redonda-v2.jpg",
+      player: {
+        linkPlayer:
+          "https://open.spotify.com/embed/track/1fxe4zzCzv4eHWa0sYglRw?utm_source=generator",
+      },
+      redesSociais: [
+        {
+          nome: "Instagram",
+          link: "https://instagram.com/feqzinoficial",
+          iconClass: "fab fa-instagram",
+        },
+        {
+          nome: "YouTube",
+          link: "https://youtube.com/@feqzinoficial",
+          iconClass: "fab fa-youtube",
+        },
+        {
+          nome: "TikTok",
+          link: "https://www.tiktok.com/@feqzinoficial",
+          iconClass: "fab fa-tiktok",
+        },
+        {
+          nome: "Spotify",
+          link: "https://open.spotify.com/artist/7bfP3iWEtZ2MhJsCa36FrI",
+          iconClass: "fab fa-spotify",
+        },
+      ],
+      videos: [
+        "mTzWwrpXK8g",
+        "b5QxQ49ZXqY",
+        "2lPknZn_0kA",
+        "9RVghdvDpN4",
+        "zo_qfLPHSeA",
+        "Nn4S9R2h3YQ",
+        "uNMLRcTuBT8",
+      ],
+      dataLançamento: "2025-06-30T00:00:00",
+    };
 
-    async function carregarConfiguracoes() {
-        try {
-            const response = await fetch('/api/getContentfulConfig');
-            if (!response.ok) throw new Error('Falha ao carregar configurações do nosso servidor.');
-            const data = await response.json();
-
-            if (data.items.length > 0) {
-                const entradaPrincipal = data.items[0];
-                const encontrarUrlDoAsset = (assetId) => {
-                    if (!assetId || !data.includes || !data.includes.Asset) return '';
-                    const asset = data.includes.Asset.find(a => a.sys.id === assetId);
-                    return asset ? 'https:' + asset.fields.file.url : '';
-                };
-                const idCapa = entradaPrincipal.fields.imagemDeCapa?.sys.id;
-                const idPerfil = entradaPrincipal.fields.fotoDePerfil?.sys.id;
-                const urlCapa = encontrarUrlDoAsset(idCapa);
-                const urlPerfil = encontrarUrlDoAsset(idPerfil);
-
-                if (urlCapa) {
-                    document.getElementById('header-capa').style.backgroundImage = `url(${urlCapa})`;
-                }
-                if (urlPerfil) {
-                    document.getElementById('foto-perfil').src = urlPerfil;
-                }
-            }
-        } catch (error) {
-            console.error('Erro ao carregar configs:', error);
-        }
-    }
-
-    async function carregarVideosDoYouTube() {
-        try {
-            const response = await fetch('/api/getYoutubeVideos');
-            if (!response.ok) throw new Error('Falha ao carregar vídeos do nosso servidor.');
-            const data = await response.json();
-            
-            const wrapper = document.getElementById('youtube-carousel-wrapper');
-            wrapper.innerHTML = '';
-
-            if (data.items && data.items.length > 0) {
-                data.items.forEach(item => {
-                    const videoId = item.id.videoId;
-                    const slideHTML = `
-                    <div class="swiper-slide">
-                      <div class="video-container">
-                        <iframe src="https://www.youtube.com/embed/${videoId}" title="${item.snippet.title}" frameborder="0" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                      </div>
-                    </div>`;
-                    wrapper.innerHTML += slideHTML;
-                });
-
-                new Swiper('.swiper', {
-                    loop: true,
-                    spaceBetween: 20,
-                    slidesPerView: 1,
-                    breakpoints: {
-                        768: { slidesPerView: 2, spaceBetween: 30 },
-                        1024: { slidesPerView: 3, spaceBetween: 30 }
-                    },
-                    pagination: { el: '.swiper-pagination', clickable: true },
-                    navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
-                });
-            } else {
-                console.warn("A API do YouTube não retornou vídeos (data.items está vazio).");
-                wrapper.innerHTML = "<p style='text-align:center;'>Não foi possível carregar os vídeos no momento.</p>";
-            }
-        } catch (error) {
-            console.error('Erro ao carregar vídeos do YouTube:', error);
-        }
-    }
-
-    function iniciarCountdown() {
-        const countdown = document.getElementById("countdown");
-        if (!countdown) return;
-        const launchDate = new Date("2025-05-31T00:00:00").getTime();
-        const interval = setInterval(() => {
-            const now = new Date().getTime();
-            const distance = launchDate - now;
-            if (distance < 0) {
-                clearInterval(interval);
-                countdown.innerHTML = "Já disponível em todas as plataformas!";
-                const preSaveButton = document.querySelector('.pre-save-button');
-                if (preSaveButton) preSaveButton.style.display = 'none';
-            } else {
-                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-                countdown.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s <br><span style="font-size: 0.5em; color: #ccc;">Para o próximo lançamento.</span>`;
-            }
-        }, 1000);
-    }
-  </script>
-
-<!-- Firebase App (the core Firebase SDK) -->
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-  <!-- Firebase Authentication -->
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
-
-  <script>
-    // TODO: Substitua os valores abaixo pelo seu próprio config do Firebase
+    // Configurações Firebase (substitua pelas suas)
     const firebaseConfig = {
-      apiKey: "AIzaSyBhSmocbaARqU_pPM0Tqki8d11jm97IE4M",
-  authDomain: "dashboardfeqzin.firebaseapp.com",
-  projectId: "dashboardfeqzin",
-  storageBucket: "dashboardfeqzin.firebasestorage.app",
-  messagingSenderId: "1042985498691",
-  appId: "1:1042985498691:web:16ab98f93f925ebf7b7cf6",
-  measurementId: "G-QZY8SDZX5T"
+      apiKey: "SUA_API_KEY_AQUI",
+      authDomain: "SEU_AUTH_DOMAIN.firebaseapp.com",
+      projectId: "SEU_PROJECT_ID",
+      storageBucket: "SEU_PROJECT_ID.appspot.com",
+      messagingSenderId: "SEU_MESSAGING_SENDER_ID",
+      appId: "SEU_APP_ID",
     };
 
     // Inicializa Firebase
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
 
-    // Elementos do DOM
-    const authForm = document.getElementById("auth-form");
+    // --- Preencher site com dados ---
+    window.addEventListener("DOMContentLoaded", () => {
+      // Capa background
+      const headerCapa = document.getElementById("header-capa");
+      headerCapa.style.backgroundImage = `url('${dadosSite.capa.background}')`;
+
+      // Foto de perfil
+      const fotoPerfil = document.getElementById("foto-perfil");
+      fotoPerfil.src = dadosSite.fotoPerfil;
+
+      // Player
+      const playerDiv = document.getElementById("player");
+      playerDiv.innerHTML = `<iframe src="${dadosSite.player.linkPlayer}" width="100%" height="152" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>`;
+
+      // Redes sociais
+      const socialIcons = document.getElementById("social-icons");
+      dadosSite.redesSociais.forEach((rede) => {
+        const a = document.createElement("a");
+        a.href = rede.link;
+        a.target = "_blank";
+        a.rel = "noopener noreferrer";
+        a.title = rede.nome;
+        a.innerHTML = `<i class="${rede.iconClass}"></i>`;
+        socialIcons.appendChild(a);
+      });
+
+      // Videos Swiper
+      const videoWrapper = document.getElementById("video-swiper-wrapper");
+      dadosSite.videos.forEach((id) => {
+        const slide = document.createElement("div");
+        slide.className = "swiper-slide";
+        slide.innerHTML = `
+          <div class="video-container">
+            <iframe
+              src="https://www.youtube.com/embed/${id}"
+              title="Video do Feqzin"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            ></iframe>
+          </div>`;
+        videoWrapper.appendChild(slide);
+      });
+
+      // Inicializar Swiper
+      new Swiper(".mySwiper", {
+        loop: true,
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        },
+      });
+
+      // Contagem regressiva
+      const countdownElem = document.getElementById("countdown-timer");
+      function updateCountdown() {
+        const now = new Date();
+        const releaseDate = new Date(dadosSite.dataLançamento);
+        const diff = releaseDate - now;
+        if (diff <= 0) {
+          countdownElem.textContent = "Já lançado!";
+          clearInterval(countdownInterval);
+          return;
+        }
+        const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const horas = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const minutos = Math.floor((diff / (1000 * 60)) % 60);
+        const segundos = Math.floor((diff / 1000) % 60);
+        countdownElem.textContent = `${dias}d ${horas}h ${minutos}m ${segundos}s`;
+      }
+      updateCountdown();
+      const countdownInterval = setInterval(updateCountdown, 1000);
+    });
+
+    // --- Autenticação Firebase para Dashboard do Fã ---
+    const form = document.getElementById("auth-form");
     const emailInput = document.getElementById("email");
     const passwordInput = document.getElementById("password");
     const btnLogin = document.getElementById("btn-login");
     const btnSignup = document.getElementById("btn-signup");
     const authMessage = document.getElementById("auth-message");
+    const userInfo = document.getElementById("user-info");
+    const btnLogout = document.getElementById("btn-logout");
+
+    function clearMessage() {
+      authMessage.textContent = "";
+      authMessage.style.color = "var(--cor-texto)";
+    }
+
+    function showMessage(msg, isError = false) {
+      authMessage.textContent = msg;
+      authMessage.style.color = isError ? "#ff4444" : "var(--cor-destaque)";
+    }
+
+    // Atualiza interface dependendo do estado de login
+    function updateUI(user) {
+      if (user) {
+        userInfo.textContent = `Olá, ${user.email}`;
+        form.style.display = "none";
+        btnLogout.style.display = "inline-block";
+        clearMessage();
+      } else {
+        userInfo.textContent = "";
+        form.style.display = "flex";
+        btnLogout.style.display = "none";
+        clearMessage();
+      }
+    }
+
+    // Observador de estado de autenticação
+    auth.onAuthStateChanged((user) => {
+      updateUI(user);
+    });
 
     // Login
-    authForm.addEventListener("submit", (e) => {
+    form.addEventListener("submit", (e) => {
       e.preventDefault();
-      const email = emailInput.value;
+      clearMessage();
+      const email = emailInput.value.trim();
       const password = passwordInput.value;
 
-      auth.signInWithEmailAndPassword(email, password)
-        .then((userCredential) => {
-          authMessage.style.color = "lightgreen";
-          authMessage.textContent = `Bem-vindo, ${userCredential.user.email}! Você está logado.`;
-          authForm.reset();
+      if (!email || !password) {
+        showMessage("Preencha e-mail e senha", true);
+        return;
+      }
+
+      showMessage("Tentando entrar...");
+
+      auth
+        .signInWithEmailAndPassword(email, password)
+        .then(() => {
+          showMessage("Login realizado com sucesso!");
+          emailInput.value = "";
+          passwordInput.value = "";
         })
         .catch((error) => {
-          authMessage.style.color = "tomato";
-          authMessage.textContent = `Erro no login: ${error.message}`;
+          let msg = "Erro ao entrar.";
+          if (error.code === "auth/user-not-found") {
+            msg = "Usuário não encontrado.";
+          } else if (error.code === "auth/wrong-password") {
+            msg = "Senha incorreta.";
+          } else if (error.code === "auth/invalid-email") {
+            msg = "E-mail inválido.";
+          }
+          showMessage(msg, true);
         });
     });
 
     // Cadastro
     btnSignup.addEventListener("click", () => {
-      const email = emailInput.value;
+      clearMessage();
+      const email = emailInput.value.trim();
       const password = passwordInput.value;
+
       if (!email || !password) {
-        authMessage.style.color = "tomato";
-        authMessage.textContent = "Preencha email e senha para cadastrar.";
+        showMessage("Preencha e-mail e senha para cadastrar", true);
         return;
       }
 
-      auth.createUserWithEmailAndPassword(email, password)
-        .then((userCredential) => {
-          authMessage.style.color = "lightgreen";
-          authMessage.textContent = `Usuário criado: ${userCredential.user.email}. Agora faça login.`;
-          authForm.reset();
+      if (password.length < 6) {
+        showMessage("Senha deve ter pelo menos 6 caracteres", true);
+        return;
+      }
+
+      showMessage("Criando conta...");
+
+      auth
+        .createUserWithEmailAndPassword(email, password)
+        .then(() => {
+          showMessage("Cadastro realizado com sucesso!");
+          emailInput.value = "";
+          passwordInput.value = "";
         })
         .catch((error) => {
-          authMessage.style.color = "tomato";
-          authMessage.textContent = `Erro no cadastro: ${error.message}`;
+          let msg = "Erro ao cadastrar.";
+          if (error.code === "auth/email-already-in-use") {
+            msg = "E-mail já está em uso.";
+          } else if (error.code === "auth/invalid-email") {
+            msg = "E-mail inválido.";
+          } else if (error.code === "auth/weak-password") {
+            msg = "Senha muito fraca.";
+          }
+          showMessage(msg, true);
         });
     });
 
-    // Opcional: monitorar estado de autenticação
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        // Usuário logado
-        authMessage.style.color = "lightgreen";
-        authMessage.textContent = `Você está logado como ${user.email}`;
-      } else {
-        // Usuário deslogado
-        // authMessage.textContent = "";
-      }
+    // Logout
+    btnLogout.addEventListener("click", () => {
+      auth.signOut().then(() => {
+        showMessage("Você saiu.");
+      });
     });
   </script>
 </body>
