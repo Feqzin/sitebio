@@ -486,26 +486,44 @@
         });
     });
 
-    // Recuperar senha
-  btnResetPassword.addEventListener("click", () => {
-    const email = emailInput.value;
+ // Recuperação de senha com melhorias
+btnResetPassword.addEventListener("click", () => {
+  const email = emailInput.value;
 
-    if (!email) {
+  if (!email) {
+    authMessage.style.color = "tomato";
+    authMessage.textContent = "Por favor, digite seu e-mail para redefinir a senha.";
+    return;
+  }
+
+  // Esconder o campo de senha para evitar confusão
+  passwordInput.style.display = "none";
+  btnLogin.style.display = "none";
+  btnSignup.style.display = "none";
+
+  auth.sendPasswordResetEmail(email)
+    .then(() => {
+      authMessage.style.color = "lightgreen";
+      authMessage.textContent = "E-mail de redefinição enviado com sucesso.";
+
+      // Mostrar alerta como pop-up de confirmação
+      alert("Um link de redefinição de senha foi enviado para " + email);
+
+      // Mostrar novamente os campos após a ação
+      passwordInput.style.display = "block";
+      btnLogin.style.display = "inline-block";
+      btnSignup.style.display = "inline-block";
+    })
+    .catch((error) => {
       authMessage.style.color = "tomato";
-      authMessage.textContent = "Por favor, digite seu e-mail para redefinir a senha.";
-      return;
-    }
+      authMessage.textContent = "Erro ao enviar e-mail: " + error.message;
 
-    auth.sendPasswordResetEmail(email)
-      .then(() => {
-        authMessage.style.color = "lightgreen";
-        authMessage.textContent = "E-mail de redefinição de senha enviado. Verifique sua caixa de entrada!";
-      })
-      .catch((error) => {
-        authMessage.style.color = "tomato";
-        authMessage.textContent = "Erro ao enviar e-mail: " + error.message;
-      });
-  });
+      // Reexibir os campos mesmo se der erro
+      passwordInput.style.display = "block";
+      btnLogin.style.display = "inline-block";
+      btnSignup.style.display = "inline-block";
+    });
+});
 
     // Cadastro
     btnSignup.addEventListener("click", () => {
