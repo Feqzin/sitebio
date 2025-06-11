@@ -497,20 +497,28 @@ btnResetPassword.addEventListener("click", () => {
   }
 
   // Esconder o campo de senha para evitar confusão
-  passwordInput.style.display = "none";
-  btnLogin.style.display = "none";
-  btnSignup.style.display = "none";
+  
+
+  // Esconder com transição suave
+  passwordInput.style.opacity = "0";
+  setTimeout(() => {
+    passwordInput.style.display = "none";
+    btnLogin.style.display = "none";
+    btnSignup.style.display = "none";
+  }, 300);
 
   auth.sendPasswordResetEmail(email)
     .then(() => {
       authMessage.style.color = "lightgreen";
       authMessage.textContent = "E-mail de redefinição enviado com sucesso.";
-
-      // Mostrar alerta como pop-up de confirmação
       alert("Um link de redefinição de senha foi enviado para " + email);
 
-      // Mostrar novamente os campos após a ação
+      // Mostrar novamente com suavidade
       passwordInput.style.display = "block";
+      setTimeout(() => {
+        passwordInput.style.opacity = "1";
+      }, 10);
+
       btnLogin.style.display = "inline-block";
       btnSignup.style.display = "inline-block";
     })
@@ -518,8 +526,11 @@ btnResetPassword.addEventListener("click", () => {
       authMessage.style.color = "tomato";
       authMessage.textContent = "Erro ao enviar e-mail: " + error.message;
 
-      // Reexibir os campos mesmo se der erro
       passwordInput.style.display = "block";
+      setTimeout(() => {
+        passwordInput.style.opacity = "1";
+      }, 10);
+
       btnLogin.style.display = "inline-block";
       btnSignup.style.display = "inline-block";
     });
