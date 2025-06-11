@@ -484,6 +484,27 @@
         });
     });
 
+    // Recuperar senha
+  btnResetPassword.addEventListener("click", () => {
+    const email = emailInput.value;
+
+    if (!email) {
+      authMessage.style.color = "tomato";
+      authMessage.textContent = "Por favor, digite seu e-mail para redefinir a senha.";
+      return;
+    }
+
+    auth.sendPasswordResetEmail(email)
+      .then(() => {
+        authMessage.style.color = "lightgreen";
+        authMessage.textContent = "E-mail de redefinição de senha enviado. Verifique sua caixa de entrada!";
+      })
+      .catch((error) => {
+        authMessage.style.color = "tomato";
+        authMessage.textContent = "Erro ao enviar e-mail: " + error.message;
+      });
+  });
+
     // Cadastro
     btnSignup.addEventListener("click", () => {
       const email = emailInput.value;
