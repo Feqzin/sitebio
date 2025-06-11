@@ -2,6 +2,7 @@
 
 
 
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -458,87 +459,149 @@
   measurementId: "G-QZY8SDZX5T"
     };
 
-<script>
-  // Inicializar Firebase
+    // Inicializa Firebase
+    
   firebase.initializeApp(firebaseConfig);
-
   const auth = firebase.auth();
 
-  const form = document.getElementById('auth-form');
-  const btnSignup = document.getElementById('btn-signup');
-  const btnResetPassword = document.getElementById('btn-reset-password');
-  const btnLogout = document.getElementById('btnLogout');
-  const authMessage = document.getElementById('auth-message');
+  const authForm = document.getElementById("auth-form");
+  const emailInput = document.getElementById("email");
+  const passwordInput = document.getElementById("password");
+  const btnLogin = document.getElementById("btn-login");
+  const btnSignup = document.getElementById("btn-signup");
+  const btnResetPassword = document.getElementById("btn-reset-password");
+  const authMessage = document.getElementById("auth-message");
+  const btnLogout = document.getElementById("btnLogout");
 
-  // LOGIN
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const email = form.email.value;
-    const password = form.password.value;
-    try {
-      await auth.signInWithEmailAndPassword(email, password);
-      authMessage.textContent = 'Login realizado com sucesso!';
-      authMessage.style.color = 'lime';
-      btnLogout.style.display = 'block';
-    } catch (error) {
-      authMessage.textContent = 'Erro no login: ' + error.message;
-      authMessage.style.color = 'red';
-    }
-  });
 
-  // CADASTRO
-  btnSignup.addEventListener('click', async () => {
-    const email = form.email.value;
-    const password = form.password.value;
-    try {
-      await auth.createUserWithEmailAndPassword(email, password);
-      authMessage.textContent = 'Cadastro realizado com sucesso!';
-      authMessage.style.color = 'lime';
-      btnLogout.style.display = 'block';
-    } catch (error) {
-      authMessage.textContent = 'Erro no cadastro: ' + error.message;
-      authMessage.style.color = 'red';
-    }
-  });
+    // Login
+    authForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const email = emailInput.value;
+      const password = passwordInput.value;
 
-  // RESETAR SENHA
-  btnResetPassword.addEventListener('click', async () => {
-    const email = form.email.value;
-    try {
-      await auth.sendPasswordResetEmail(email);
-      authMessage.textContent = 'Email de redefinição enviado!';
-      authMessage.style.color = 'lime';
-    } catch (error) {
-      authMessage.textContent = 'Erro ao enviar redefinição: ' + error.message;
-      authMessage.style.color = 'red';
-    }
-  });
+      auth.signInWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+          authMessage.style.color = "lightgreen";
+          authMessage.textContent = `Bem-vindo, ${userCredential.user.email}! Você está logado.`;
+          authForm.reset();
+        })
+        .catch((error) => {
+          authMessage.style.color = "tomato";
+          authMessage.textContent = `Erro no login: ${error.message}`;
+        });
+    });
 
-  // LOGOUT
-  btnLogout.addEventListener('click', async () => {
-    try {
-      await auth.signOut();
-      authMessage.textContent = 'Logout feito com sucesso!';
-      authMessage.style.color = 'orange';
-      btnLogout.style.display = 'none';
-    } catch (error) {
-      authMessage.textContent = 'Erro ao sair: ' + error.message;
-      authMessage.style.color = 'red';
-    }
-  });
+ // Recuperação de senha com melhorias
+btnResetPassword.addEventListener("click", () => {
+  const email = emailInput.value;
 
-  // Verificar se o usuário está logado
-  auth.onAuthStateChanged((user) => {
-    if (user) {
-      authMessage.textContent = 'Você está logado como ' + user.email;
-      authMessage.style.color = 'lime';
-      btnLogout.style.display = 'block';
-    } else {
-      authMessage.textContent = '';
-      btnLogout.style.display = 'none';
-    }
-  });
-</script>
+  if (!email) {
+    authMessage.style.color = "tomato";
+    authMessage.textContent = "Por favor, digite seu e-mail para redefinir a senha.";
+    return;
+  }
+
+  // Esconder o campo de senha para evitar confusão
   
+
+  // Esconder com transição suave
+  passwordInput.style.opacity = "0";
+  setTimeout(() => {
+    passwordInput.style.display = "none";
+    btnLogin.style.display = "none";
+    btnSignup.style.display = "none";
+  }, 300);
+
+  auth.sendPasswordResetEmail(email)
+    .then(() => {
+      authMessage.style.color = "lightgreen";
+      authMessage.textContent = "E-mail de redefinição enviado com sucesso.";
+      alert("Um link de redefinição de senha foi enviado para " + email);
+
+      // Mostrar novamente com suavidade
+      passwordInput.style.display = "block";
+      setTimeout(() => {
+        passwordInput.style.opacity = "1";
+      }, 10);
+
+      btnLogin.style.display = "inline-block";
+      btnSignup.style.display = "inline-block";
+    })
+    .catch((error) => {
+      authMessage.style.color = "tomato";
+      authMessage.textContent = "Erro ao enviar e-mail: " + error.message;
+
+      passwordInput.style.display = "block";
+      setTimeout(() => {
+        passwordInput.style.opacity = "1";
+      }, 10);
+
+      btnLogin.style.display = "inline-block";
+      btnSignup.style.display = "inline-block";
+    });
+});
+
+    // Cadastro
+    btnSignup.addEventListener("click", () => {
+      const email = emailInput.value;
+      const password = passwordInput.value;
+      if (!email || !password) {
+        authMessage.style.color = "tomato";
+        authMessage.textContent = "Preencha email e senha para cadastrar.";
+        return;
+      }
+
+      auth.createUserWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+          authMessage.style.color = "lightgreen";
+          authMessage.textContent = `Usuário criado: ${userCredential.user.email}. Agora faça login.`;
+          authForm.reset();
+        })
+        .catch((error) => {
+          authMessage.style.color = "tomato";
+          authMessage.textContent = `Erro no cadastro: ${error.message}`;
+        });
+    });
+
+    // Opcional: monitorar estado de autenticação
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        // Usuário logado
+        authMessage.style.color = "lightgreen";
+        authMessage.textContent = `Você está logado como ${user.email}`;
+      } else {
+        // Usuário deslogado
+        // authMessage.textContent = "";
+      }
+    });
+
+    // Mostrar o botão logout se o usuário estiver logado
+auth.onAuthStateChanged((user) => {
+  if (user) {
+    btnLogout.style.display = "inline-block"; // Mostra o botão
+    authMessage.style.color = "lightgreen";
+    authMessage.textContent = "Usuário logado: " + user.email;
+  } else {
+    btnLogout.style.display = "none"; // Esconde se não estiver logado
+  }
+});
+
+// Lógica do botão de logout
+btnLogout.addEventListener("click", () => {
+  auth.signOut()
+    .then(() => {
+      authMessage.style.color = "lightgreen";
+      authMessage.textContent = "Logout realizado com sucesso.";
+      // Opcional: Atualiza a interface
+      passwordInput.value = "";
+    })
+    .catch((error) => {
+      console.error("Erro ao sair:", error);
+      authMessage.style.color = "tomato";
+      authMessage.textContent = "Erro ao sair da conta.";
+    });
+});
+  </script>
 </body>
 </html>
