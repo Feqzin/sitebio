@@ -504,6 +504,24 @@
         });
     });
 
+      // Código de reset de senha
+  document.getElementById('btn-reset-password').addEventListener('click', async () => {
+    const email = document.getElementById('email').value;
+
+    if (!email) {
+      document.getElementById('auth-message').textContent = 'Digite seu email para redefinir a senha.';
+      return;
+    }
+
+    try {
+      await sendPasswordResetEmail(auth, email);
+      document.getElementById('auth-message').textContent = 'Email de redefinição enviado! Verifique sua caixa de entrada.';
+    } catch (error) {
+      console.error('Erro ao enviar email de redefinição:', error);
+      document.getElementById('auth-message').textContent = 'Erro ao enviar email. Verifique se o email está cadastrado.';
+    }
+  });
+  
     // Opcional: monitorar estado de autenticação
     auth.onAuthStateChanged((user) => {
       if (user) {
