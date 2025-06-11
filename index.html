@@ -464,44 +464,75 @@
   firebase.initializeApp(firebaseConfig);
   const auth = firebase.auth();
 
-  const authForm = document.getElementById("auth-form");
-  const emailInput = document.getElementById("email");
-  const passwordInput = document.getElementById("password");
-  const btnLogin = document.getElementById("btn-login");
-  const btnSignup = document.getElementById("btn-signup");
-  const btnResetPassword = document.getElementById("btn-reset-password");
-  const authMessage = document.getElementById("auth-message");
-  const btnLogout = document.getElementById("btnLogout");
+const authForm = document.getElementById('auth-form');
+  const emailInput = document.getElementById('email');
+  const passwordInput = document.getElementById('password');
+  const loginBtn = document.getElementById('btn-login');
+  const signupBtn = document.getElementById('btn-signup');
+  const resetBtn = document.getElementById('btn-reset-password');
+  const logoutBtn = document.getElementById('btnLogout');
+  const message = document.getElementById('auth-message');
+  const loginContainer = document.getElementById('login-container');
+  const userInfo = document.getElementById('user-info');
 
+  const showUserInfo = (user) => {
+    loginContainer.style.display = 'none';
+    logoutBtn.style.display = 'block';
+    userInfo.textContent = `Usuário logado: ${user.email}`;
+    userInfo.style.display = 'block';
+  };
 
-    // Login
-    authForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const email = emailInput.value;
-      const password = passwordInput.value;
+  const resetUI = () => {
+    loginContainer.style.display = 'block';
+    logoutBtn.style.display = 'none';
+    userInfo.style.display = 'none';
+    message.textContent = '';
+  };
 
-      auth.signInWithEmailAndPassword(email, password)
-        .then((userCredential) => {
-          authMessage.style.color = "lightgreen";
-          authMessage.textContent = `Bem-vindo, ${userCredential.user.email}! Você está logado.`;
-          authForm.reset();
-        })
-        .catch((error) => {
-          authMessage.style.color = "tomato";
-          authMessage.textContent = `Erro no login: ${error.message}`;
-        });
-    });
+  loginBtn.addEventListener('click', async (e) => {
+    e.preventDefault();
+    try {
+      const result = await auth.signInWithEmailAndPassword(emailInput.value, passwordInput.value);
+      message.textContent = 'Login realizado com sucesso!';
+      showUserInfo(result.user);
+    } catch (error) {
+      message.textContent = 'Erro: ' + error.message;
+    }
+  });
 
- // Recuperação de senha com melhorias
-btnResetPassword.addEventListener("click", () => {
-  const email = emailInput.value;
+  signupBtn.addEventListener('click', async () => {
+    try {
+      const result = await auth.createUserWithEmailAndPassword(emailInput.value, passwordInput.value);
+      message.textContent = 'Cadastro realizado com sucesso!';
+      showUserInfo(result.user);
+    } catch (error) {
+      message.textContent = 'Erro: ' + error.message;
+    }
+  });
 
-  if (!email) {
-    authMessage.style.color = "tomato";
-    authMessage.textContent = "Por favor, digite seu e-mail para redefinir a senha.";
-    return;
-  }
+  resetBtn.addEventListener('click', async () => {
+    try {
+      await auth.sendPasswordResetEmail(emailInput.value);
+      message.textContent = 'E-mail de redefinição enviado!';
+    } catch (error) {
+      message.textContent = 'Erro: ' + error.message;
+    }
+  });
 
+  logoutBtn.addEventListener('click', async () => {
+    await auth.signOut();
+    message.textContent = 'Você saiu da conta.';
+    resetUI();
+  });
+
+  auth.onAuthStateChanged((user) => {
+    if (user) {
+      showUserInfo(user);
+    } else {
+      resetUI();
+    }
+  });
+    
   // Esconder o campo de senha para evitar confusão
   
 
