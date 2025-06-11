@@ -481,58 +481,7 @@
           authMessage.style.color = "tomato";
           authMessage.textContent = `Erro no login: ${error.message}`;
         });
-    });
-<script>
-  const authForm = document.getElementById('auth-form');
-  const authMessage = document.getElementById('auth-message');
 
-  const btnLogin = document.getElementById('btn-login');
-  const btnSignup = document.getElementById('btn-signup');
-  const btnReset = document.getElementById('btn-reset-password');
-
-  btnLogin.addEventListener('click', async (e) => {
-    e.preventDefault();
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-
-    try {
-      await auth.signInWithEmailAndPassword(email, password);
-      authMessage.style.color = 'var(--cor-destaque)';
-      authMessage.innerText = 'Login realizado com sucesso!';
-    } catch (error) {
-      authMessage.style.color = 'red';
-      authMessage.innerText = error.message;
-    }
-  });
-
-  btnSignup.addEventListener('click', async (e) => {
-    e.preventDefault();
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-
-    try {
-      await auth.createUserWithEmailAndPassword(email, password);
-      authMessage.style.color = 'var(--cor-destaque)';
-      authMessage.innerText = 'Cadastro realizado com sucesso!';
-    } catch (error) {
-      authMessage.style.color = 'red';
-      authMessage.innerText = error.message;
-    }
-  });
-
-  btnReset.addEventListener('click', async (e) => {
-    e.preventDefault();
-    const email = document.getElementById('email').value;
-
-    try {
-      await auth.sendPasswordResetEmail(email);
-      authMessage.style.color = 'var(--cor-destaque)';
-      authMessage.innerText = 'Email de redefinição enviado!';
-    } catch (error) {
-      authMessage.style.color = 'red';
-      authMessage.innerText = error.message;
-    }
-  });
     // Cadastro
     btnSignup.addEventListener("click", () => {
       const email = emailInput.value;
