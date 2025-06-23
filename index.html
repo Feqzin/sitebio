@@ -442,40 +442,6 @@
         }, 1000);
     }
 
-// Função para buscar pontuação do usuário logado
-function carregarPontuacao(uid) {
-  const container = document.getElementById("pontuacao-container");
-  const valor = document.getElementById("pontuacao-valor");
-
-  db.collection("usuarios").doc(uid).get()
-    .then((doc) => {
-      if (doc.exists && doc.data().pontos !== undefined) {
-        valor.textContent = doc.data().pontos;
-      } else {
-        valor.textContent = "0";
-        // Se quiser criar o campo automaticamente:
-        db.collection("usuarios").doc(uid).set({
-          email: auth.currentUser.email,
-          pontos: 0
-        }, { merge: true });
-      }
-      container.style.display = "block";
-    })
-    .catch((error) => {
-      console.error("Erro ao buscar pontuação:", error);
-      valor.textContent = "Erro";
-    });
-}
-
-// Atualizar ao fazer login
-auth.onAuthStateChanged((user) => {
-  if (user) {
-    carregarPontuacao(user.uid);
-  } else {
-    document.getElementById("pontuacao-container").style.display = "none";
-  }
-});
-    
   </script>
 
 <!-- Firebase App (the core Firebase SDK) -->
