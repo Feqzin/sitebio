@@ -336,6 +336,12 @@
 
 </form>
     <div id="auth-message"></div>
+    
+<div id="pontuacao-container" style="display:none; margin-top: 20px;">
+  <h3>Sua Pontuação</h3>
+  <p style="font-size: 2em; color: var(--cor-destaque);" id="pontuacao-valor">0</p>
+</div>
+    
   </section>
   <footer>
     © 2025 Feqzin. Todos os direitos reservados.
@@ -589,6 +595,46 @@ auth.onAuthStateChanged((user) => {
   }
 });
 
+    <!-- Firebase Firestore -->
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+<script>
+  const db = firebase.firestore();
+
+  // Função para buscar a pontuação do usuário logado
+  function carregarPontuacao(uid) {
+    const container = document.getElementById("pontuacao-container");
+    const valor = document.getElementById("pontuacao-valor");
+
+    db.collection("usuarios").doc(uid).get()
+      .then((doc) => {
+        if (doc.exists && doc.data().pontos !== undefined) {
+          valor.textContent = doc.data().pontos;
+        } else {
+          valor.textContent = "0";
+          // Se quiser criar o campo automaticamente
+          db.collection("usuarios").doc(uid).set({
+            email: auth.currentUser.email,
+            pontos: 0
+          }, { merge: true });
+        }
+        container.style.display = "block";
+      })
+      .catch((error) => {
+        console.error("Erro ao buscar pontuação:", error);
+        valor.textContent = "Erro";
+      });
+  }
+
+  // Chamada ao logar
+  auth.onAuthStateChanged((user) => {
+    if (user) {
+      carregarPontuacao(user.uid);
+    } else {
+      document.getElementById("pontuacao-container").style.display = "none";
+    }
+  });
+</script>
+    
 // Lógica do botão de logout
 btnLogout.addEventListener("click", () => {
   auth.signOut()
