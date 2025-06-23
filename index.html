@@ -338,7 +338,7 @@
     <div id="auth-message"></div>
   </section>
   <footer>
-    <p>© 2025 Feqzin. Site desenvolvido por Feqzin.</p>
+    © 2025 Feqzin. Todos os direitos reservados.
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
@@ -442,7 +442,6 @@
             }
         }, 1000);
     }
-
   </script>
 
 <!-- Firebase App (the core Firebase SDK) -->
@@ -450,8 +449,6 @@
   <!-- Firebase Authentication -->
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
 
-
-  
   <script>
     // TODO: Substitua os valores abaixo pelo seu próprio config do Firebase
     const firebaseConfig = {
@@ -469,11 +466,6 @@
   firebase.initializeApp(firebaseConfig);
   const auth = firebase.auth();
 
-<div id="pontuacao-container" style="display:none; margin-top: 20px;">
-  <h3>Sua Pontuação</h3>
-  <p style="font-size: 2em; color: var(--cor-destaque);" id="pontuacao-valor">0</p>
-</div>
-    
   const authForm = document.getElementById("auth-form");
   const emailInput = document.getElementById("email");
   const passwordInput = document.getElementById("password");
