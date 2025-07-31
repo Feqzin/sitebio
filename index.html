@@ -199,9 +199,11 @@
   <section id="fan-dashboard">
     <h2>Dashboard do Fã</h2>
     <form id="auth-form">
-      <input type="email" id="email" placeholder="Digite seu email" required autocomplete="username"/>
-     <input type="password" id="password" placeholder="Digite sua senha" required autocomplete="current-password" style="padding-right: 40px;" />
+      
+    <div style="position: relative;">
+  <input type="password" id="password" placeholder="Digite sua senha" required autocomplete="current-password" style="padding-right: 40px;" />
   <i class="fa fa-eye" id="toggle-password" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer; color: #aaa;"></i>
+</div>
       <button type="submit" id="btn-login">Entrar</button>
       <button type="button"   id="btn-signup">Cadastrar</button>
       <button type="button"   id="btn-reset-password">Esqueci a senha</button>
@@ -410,17 +412,6 @@
     btnLogout.addEventListener("click", () => auth.signOut());
   </script>
   
- <script>
-  const passwordInput = document.getElementById("password");
-  const togglePassword = document.getElementById("toggle-password");
-
-  togglePassword.addEventListener("click", () => {
-    const type = passwordInput.getAttribute("type") === "password" ? "text" : "password";
-    passwordInput.setAttribute("type", type);
-    togglePassword.classList.toggle("fa-eye");
-    togglePassword.classList.toggle("fa-eye-slash");
-  });
-</script>
   
 </body>
 </html>
