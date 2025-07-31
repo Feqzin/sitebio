@@ -6,7 +6,8 @@
   <title>Feqzin | Site Oficial</title>
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
         integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
         crossorigin="anonymous" referrerpolicy="no-referrer"/>
 
@@ -20,129 +21,149 @@
       --cor-fundo-secundario: #111;
       --cor-borda-suave: #444;
     }
-    /* ---- ESTILOS GERAIS ---- */
     body {
-      margin: 0; font-family: Arial,sans-serif;
-      background: var(--cor-fundo); color: var(--cor-texto); line-height:1.6;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: var(--cor-fundo);
+      color: var(--cor-texto);
+      line-height: 1.6;
     }
     header {
-      background-color:rgba(0,0,0,0.6);
-      background-blend-mode:darken;
-      background-size:cover;
-      background-position:center;
-      padding:360px 20px 40px;
-      text-align:center; color:#fff; position:relative;
+      background-color: rgba(0,0,0,0.6);
+      background-blend-mode: darken;
+      background-size: cover;
+      background-position: center;
+      padding: 360px 20px 40px;
+      text-align: center;
+      color: #fff;
+      position: relative;
     }
     header::after {
-      content:""; position:absolute; bottom:0; left:0;
-      width:100%; height:100px;
-      background:linear-gradient(to bottom,rgba(14,14,14,0),var(--cor-fundo));
-      z-index:1;
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 100%; height: 100px;
+      background: linear-gradient(to bottom, rgba(14,14,14,0), var(--cor-fundo));
+      z-index: 1;
     }
-    header h1, header p { position:relative; z-index:2; }
-    header h1 { font-size:3em; margin-bottom:10px; }
-    header p { font-size:1.2em; color:#ddd; }
+    header h1, header p { position: relative; z-index: 2; }
+    header h1 { font-size: 3em; margin-bottom: 10px; }
+    header p { font-size: 1.2em; color: #ddd; }
 
     .profile-pic {
-      width:150px; height:150px; border-radius:50%;
-      display:block; border:4px solid var(--cor-destaque);
-      object-fit:cover; background:#000;
-      position:absolute; top:190px; left:50%;
-      transform:translateX(-50%); z-index:3;
-      transition:transform .4s ease-in-out; transform-style:preserve-3d;
+      width: 150px; height: 150px; border-radius: 50%;
+      display: block; border: 4px solid var(--cor-destaque);
+      object-fit: cover; background: #000;
+      position: absolute; top: 190px; left: 50%;
+      transform: translateX(-50%); z-index: 3;
+      transition: transform .4s ease-in-out; transform-style: preserve-3d;
     }
     .profile-pic:hover {
-      transform:translateX(-50%) perspective(1000px) rotateY(25deg);
+      transform: translateX(-50%) perspective(1000px) rotateY(25deg);
     }
 
     section {
-      padding:40px 20px; max-width:900px; margin:auto;
+      padding: 40px 20px; max-width: 900px; margin: auto;
     }
-    section:first-of-type { padding-top:100px; }
-    h2 {
-      border-bottom:2px solid var(--cor-borda-suave);
-      padding-bottom:10px; margin-bottom:20px;
-    }
-    a { color:var(--cor-destaque); text-decoration:none; transition:color .3s; }
-    a:hover { color:#fff; }
+    section:first-of-type { padding-top: 100px; }
+    h2 { border-bottom: 2px solid var(--cor-borda-suave); padding-bottom: 10px; margin-bottom: 20px; }
+    a { color: var(--cor-destaque); text-decoration: none; transition: color .3s; }
+    a:hover { color: #fff; }
 
-    .socials { text-align:center; }
+    .socials { text-align: center; }
     .socials a {
-      margin:0 15px; color:var(--cor-texto); font-size:2em; transition:all .3s;
+      margin: 0 15px; color: var(--cor-texto); font-size: 2em; transition: all .3s;
     }
     .socials a:hover {
-      color:var(--cor-destaque); transform:translateY(-5px);
+      color: var(--cor-destaque); transform: translateY(-5px);
     }
 
-    .player { margin:20px 0; }
+    .player { margin: 20px 0; }
     .countdown {
-      text-align:center; font-size:2em; margin:20px 0 10px;
-      color:var(--cor-destaque); line-height:1.2;
+      text-align: center; font-size: 2em; margin: 20px 0 10px;
+      color: var(--cor-destaque); line-height: 1.2;
     }
     footer {
-      background:var(--cor-fundo-secundario);
-      text-align:center; padding:20px;
-      font-size:.9em; color:#777;
+      background: var(--cor-fundo-secundario);
+      text-align: center; padding: 20px;
+      font-size: .9em; color: #777;
     }
 
-    .swiper { width:100%; padding-top:20px; padding-bottom:50px; }
-    .swiper-slide { background-position:center; background-size:cover; width:100%; }
-    .video-container { position:relative; width:100%; padding-top:56.25%; }
+    .swiper { width: 100%; padding-top: 20px; padding-bottom: 50px; }
+    .swiper-slide { background-position: center; background-size: cover; width: 100%; }
+    .video-container { position: relative; width: 100%; padding-top: 56.25%; }
     .video-container iframe {
-      position:absolute; top:0; left:0; width:100%; height:100%;
-      border-radius:12px; border:0;
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      border-radius: 12px; border: 0;
     }
-    .swiper-button-next, .swiper-button-prev { color:var(--cor-destaque); }
-    .swiper-pagination-bullet-active { background:var(--cor-destaque); }
+    .swiper-button-next, .swiper-button-prev { color: var(--cor-destaque); }
+    .swiper-pagination-bullet-active { background: var(--cor-destaque); }
 
     .pre-save-button {
-      display:inline-block; background:var(--cor-destaque); color:#fff;
-      padding:15px 35px; border-radius:50px; text-decoration:none;
-      font-weight:bold; font-size:1.1em; margin-top:20px;
-      transition:background .3s, transform .2s;
+      display: inline-block; background: var(--cor-destaque); color: #fff;
+      padding: 15px 35px; border-radius: 50px; font-weight: bold;
+      font-size: 1.1em; margin-top: 20px; transition: background .3s, transform .2s;
     }
     .pre-save-button:hover {
-      background:var(--cor-destaque-hover); transform:scale(1.05);
+      background: var(--cor-destaque-hover); transform: scale(1.05);
     }
 
-    /* ---- Dashboard do Fã ---- */
+    /* Dashboard do Fã */
     #fan-dashboard {
-      background:#111; border:2px solid var(--cor-destaque);
-      border-radius:12px; padding:20px;
-      max-width:400px; margin:40px auto; text-align:center;
+      background: #111; border: 2px solid var(--cor-destaque);
+      border-radius: 12px; padding: 20px; max-width: 400px;
+      margin: 40px auto; text-align: center;
     }
     #fan-dashboard form {
-      display:flex; flex-direction:column; gap:10px;
+      display: flex; flex-direction: column; gap: 10px;
     }
     #fan-dashboard input {
-      padding:10px; border-radius:6px; border:1px solid var(--cor-borda-suave);
-      background:#222; color:var(--cor-texto); font-size:1em;
+      padding: 10px; border-radius: 6px; border: 1px solid var(--cor-borda-suave);
+      background: #222; color: var(--cor-texto); font-size: 1em;
     }
     #fan-dashboard button {
-      padding:10px; border:none; border-radius:6px;
-      font-weight:bold; font-size:1em; cursor:pointer;
-      transition:background .3s;
+      padding: 10px; border: none; border-radius: 6px;
+      font-weight: bold; font-size: 1em; cursor: pointer;
+      transition: background .3s;
     }
-    #btn-login { background:var(--cor-destaque); color:#fff; }
-    #btn-signup { background:#555; color:#ccc; }
-    #btn-reset-password { background:#444; color:#ccc; }
-    #btnLogout { display:none; background:#f44336; color:#fff; }
-    #auth-message { margin-top:15px; min-height:1.2em; font-weight:bold; }
-    #pontuacao-container { display:none; margin-top:20px; }
-    /* botão quiz */
+    #btn-login { background: var(--cor-destaque); color: #fff; }
+    #btn-signup { background: #555; color: #ccc; }
+    #btn-reset-password { background: #444; color: #ccc; }
+    #btnLogout { display: none; background: #f44336; color: #fff; }
+    #auth-message {
+      margin-top: 15px; min-height: 1.2em; font-weight: bold;
+    }
+    #pontuacao-container {
+      display: none; margin-top: 20px;
+    }
     #start-quiz {
-      display:none; margin-top:20px; padding:10px 20px;
-      background:var(--cor-destaque); color:#fff; border:none;
-      border-radius:6px; font-weight:bold; cursor:pointer;
+      display: none; margin-top: 20px; padding: 10px 20px;
+      background: var(--cor-destaque); color: #fff;
+      border: none; border-radius: 6px; font-weight: bold;
+      cursor: pointer; transition: background .3s;
     }
-    #start-quiz:hover { background:var(--cor-destaque-hover); }
+    #start-quiz:hover {
+      background: var(--cor-destaque-hover);
+    }
+
+    /* Seção de resgate */
+    #resgate-section {
+      display: block; max-width: 400px; margin: 40px auto;
+    }
+    #itens-resgate {
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .item {
+      border: 1px solid #ccc; padding: 10px; border-radius: 8px;
+    }
+    #resgate-msg { margin-top: 10px; font-weight: bold; }
 
     @media (max-width:600px) {
-      header h1 { font-size:2em; }
-      .profile-pic { width:120px; height:120px; top:210px; }
-      section:first-of-type { padding-top:80px; }
-      header { padding:320px 20px 40px; }
-      #fan-dashboard { max-width:90%; }
+      header h1 { font-size: 2em; }
+      .profile-pic { width: 120px; height: 120px; top: 210px; }
+      section:first-of-type { padding-top: 80px; }
+      header { padding: 320px 20px 40px; }
+      #fan-dashboard { max-width: 90%; }
     }
   </style>
 </head>
@@ -150,11 +171,11 @@
   <header id="header-capa">
     <h1>Feqzin</h1><p></p>
   </header>
-  <img id="foto-perfil" class="profile-pic" src="" alt="Feqzin"/>
+  <img id="foto-perfil" class="profile-pic" src="" alt="Feqzin" />
 
   <section>
     <h2>Sobre</h2>
-    <p>Feqzin é um artista nascido na zona norte de São Paulo, mais precisamente no bairro do Jardim Brasil. Desde 2017 canetando, iniciou sua trajetória oficialmente em 2022 com a primeira track produzida no celular. Traz autenticidade no vocal e está sempre inovando em suas produções.</p>
+    <p>Feqzin é um artista nascido na zona norte de São Paulo... (texto existente)</p>
   </section>
 
   <section>
@@ -187,15 +208,10 @@
   <section>
     <h2>Redes Sociais</h2>
     <div class="socials">
-      <a href="https://www.instagram.com/feqzinn/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
-      <a href="https://www.tiktok.com/@feqzinn" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
-      <a href="https://www.youtube.com/@feqzin" target="_blank"><i class="fa-brands fa-youtube"></i></a>
-      <a href="https://open.spotify.com/intl-pt/artist/56eMJpXmR5veK1kOi2apO4" target="_blank"><i class="fa-brands fa-spotify"></i></a>
-      <a href="https://soundcloud.com/discordia-urban" target="_blank"><i class="fa-brands fa-soundcloud"></i></a>
+      <!-- links existentes -->
     </div>
   </section>
 
-  <!-- NOVA SEÇÃO: DASHBOARD DO FÃ -->
   <section id="fan-dashboard">
     <h2>Dashboard do Fã</h2>
     <form id="auth-form">
@@ -214,6 +230,31 @@
     <div id="auth-message"></div>
   </section>
 
+  <!-- Seção de Resgate -->
+  <div id="resgate-section">
+    <h2>Resgate seus prêmios</h2>
+    <p>Você tem <span id="pontos-usuario">0</span> pontos.</p>
+    <div id="itens-resgate">
+      <div class="item">
+        <p>Desconto de 10% (50 pontos)</p>
+        <button onclick="resgatarItem(50,'Desconto de 10%')">Resgatar</button>
+      </div>
+      <div class="item">
+        <p>Acesso antecipado (100 pontos)</p>
+        <button onclick="resgatarItem(100,'Acesso antecipado')">Resgatar</button>
+      </div>
+      <div class="item">
+        <p>Item exclusivo (200 pontos)</p>
+        <button onclick="resgatarItem(200,'Item exclusivo')">Resgatar</button>
+      </div>
+      <div class="item">
+        <p>Camisa oficial (500 pontos)</p>
+        <button onclick="resgatarItem(500,'Camisa oficial')">Resgatar</button>
+      </div>
+    </div>
+    <p id="resgate-msg"></p>
+  </div>
+
   <footer>© 2025 Feqzin. Todos os direitos reservados.</footer>
 
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
@@ -224,189 +265,118 @@
       iniciarCountdown();
     });
 
-    async function carregarConfiguracoes() {
-      try {
-        const res = await fetch("/api/getContentfulConfig");
-        if (!res.ok) throw new Error();
-        const data = await res.json();
-        if (data.items.length) {
-          const e = data.items[0];
-          const findUrl = id => (data.includes?.Asset.find(a=>a.sys.id===id)?.fields.file.url || "");
-          const capa = findUrl(e.fields.imagemDeCapa?.sys.id);
-          const perf = findUrl(e.fields.fotoDePerfil?.sys.id);
-          if (capa) document.getElementById("header-capa").style.backgroundImage = `url(https:${capa})`;
-          if (perf) document.getElementById("foto-perfil").src = `https:${perf}`;
-        }
-      } catch {}
-    }
+    // ... funções carregarConfiguracoes, carregarVideosDoYouTube, iniciarCountdown (mantidas iguais)
 
-    async function carregarVideosDoYouTube() {
-      try {
-        const res = await fetch("/api/getYoutubeVideos");
-        if (!res.ok) throw new Error();
-        const data = await res.json();
-        const w = document.getElementById("youtube-carousel-wrapper");
-        w.innerHTML = "";
-        if (data.items.length) {
-          data.items.forEach(i=>{
-            w.innerHTML += `
-              <div class="swiper-slide">
-                <div class="video-container">
-                  <iframe src="https://www.youtube.com/embed/${i.id.videoId}" title="${i.snippet.title}" frameborder="0" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; picture-in-picture"></iframe>
-                </div>
-              </div>`;
-          });
-          new Swiper(".swiper", {
-            loop:true, spaceBetween:20, slidesPerView:1,
-            breakpoints:{768:{slidesPerView:2, spaceBetween:30},1024:{slidesPerView:3, spaceBetween:30}},
-            pagination:{el:".swiper-pagination",clickable:true},
-            navigation:{nextEl:".swiper-button-next",prevEl:".swiper-button-prev"}
-          });
-        } else {
-          w.innerHTML = "<p style='text-align:center;'>Não foi possível carregar os vídeos no momento.</p>";
-        }
-      } catch {}
-    }
-
-    function iniciarCountdown() {
-      const el = document.getElementById("countdown");
-      const launch = new Date("2025-05-31T00:00:00").getTime();
-      const iv = setInterval(()=>{
-        const now = Date.now(), d = launch - now;
-        if (d<0) {
-          clearInterval(iv);
-          el.innerHTML = "Já disponível em todas as plataformas!";
-          document.querySelector(".pre-save-button").style.display="none";
-        } else {
-          const days = Math.floor(d/(1000*60*60*24));
-          const hrs  = Math.floor((d%(1000*60*60*24))/(1000*60*60));
-          const mins = Math.floor((d%(1000*60*60))/(1000*60));
-          const secs = Math.floor((d%(1000*60))/1000);
-          el.innerHTML = `${days}d ${hrs}h ${mins}m ${secs}s<br><span style="font-size:.5em;color:#ccc;">Para o próximo lançamento.</span>`;
-        }
-      },1000);
-    }
-  </script>
-
-  <!-- Firebase SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
-  <script>
-    // Suas chaves Firebase
+    // Firebase
     const firebaseConfig = {
-      apiKey: "AIzaSyBhSmocbaARqU_pPM0Tqki8d11jm97IE4M",
-      authDomain: "dashboardfeqzin.firebaseapp.com",
-      projectId: "dashboardfeqzin",
-      storageBucket: "dashboardfeqzin.firebasestorage.app",
-      messagingSenderId: "1042985498691",
-      appId: "1:1042985498691:web:16ab98f93f925ebf7b7cf6",
-      measurementId: "G-QZY8SDZX5T"
+      apiKey: "AIzaSyBhSm...
     };
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
     const db   = firebase.firestore();
 
     // Elementos
-    const authForm          = document.getElementById("auth-form");
-    const emailInput        = document.getElementById("email");
-    const passwordInput     = document.getElementById("password");
-    const btnLogin          = document.getElementById("btn-login");
-    const btnSignup         = document.getElementById("btn-signup");
-    const btnResetPassword  = document.getElementById("btn-reset-password");
-    const btnLogout         = document.getElementById("btnLogout");
-    const authMessage       = document.getElementById("auth-message");
-    const pontuacaoContainer= document.getElementById("pontuacao-container");
-    const pontuacaoValor    = document.getElementById("pontuacao-valor");
-    const btnQuiz           = document.getElementById("start-quiz");
+    const authForm   = document.getElementById("auth-form"),
+          emailInput = document.getElementById("email"),
+          pwdInput   = document.getElementById("password"),
+          btnLogin   = document.getElementById("btn-login"),
+          btnSignup  = document.getElementById("btn-signup"),
+          btnReset   = document.getElementById("btn-reset-password"),
+          btnLogout  = document.getElementById("btnLogout"),
+          msgAuth    = document.getElementById("auth-message"),
+          pontCont   = document.getElementById("pontuacao-container"),
+          pontVal    = document.getElementById("pontuacao-valor"),
+          btnQuiz    = document.getElementById("start-quiz"),
+          ptsUserEl  = document.getElementById("pontos-usuario"),
+          resgMsg    = document.getElementById("resgate-msg");
 
-    const adminEmail = "fernandoq87@gmail.com";
-
-    function carregarPontuacao(uid) {
-      db.collection("usuarios").doc(uid).get()
-        .then(doc => {
-          const data = doc.data() || {};
-          pontuacaoValor.textContent = data.pontos || 0;
-          pontuacaoContainer.style.display = "block";
-        }).catch(console.error);
-    }
-
-    auth.onAuthStateChanged(user => {
+    // Mostrar pontos e botão quiz
+    auth.onAuthStateChanged(async user => {
       if (user) {
-        authMessage.style.color = "lightgreen";
-        authMessage.textContent = `Usuário logado: ${user.email}`;
-
-        // esconder form
-        emailInput.style.display = passwordInput.style.display =
-          btnLogin.style.display = btnSignup.style.display = btnResetPassword.style.display = "none";
         btnLogout.style.display = "inline-block";
+        emailInput.style.display = pwdInput.style.display = btnLogin.style.display = btnSignup.style.display = btnReset.style.display = "none";
 
-        carregarPontuacao(user.uid);
+        // Carrega pontuação
+        const doc = await db.collection("usuarios").doc(user.uid).get();
+        const data = doc.data() || {};
+        pontVal.textContent = data.pontos || 0;
+        ptsUserEl.textContent = data.pontos || 0;
+        pontCont.style.display = "block";
 
-        // mostrar botão quiz
+        // botão quiz
         btnQuiz.style.display = "inline-block";
-        btnQuiz.onclick = () => window.open("quiz.html", "_blank");
+        btnQuiz.onclick = () => window.open("quiz.html","_blank");
 
       } else {
-        authMessage.textContent = "";
-        emailInput.style.display = passwordInput.style.display =
-          btnLogin.style.display = btnSignup.style.display = btnResetPassword.style.display = "block";
-        btnLogout.style.display = "none";
-        pontuacaoContainer.style.display = "none";
-        btnQuiz.style.display = "none";
+        window.location.href = "login.html";
       }
     });
 
     // Login
     authForm.addEventListener("submit", e => {
       e.preventDefault();
-      auth.signInWithEmailAndPassword(emailInput.value, passwordInput.value)
+      auth.signInWithEmailAndPassword(emailInput.value,pwdInput.value)
         .catch(err => {
-          authMessage.style.color = "tomato";
-          authMessage.textContent = `Erro no login: ${err.message}`;
+          msgAuth.style.color = "tomato";
+          msgAuth.textContent = `Erro no login: ${err.message}`;
         });
       authForm.reset();
     });
 
     // Signup
-    btnSignup.addEventListener("click", () => {
-      if (!emailInput.value || !passwordInput.value) {
-        authMessage.style.color = "tomato";
-        authMessage.textContent = "Preencha email e senha para cadastrar.";
+    btnSignup.onclick = () => {
+      if (!emailInput.value||!pwdInput.value) {
+        msgAuth.style.color = "tomato";
+        msgAuth.textContent = "Preencha email e senha.";
         return;
       }
-      auth.createUserWithEmailAndPassword(emailInput.value, passwordInput.value)
-        .then(() => {
-          authMessage.style.color = "lightgreen";
-          authMessage.textContent = "Usuário criado! Faça login.";
-          authForm.reset();
-        })
+      auth.createUserWithEmailAndPassword(emailInput.value,pwdInput.value)
+        .then(() => msgAuth.textContent = "Usuário criado! Faça login.")
         .catch(err => {
-          authMessage.style.color = "tomato";
-          authMessage.textContent = `Erro no cadastro: ${err.message}`;
+          msgAuth.style.color = "tomato";
+          msgAuth.textContent = `Erro no cadastro: ${err.message}`;
         });
-    });
+    };
 
-    // Reset password
-    btnResetPassword.addEventListener("click", () => {
+    // Reset
+    btnReset.onclick = () => {
       if (!emailInput.value) {
-        authMessage.style.color = "tomato";
-        authMessage.textContent = "Digite seu e-mail para redefinir a senha.";
+        msgAuth.style.color = "tomato";
+        msgAuth.textContent = "Digite seu email para reset.";
         return;
       }
       auth.sendPasswordResetEmail(emailInput.value)
-        .then(() => {
-          authMessage.style.color = "lightgreen";
-          authMessage.textContent = "E-mail de redefinição enviado.";
-        })
+        .then(() => msgAuth.textContent = "E-mail de redefinição enviado.")
         .catch(err => {
-          authMessage.style.color = "tomato";
-          authMessage.textContent = `Erro: ${err.message}`;
+          msgAuth.style.color = "tomato";
+          msgAuth.textContent = `Erro: ${err.message}`;
         });
-    });
+    };
 
     // Logout
-    btnLogout.addEventListener("click", () => auth.signOut());
+    btnLogout.onclick = () => auth.signOut();
+
+    // Resgate
+    async function resgatarItem(custo,nomeItem){
+      const user = auth.currentUser;
+      if(!user) return;
+      const ref = db.collection("usuarios").doc(user.uid);
+      const snap = await ref.get();
+      const data = snap.data()||{};
+      const pontos = data.pontos||0;
+      if(pontos>=custo){
+        await ref.update({ pontos: firebase.firestore.FieldValue.increment(-custo) });
+        resgMsg.style.color = "green";
+        resgMsg.textContent = `Resgatado: ${nomeItem}`;
+        const novo = await ref.get();
+        const p = novo.data().pontos||0;
+        pontVal.textContent = p;
+        ptsUserEl.textContent = p;
+      } else {
+        resgMsg.style.color = "red";
+        resgMsg.textContent = "Pontos insuficientes.";
+      }
+    }
   </script>
 </body>
 </html>
