@@ -12,34 +12,34 @@
       margin: 40px auto;
       padding: 20px;
     }
-    h1, h2 { text-align: center; }
-    button, select {
-      display: block;
-      width: 100%;
-      margin: 10px 0;
-      padding: 12px;
-      background: #1db954;
-      border: none;
-      border-radius: 6px;
-      color: white;
-      font-size: 1em;
-      cursor: pointer;
+    h1,h2 { text-align: center; }
+    #variation-selection button,
+    #quiz-container button,
+    #btn-resgatar,
+    #resgate-section select {
+      display: block; width: 100%; margin: 10px 0;
+      padding: 12px; background: #1db954; border: none;
+      border-radius: 6px; color: white; font-size:1em; cursor:pointer;
     }
-    button:hover, select:hover { background: #1ed760; }
-    #message, #resgate-msg { margin: 20px 0; text-align: center; }
-    #quiz-container, #resgate-section { display: none; }
-    #resgate-section select { background: #222; color: #f1f1f1; }
+    #variation-selection button:hover,
+    #quiz-container button:hover,
+    #btn-resgatar:hover {
+      background: #1ed760;
+    }
+    #message,#resgate-msg { margin:20px 0; text-align:center; }
+    #quiz-container,#resgate-section { display:none; }
+    #resgate-section select { background:#222; color:#f1f1f1; }
   </style>
 </head>
 <body>
   <h1>Quiz & Resgate Feqzin</h1>
 
-  <!-- Seleção de variações -->
+  <!-- 1) Escolha de variação -->
   <div id="variation-selection">
     <h2>Escolha seu Quiz</h2>
   </div>
 
-  <!-- Tela de quiz -->
+  <!-- 2) Quiz -->
   <div id="quiz-screen" style="display:none;">
     <div id="message"></div>
     <div id="quiz-container">
@@ -51,24 +51,20 @@
     </div>
   </div>
 
-  <!-- Seção de resgate -->
+  <!-- 3) Resgate -->
   <div id="resgate-section">
     <h2>Resgate de Itens</h2>
     <div id="resgate-msg"></div>
     <p>Seus pontos: <span id="pontos-resgate">0</span></p>
-    <select id="item-select">
-      <!-- opções serão inseridas via JS -->
-    </select>
+    <select id="item-select"></select>
     <button id="btn-resgatar">Resgatar Item</button>
   </div>
 
-  <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
-
   <script>
-    // Configuração Firebase (mesmas chaves do index.html)
+    // Firebase
     const firebaseConfig = {
       apiKey: "AIzaSyBhSmocbaARqU_pPM0Tqki8d11jm97IE4M",
       authDomain: "dashboardfeqzin.firebaseapp.com",
@@ -83,92 +79,146 @@
     const db   = firebase.firestore();
     const adminEmail = "fernandoq87@gmail.com";
 
-    // 1) Definição das variações de quiz
+    // 1) Variações com perguntas reais
     const quizVariations = {
-      quizA: { label: "Quiz A: Geografia",   questions: [ /* ... */ ] },
-      quizB: { label: "Quiz B: Arte",        questions: [ /* ... */ ] },
-      quizC: { label: "Quiz C: Ciências",     questions: [ /* ... */ ] },
-      quizD: { label: "Quiz D: Cultura Pop", questions: [ /* ... */ ] }
+      quizA: {
+        label: "Quiz A: Geografia",
+        questions: [
+          {
+            question: "Qual é a capital do Brasil?",
+            answers: [
+              { text:"Rio de Janeiro", correct:false },
+              { text:"São Paulo",      correct:false },
+              { text:"Brasília",       correct:true  },
+              { text:"Salvador",       correct:false }
+            ]
+          }
+        ]
+      },
+      quizB: {
+        label: "Quiz B: Arte",
+        questions: [
+          {
+            question: "Quem pintou a Mona Lisa?",
+            answers: [
+              { text:"Van Gogh",          correct:false },
+              { text:"Leonardo da Vinci", correct:true  },
+              { text:"Picasso",           correct:false },
+              { text:"Monet",             correct:false }
+            ]
+          }
+        ]
+      },
+      quizC: {
+        label: "Quiz C: Ciências",
+        questions: [
+          {
+            question: "Qual elemento tem símbolo químico O?",
+            answers: [
+              { text:"Oxigênio", correct:true },
+              { text:"Ozônio",   correct:false },
+              { text:"Ósmio",    correct:false },
+              { text:"Ouro",     correct:false }
+            ]
+          }
+        ]
+      },
+      quizD: {
+        label: "Quiz D: Cultura Pop",
+        questions: [
+          {
+            question: "Em que série aparece Jon Snow?",
+            answers: [
+              { text:"Vikings",           correct:false },
+              { text:"Game of Thrones",   correct:true  },
+              { text:"The Witcher",       correct:false },
+              { text:"The Mandalorian",   correct:false }
+            ]
+          }
+        ]
+      }
     };
 
-    // 2) Itens disponíveis para resgate
+    // 2) Itens de resgate
     const redeemItems = [
-      { id: 'merch1', label: 'Camisa Oficial', cost: 50 },
-      { id: 'download', label: 'Download exclusivo', cost: 30 },
-      { id: 'shoutout', label: 'Shoutout nas redes', cost: 20 },
-      { id: 'demo', label: 'Demo track inédita', cost: 40 }
+      { id:'merch1', label:'Camisa Oficial',    cost:50 },
+      { id:'download', label:'Download exclusivo', cost:30 },
+      { id:'shoutout', label:'Shoutout nas redes', cost:20 },
+      { id:'demo',     label:'Demo track inédita', cost:40 }
     ];
 
     // Estado
-    let currentVariation = null;
-    let currentIndex     = 0;
-    let userData         = {};
+    let currentVariation = null,
+        currentIndex     = 0,
+        userData         = {};
 
-    // Monta seleção de quizzes
-    function montarVariations() {
+    // Monta botões de variações
+    function montarVariations(){
       const sel = document.getElementById("variation-selection");
       sel.innerHTML = "<h2>Escolha seu Quiz</h2>";
-      Object.entries(quizVariations).forEach(([key, quizObj]) => {
+      Object.entries(quizVariations).forEach(([key,q])=>{
         const btn = document.createElement("button");
-        btn.textContent = quizObj.label;
-        btn.onclick = () => iniciarVariation(key);
+        btn.textContent = q.label;
+        btn.onclick     = ()=> iniciarVariation(key);
         sel.appendChild(btn);
       });
     }
 
-    // Inicia quiz selecionado
-    function iniciarVariation(key) {
+    // Inicia quiz
+    function iniciarVariation(key){
       currentVariation = key;
       currentIndex     = 0;
       document.getElementById("variation-selection").style.display = "none";
       carregarQuizScreen();
     }
 
-    // Carrega quiz
-    function carregarQuizScreen() {
-      const varObj = quizVariations[currentVariation];
-      document.getElementById("message").textContent = varObj.label;
+    // Exibe quiz
+    function carregarQuizScreen(){
+      const v = quizVariations[currentVariation];
+      document.getElementById("message").textContent = v.label;
       document.getElementById("quiz-screen").style.display = "block";
-      montarPergunta(varObj.questions[currentIndex]);
+      montarPergunta(v.questions[currentIndex]);
     }
 
-    function montarPergunta(perguntaObj) {
+    // Exibe pergunta
+    function montarPergunta(qObj){
       document.getElementById("quiz-container").style.display = "block";
-      document.getElementById("question").textContent = perguntaObj.question;
-      perguntaObj.answers.forEach((ans,i) => {
+      document.getElementById("question").textContent = qObj.question;
+      qObj.answers.forEach((ans,i)=>{
         const btn = document.getElementById(`a${i+1}`);
         btn.textContent = ans.text;
-        btn.onclick = () => responder(ans.correct);
+        btn.onclick     = ()=> responder(ans.correct);
       });
     }
 
-    // Processa resposta
-    async function responder(correct) {
+    // Responde
+    async function responder(correct){
       const user = auth.currentUser;
-      if (!user) return;
+      if(!user) return;
       const docRef = db.collection("usuarios").doc(user.uid);
       const snap   = await docRef.get();
-      const data   = snap.exists ? snap.data() : { pontos:0, quizRespondido:{} };
+      const data   = snap.exists? snap.data() : { pontos:0, quizRespondido:{} };
 
-      if (data.quizRespondido?.[currentVariation] && user.email !== adminEmail) {
-        alert("Você já respondeu este quiz.");
-        return;
+      // bloqueio
+      if(data.quizRespondido?.[currentVariation] && user.email!==adminEmail){
+        return alert("Você já respondeu este quiz.");
       }
 
-      const pontosGanhos = correct ? 10 : 0;
+      const pontosGanhos = correct?10:0;
       const updates = { pontos: firebase.firestore.FieldValue.increment(pontosGanhos) };
-      if (user.email !== adminEmail) {
+      if(user.email!==adminEmail){
         updates[`quizRespondido.${currentVariation}`] = true;
       }
       await docRef.set(updates, { merge:true });
-      alert(correct ? `Correto! +${pontosGanhos} pontos` : "Errado!");
+      alert(correct? `Correto! +${pontosGanhos} pontos` : "Errado!");
 
-      const perguntas = quizVariations[currentVariation].questions;
-      if (currentIndex < perguntas.length - 1) {
+      // próximo ou resgate
+      const qs = quizVariations[currentVariation].questions;
+      if(currentIndex < qs.length-1){
         currentIndex++;
-        montarPergunta(perguntas[currentIndex]);
+        montarPergunta(qs[currentIndex]);
       } else {
-        // final do quiz: mostra seção de resgate
+        // fim do quiz
         const finalSnap = await docRef.get();
         userData = finalSnap.data();
         document.getElementById("quiz-container").style.display = "none";
@@ -178,60 +228,47 @@
     }
 
     // Configura resgate
-    function iniciarResgate() {
+    function iniciarResgate(){
       const sec = document.getElementById("resgate-section");
-      const pname = document.getElementById("pontos-resgate");
-      pname.textContent = userData.pontos;
+      document.getElementById("pontos-resgate").textContent = userData.pontos;
       const sel = document.getElementById("item-select");
-      sel.innerHTML = "<option value=''>-- Selecione um item --</option>";
-      redeemItems.forEach(item => {
+      sel.innerHTML = "<option value=''>-- selecione --</option>";
+      redeemItems.forEach(i=>{
         const opt = document.createElement("option");
-        opt.value = item.id;
-        opt.textContent = `${item.label} — ${item.cost} pontos`;
+        opt.value = i.id;
+        opt.textContent = `${i.label} — ${i.cost} pontos`;
         sel.appendChild(opt);
       });
       sec.style.display = "block";
     }
 
-    // Evento de resgate
-    document.getElementById("btn-resgatar").onclick = async () => {
-      const sel = document.getElementById("item-select");
-      const chosenId = sel.value;
-      const msgEl = document.getElementById("resgate-msg");
+    // Resgatar
+    document.getElementById("btn-resgatar").onclick = async ()=>{
+      const selVal = document.getElementById("item-select").value;
+      const msgEl  = document.getElementById("resgate-msg");
       msgEl.textContent = "";
-
-      if (!chosenId) {
-        msgEl.textContent = "Selecione um item para resgatar.";
-        return;
-      }
-      const item = redeemItems.find(i=>i.id===chosenId);
-      if (userData.pontos < item.cost) {
-        msgEl.textContent = "Pontos insuficientes.";
-        return;
-      }
-
-      // Deduz pontos e registra request
+      const item = redeemItems.find(i=>i.id===selVal);
+      if(!item) return msgEl.textContent = "Selecione um item.";
+      if(userData.pontos < item.cost) return msgEl.textContent = "Pontos insuficientes.";
       const docRef = db.collection("usuarios").doc(auth.currentUser.uid);
       await docRef.update({
         pontos: firebase.firestore.FieldValue.increment(-item.cost),
-        [`resgates.${chosenId}`]: firebase.firestore.FieldValue.serverTimestamp()
+        [`resgates.${item.id}`]: firebase.firestore.FieldValue.serverTimestamp()
       });
-
-      // Atualiza UI
       userData.pontos -= item.cost;
       document.getElementById("pontos-resgate").textContent = userData.pontos;
       msgEl.textContent = `Você resgatou: ${item.label}!`;
     };
 
-    // Inicializa após autenticação
-    auth.onAuthStateChanged(async user => {
-      if (!user) {
+    // Auth listener
+    auth.onAuthStateChanged(async user=>{
+      if(!user){
         document.getElementById("variation-selection").textContent = "Faça login no dashboard antes.";
         return;
       }
       const doc = await db.collection("usuarios").doc(user.uid).get();
-      userData = doc.exists ? doc.data() : { pontos:0, quizRespondido:{}, resgates:{} };
-      if (!doc.exists) {
+      userData = doc.exists? doc.data() : { pontos:0, quizRespondido:{}, resgates:{} };
+      if(!doc.exists){
         await db.collection("usuarios").doc(user.uid).set(userData);
       }
       montarVariations();
