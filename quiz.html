@@ -76,7 +76,7 @@
     const db   = firebase.firestore();
     const adminEmail = "fernandoq87@gmail.com";
 
-    // 1) Definição das variações de quiz
+    // 1) Definição das variações de quiz (4 variações)
     const quizVariations = {
       quizA: {
         label: "Quiz A: Geografia",
@@ -99,16 +99,45 @@
           {
             question: "Quem pintou a Mona Lisa?",
             answers: [
-              { text:"Vincent van Gogh", correct:false },
+              { text:"Van Gogh",          correct:false },
               { text:"Leonardo da Vinci", correct:true  },
-              { text:"Pablo Picasso",     correct:false },
-              { text:"Claude Monet",      correct:false }
+              { text:"Picasso",           correct:false },
+              { text:"Monet",             correct:false }
             ]
           },
           // ... outras perguntas da variação B
         ]
+      },
+      quizC: {
+        label: "Quiz C: Ciências",
+        questions: [
+          {
+            question: "Qual elemento tem símbolo químico O?",
+            answers: [
+              { text:"Oxigênio",    correct:true  },
+              { text:"Ósmio",       correct:false },
+              { text:"Ouro",        correct:false },
+              { text:"Ozônio",      correct:false }
+            ]
+          },
+          // ... outras perguntas da variação C
+        ]
+      },
+      quizD: {
+        label: "Quiz D: Cultura Pop",
+        questions: [
+          {
+            question: "Em que série aparece o personagem Jon Snow?",
+            answers: [
+              { text:"Vikings",           correct:false },
+              { text:"Game of Thrones",   correct:true  },
+              { text:"The Witcher",       correct:false },
+              { text:"The Mandalorian",   correct:false }
+            ]
+          },
+          // ... outras perguntas da variação D
+        ]
       }
-      // adicione quantas variações quiser
     };
 
     // controles de estado
@@ -161,7 +190,10 @@
       if (!user) return;
 
       const docRef = db.collection("usuarios").doc(user.uid);
-      const data   = userData;
+
+      // Carrega data atual
+      const docSnap = await docRef.get();
+      const data    = docSnap.exists ? docSnap.data() : { pontos:0, quizRespondido:{} };
 
       // bloqueio para usuários comuns que já responderam esta variação
       if (data.quizRespondido?.[currentVariation] && user.email !== adminEmail) {
@@ -189,8 +221,9 @@
         montarPergunta(perguntas[currentIndex]);
       } else {
         // fim do quiz
-        const novo = (await docRef.get()).data();
-        document.getElementById("message").textContent = `Quiz finalizado! Seus pontos: ${novo.pontos}`;
+        const finalSnap = await docRef.get();
+        const finalData = finalSnap.data();
+        document.getElementById("message").textContent = `Quiz finalizado! Seus pontos: ${finalData.pontos}`;
         document.getElementById("quiz-container").style.display = "none";
       }
     }
