@@ -1,175 +1,220 @@
-<!-- mesmo <head> e <style> do exemplo anterior -->
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  import {
-    getAuth,
-    onAuthStateChanged
-  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-  import {
-    getFirestore,
-    doc,
-    getDoc,
-    updateDoc,
-    setDoc
-  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyBhSmocbaARqU_pPM0Tqki8d11jm97IE4M",
-    authDomain: "dashboardfeqzin.firebaseapp.com",
-    projectId: "dashboardfeqzin",
-    storageBucket: "dashboardfeqzin.firebasestorage.app",
-    messagingSenderId: "1042985498691",
-    appId: "1:1042985498691:web:16ab98f93f925ebf7b7cf6",
-    measurementId: "G-QZY8SDZX5T"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
-
-  let currentUser = null;
-  let quizRespondido = false;
-  let pontos = 0;
-
-  const perguntas = [
-    {
-      pergunta: "Qual ano Feqzin começou a produzir músicas?",
-      opcoes: ["2015", "2017", "2020", "2022"],
-      resposta: "2022"
-    },
-    {
-      pergunta: "Qual bairro o artista Feqzin é?",
-      opcoes: ["Vila Maria", "Brasilândia", "Jardim Brasil", "Jaçanã"],
-      resposta: "Jardim Brasil"
-    },
-    {
-      pergunta: "Qual é o estilo musical do Feqzin?",
-      opcoes: ["Funk", "Sertanejo", "Trap", "Pagode"],
-      resposta: "Trap"
-    },
-    {
-      pergunta: "Qual é o nome artístico do Fernando?",
-      opcoes: ["MC Fe", "Feqzin", "FZ7", "ZinFe"],
-      resposta: "Feqzin"
-    },
-    {
-      pergunta: "Qual ferramenta Feqzin usou para produzir a primeira faixa?",
-      opcoes: ["Notebook", "Estúdio", "Celular", "Mesa de som"],
-      resposta: "Celular"
-    },
-    {
-      pergunta: "Feqzin é conhecido por qual característica vocal?",
-      opcoes: ["Timbre rouco", "Autenticidade", "Auto-Tune", "Graves potentes"],
-      resposta: "Autenticidade"
-    },
-    {
-      pergunta: "Qual é a principal estética do Feqzin?",
-      opcoes: ["Lo-fi", "Brega Funk", "Underground", "Sertanejo universitário"],
-      resposta: "Underground"
-    },
-    {
-      pergunta: "Quando Feqzin iniciou sua trajetória oficialmente?",
-      opcoes: ["2019", "2020", "2021", "2022"],
-      resposta: "2022"
-    },
-    {
-      pergunta: "Que tipo de som Feqzin lança?",
-      opcoes: ["MPB", "Trap", "Indie Rock", "Funk Melody"],
-      resposta: "Trap"
-    },
-    {
-      pergunta: "Em que cidade fica o bairro Jardim Brasil?",
-      opcoes: ["Campinas", "São Paulo", "Guarulhos", "Santos"],
-      resposta: "São Paulo"
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quiz do Feqzin</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #1d1d1d;
+      color: white;
+      padding: 20px;
     }
-  ];
-
-  function renderPergunta(index) {
-    const q = perguntas[index];
-    const quizArea = document.getElementById("quiz-area");
-    quizArea.innerHTML = `
-      <div class="question"><strong>${q.pergunta}</strong></div>
-      <div class="options">
-        ${q.opcoes.map((op) => `
-          <div class="option">
-            <input type="radio" name="resposta" value="${op}" id="${op}" />
-            <label for="${op}">${op}</label>
-          </div>
-        `).join("")}
-      </div>
-      <button onclick="verificarResposta(${index})">Confirmar</button>
-    `;
-  }
-
-  window.startQuiz = () => {
-    if (quizRespondido && currentUser?.email !== "fernandoq87@gmail.com") {
-      alert("Você já respondeu esse quiz!");
-      return;
+    h1 {
+      color: lime;
     }
-    pontos = 0;
-    renderPergunta(0);
-  };
-
-  window.verificarResposta = async (index) => {
-    const selecionada = document.querySelector('input[name="resposta"]:checked');
-    if (!selecionada) return alert("Escolha uma opção!");
-    const correta = perguntas[index].resposta;
-    if (selecionada.value === correta) {
-      pontos += 10;
+    #quiz-container, #resgate-container {
+      margin-top: 30px;
+      background: #333;
+      padding: 20px;
+      border-radius: 8px;
     }
+    .question {
+      margin-bottom: 20px;
+    }
+    button {
+      background-color: lime;
+      color: black;
+      padding: 10px;
+      margin-top: 10px;
+      border: none;
+      cursor: pointer;
+    }
+    .answer {
+      display: block;
+      margin: 8px 0;
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>Quiz do Feqzin</h1>
 
-    if (index + 1 < perguntas.length) {
-      renderPergunta(index + 1);
-    } else {
-      document.getElementById("quiz-area").innerHTML = `<h3>Quiz Finalizado!</h3><p>Você fez ${pontos} pontos.</p>`;
-      if (currentUser) {
-        const userDoc = doc(db, "usuarios", currentUser.uid);
-        const snapshot = await getDoc(userDoc);
-        const dados = snapshot.exists() ? snapshot.data() : { pontos: 0, quizRespondido: false };
-        await updateDoc(userDoc, {
-          pontos: dados.pontos + pontos,
-          quizRespondido: currentUser.email === "fernandoq87@gmail.com" ? false : true
-        });
-        carregarPontos(currentUser);
+  <div id="resgate-container">
+    <h2>🎁 Resgate de Prêmios</h2>
+    <p id="user-pontos">Pontos: carregando...</p>
+    <button id="resgatar-btn">Resgatar item por 50 pontos</button>
+    <p id="resgate-status"></p>
+  </div>
+
+  <div id="quiz-container" class="hidden">
+    <div id="pergunta-area"></div>
+    <button id="next-btn" class="hidden">Próxima Pergunta</button>
+    <p id="final-msg" class="hidden"></p>
+  </div>
+
+  <button id="start-btn">Começar Quiz</button>
+
+  <!-- Firebase e Script -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyBhSmocbaARqU_pPM0Tqki8d11jm97IE4M",
+      authDomain: "dashboardfeqzin.firebaseapp.com",
+      projectId: "dashboardfeqzin",
+      storageBucket: "dashboardfeqzin.appspot.com",
+      messagingSenderId: "1042985498691",
+      appId: "1:1042985498691:web:16ab98f93f925ebf7b7cf6",
+      measurementId: "G-QZY8SDZX5T"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    let user = null;
+    let currentQuestionIndex = 0;
+    let score = 0;
+    let perguntasRespondidas = false;
+
+    const perguntas = [
+      {
+        pergunta: "Qual é o nome artístico do Fernando?",
+        respostas: ["Feqzin", "MC Fe", "ZinFe", "Fezinho"],
+        correta: "Feqzin"
+      },
+      {
+        pergunta: "Em que bairro de SP ele nasceu?",
+        respostas: ["Capão Redondo", "Jardim Brasil", "Itaquera", "Perus"],
+        correta: "Jardim Brasil"
+      },
+      {
+        pergunta: "Em que ano Feqzin começou a produzir suas faixas?",
+        respostas: ["2015", "2017", "2020", "2022"],
+        correta: "2022"
+      },
+      {
+        pergunta: "Feqzin se destaca por qual característica vocal?",
+        respostas: ["Autotune extremo", "Flow calmo", "Vocal autêntico", "Beat rápido"],
+        correta: "Vocal autêntico"
+      },
+      {
+        pergunta: "Qual é o objetivo do quiz?",
+        respostas: ["Ganhar seguidores", "Testar conhecimentos", "Acumular pontos", "Reclamar do sistema"],
+        correta: "Acumular pontos"
       }
-    }
-  };
+    ];
 
-  async function carregarPontos(user) {
-    if (!user) {
-      document.getElementById("pontos").innerText = "Pontos: (faça login para resgatar)";
-      return;
-    }
-    const userDoc = doc(db, "usuarios", user.uid);
-    const snapshot = await getDoc(userDoc);
-    if (snapshot.exists()) {
-      const dados = snapshot.data();
-      quizRespondido = dados.quizRespondido || false;
-      document.getElementById("pontos").innerText = `Pontos: ${dados.pontos || 0}`;
-    } else {
-      await setDoc(userDoc, { pontos: 0, quizRespondido: false });
-      document.getElementById("pontos").innerText = `Pontos: 0`;
-    }
-  }
+    const userPontos = document.getElementById("user-pontos");
+    const resgatarBtn = document.getElementById("resgatar-btn");
+    const resgateStatus = document.getElementById("resgate-status");
+    const startBtn = document.getElementById("start-btn");
+    const quizContainer = document.getElementById("quiz-container");
+    const perguntaArea = document.getElementById("pergunta-area");
+    const nextBtn = document.getElementById("next-btn");
+    const finalMsg = document.getElementById("final-msg");
 
-  window.resgatarItem = async () => {
-    if (!currentUser) return alert("Você precisa estar logado para resgatar prêmios.");
-    const userDoc = doc(db, "usuarios", currentUser.uid);
-    const snapshot = await getDoc(userDoc);
-    if (snapshot.exists()) {
-      const dados = snapshot.data();
-      if (dados.pontos >= 50) {
-        await updateDoc(userDoc, { pontos: dados.pontos - 50 });
-        alert("Item resgatado com sucesso!");
-        carregarPontos(currentUser);
+    auth.onAuthStateChanged(async (u) => {
+      if (u) {
+        user = u;
+        const doc = await db.collection("usuarios").doc(user.uid).get();
+        const data = doc.data();
+        const pontos = data?.pontos || 0;
+        const quizRespondido = data?.quizRespondido;
+
+        userPontos.innerText = `Pontos: ${pontos}`;
+        if (quizRespondido && user.email !== "fernandoq87@gmail.com") {
+          startBtn.disabled = true;
+          startBtn.innerText = "Quiz já respondido";
+        }
+
+        resgatarBtn.onclick = async () => {
+          if (pontos >= 50) {
+            await db.collection("usuarios").doc(user.uid).update({ pontos: pontos - 50 });
+            resgateStatus.innerText = "🎉 Item resgatado com sucesso!";
+            userPontos.innerText = `Pontos: ${pontos - 50}`;
+          } else {
+            resgateStatus.innerText = "❌ Pontos insuficientes.";
+          }
+        };
       } else {
-        alert("Pontos insuficientes.");
+        userPontos.innerText = "Faça login para acumular pontos.";
+        resgatarBtn.disabled = true;
+        startBtn.disabled = true;
+      }
+    });
+
+    startBtn.onclick = () => {
+      if (!user) return alert("Você precisa estar logado para jogar.");
+      startBtn.classList.add("hidden");
+      quizContainer.classList.remove("hidden");
+      carregarPergunta();
+    };
+
+    nextBtn.onclick = () => {
+      currentQuestionIndex++;
+      if (currentQuestionIndex < perguntas.length) {
+        carregarPergunta();
+      } else {
+        finalizarQuiz();
+      }
+    };
+
+    function carregarPergunta() {
+      const perguntaAtual = perguntas[currentQuestionIndex];
+      perguntaArea.innerHTML = `
+        <div class="question">
+          <h3>${perguntaAtual.pergunta}</h3>
+          ${perguntaAtual.respostas.map(resp => `
+            <label class="answer">
+              <input type="radio" name="resposta" value="${resp}"> ${resp}
+            </label>
+          `).join("")}
+          <button onclick="verificarResposta()">Responder</button>
+        </div>
+      `;
+      nextBtn.classList.add("hidden");
+    }
+
+    window.verificarResposta = () => {
+      const respostaSelecionada = document.querySelector("input[name='resposta']:checked");
+      if (!respostaSelecionada) return alert("Selecione uma resposta.");
+      const resposta = respostaSelecionada.value;
+      const correta = perguntas[currentQuestionIndex].correta;
+      if (resposta === correta) score += 10;
+
+      nextBtn.classList.remove("hidden");
+    };
+
+    async function finalizarQuiz() {
+      perguntaArea.innerHTML = "";
+      nextBtn.classList.add("hidden");
+      finalMsg.classList.remove("hidden");
+      finalMsg.innerText = `Você terminou o quiz com ${score} pontos!`;
+
+      if (user) {
+        const docRef = db.collection("usuarios").doc(user.uid);
+        const doc = await docRef.get();
+        const dadosAtuais = doc.data();
+        if (user.email !== "fernandoq87@gmail.com") {
+          await docRef.update({
+            pontos: (dadosAtuais?.pontos || 0) + score,
+            quizRespondido: true
+          });
+        } else {
+          await docRef.update({
+            pontos: (dadosAtuais?.pontos || 0) + score
+          });
+        }
+        userPontos.innerText = `Pontos: ${(dadosAtuais?.pontos || 0) + score}`;
       }
     }
-  };
-
-  onAuthStateChanged(auth, (user) => {
-    currentUser = user;
-    carregarPontos(user);
-  });
-</script>
+  </script>
+</body>
+</html>
