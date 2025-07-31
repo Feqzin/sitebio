@@ -1,151 +1,117 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Quiz Feqzin | Ganhe Pontos e Resgate Prêmios</title>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Quiz & Resgate Feqzin</title>
   <style>
     body {
+      font-family: Arial, sans-serif;
       background: #0e0e0e;
       color: #f1f1f1;
-      font-family: Arial, sans-serif;
-      margin: 0; padding: 0 20px 40px;
-      max-width: 700px; margin-left: auto; margin-right: auto;
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 20px;
     }
     h1, h2 {
-      color: #1db954;
       text-align: center;
+      margin-bottom: 20px;
     }
-    #auth-section, #quiz-section, #resgate-section, #resultado-section {
-      background: #111;
-      border: 2px solid #1db954;
-      border-radius: 12px;
-      padding: 20px;
-      margin-top: 30px;
-    }
-    #auth-message {
-      margin-top: 10px;
-      min-height: 1.2em;
-      font-weight: bold;
-      text-align: center;
-    }
-    input[type="email"], input[type="password"] {
+
+    /* Botões e selects */
+    button, select {
+      display: block;
       width: 100%;
-      padding: 10px;
-      margin: 8px 0;
-      border-radius: 6px;
-      border: 1px solid #444;
-      background: #222;
-      color: #f1f1f1;
-      font-size: 1em;
-    }
-    button {
+      margin: 10px 0;
+      padding: 12px;
       background: #1db954;
-      color: #fff;
       border: none;
       border-radius: 6px;
-      padding: 12px 20px;
-      font-weight: bold;
+      color: #fff;
       font-size: 1em;
       cursor: pointer;
-      margin-top: 10px;
-      width: 100%;
-      transition: background 0.3s ease;
     }
-    button:hover {
+    button:hover, select:hover {
       background: #1ed760;
     }
-    #btnLogout {
-      background: #f44336;
-      margin-top: 15px;
-      display: none;
-      width: auto;
-      padding: 10px 15px;
-    }
-    .hidden { display: none; }
-    .question {
-      margin-top: 20px;
-    }
-    .answers button {
-      width: 100%;
-      margin: 6px 0;
-      background: #222;
-      color: #f1f1f1;
-      border: 1px solid #444;
-      border-radius: 6px;
-      padding: 10px;
-      font-size: 1em;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-    .answers button:hover {
-      background: #333;
-    }
-    #pontuacao {
-      font-size: 1.2em;
-      margin-top: 10px;
+
+    /* Mensagens */
+    #message, #resgate-msg {
+      margin: 20px 0;
       text-align: center;
-      color: #1db954;
     }
-    #resgate-list {
-      margin-top: 15px;
+
+    /* Containers iniciais */
+    #variation-selection, #quiz-screen, #resgate-section {
+      margin-top: 30px;
     }
-    #resgate-list button {
-      margin: 5px 0;
-      background: #1db954;
-      width: 100%;
-      font-weight: bold;
+
+    /* Quiz */
+    #quiz-screen { }
+    #quiz-container {
+      display: none;
+      margin-top: 10px;
+    }
+
+    /* Resgate */
+    #resgate-section {
+      display: none;
+      background: #111;
+      padding: 20px;
+      border: 2px solid #1db954;
+      border-radius: 8px;
+    }
+    #resgate-section p {
+      margin: 10px 0;
+    }
+    #itens-resgate {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin: 20px 0;
+    }
+    .item {
+      background: #222;
+      padding: 10px;
       border-radius: 6px;
     }
-    #resgate-list button:disabled {
-      background: #555;
-      cursor: not-allowed;
-    }
-    #start-quiz {
-      margin-top: 20px;
+    .item p {
+      margin: 0 0 5px;
     }
   </style>
 </head>
 <body>
+  <h1>Quiz & Resgate Feqzin</h1>
 
-  <h1>Quiz Feqzin</h1>
+  <!-- 1) Seleção de variações -->
+  <div id="variation-selection">
+    <h2>Escolha seu Quiz</h2>
+  </div>
 
-  <!-- Autenticação -->
-  <section id="auth-section">
-    <h2>Login / Cadastro</h2>
-    <form id="auth-form">
-      <input type="email" id="email" placeholder="Seu email" required autocomplete="username" />
-      <input type="password" id="password" placeholder="Sua senha" required autocomplete="current-password" />
-      <button type="submit" id="btn-login">Entrar</button>
-      <button type="button" id="btn-signup">Cadastrar</button>
-      <button type="button" id="btn-reset-password">Esqueci a senha</button>
-      <button type="button" id="btnLogout">Logout</button>
-    </form>
-    <div id="auth-message"></div>
-  </section>
-
-  <!-- Exibição da pontuação e resgate -->
-  <section id="resgate-section" class="hidden">
-    <h2>Resgate Seus Prêmios</h2>
-    <div id="pontuacao">Sua pontuação: 0 pontos</div>
-    <div id="resgate-list">
-      <!-- Itens de resgate serão inseridos aqui -->
+  <!-- 2) Quiz -->
+  <div id="quiz-screen">
+    <div id="message"></div>
+    <div id="quiz-container">
+      <p id="question"></p>
+      <button id="a1"></button>
+      <button id="a2"></button>
+      <button id="a3"></button>
+      <button id="a4"></button>
     </div>
-  </section>
+  </div>
 
-  <!-- Quiz -->
-  <section id="quiz-section" class="hidden">
-    <h2>Quiz</h2>
-    <div id="question-container"></div>
-    <button id="next-btn" class="hidden">Próxima</button>
-  </section>
-
-  <!-- Resultado -->
-  <section id="resultado-section" class="hidden">
-    <h2>Parabéns! Você terminou o quiz.</h2>
-    <div id="resultado-pontuacao"></div>
-    <button id="restart-btn">Fazer quiz novamente</button>
-  </section>
+  <!-- 3) Seção de Resgate -->
+  <div id="resgate-section">
+    <h2>Resgate de Itens</h2>
+    <div id="resgate-msg"></div>
+    <p>Você tem <strong><span id="pontos-resgate">0</span> pontos</strong></p>
+    <div id="itens-resgate">
+      <!-- Itens serão inseridos via JS -->
+    </div>
+    <select id="item-select">
+      <option value="">-- selecione um item --</option>
+    </select>
+    <button id="btn-resgatar">Resgatar Item</button>
+  </div>
 
   <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
@@ -153,7 +119,7 @@
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
 
   <script>
-    // Config Firebase (use suas chaves)
+    // 0) Configuração Firebase
     const firebaseConfig = {
       apiKey: "AIzaSyBhSmocbaARqU_pPM0Tqki8d11jm97IE4M",
       authDomain: "dashboardfeqzin.firebaseapp.com",
@@ -165,318 +131,215 @@
     };
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
-    const db = firebase.firestore();
+    const db   = firebase.firestore();
+    const adminEmail = "fernandoq87@gmail.com";
 
-    // Elementos DOM
-    const authForm = document.getElementById("auth-form");
-    const emailInput = document.getElementById("email");
-    const passwordInput = document.getElementById("password");
-    const btnLogin = document.getElementById("btn-login");
-    const btnSignup = document.getElementById("btn-signup");
-    const btnResetPassword = document.getElementById("btn-reset-password");
-    const btnLogout = document.getElementById("btnLogout");
-    const authMessage = document.getElementById("auth-message");
-
-    const resgateSection = document.getElementById("resgate-section");
-    const pontuacaoDisplay = document.getElementById("pontuacao");
-    const resgateList = document.getElementById("resgate-list");
-
-    const quizSection = document.getElementById("quiz-section");
-    const questionContainer = document.getElementById("question-container");
-    const nextBtn = document.getElementById("next-btn");
-
-    const resultadoSection = document.getElementById("resultado-section");
-    const resultadoPontuacao = document.getElementById("resultado-pontuacao");
-    const restartBtn = document.getElementById("restart-btn");
-
-    let currentUser = null;
-    let currentUID = null;
-    let pontosUsuario = 0;
-
-    // Perguntas do quiz
-    const perguntas = [
-      {
-        pergunta: "Qual é a capital do Brasil?",
-        respostas: [
-          { texto: "São Paulo", correta: false },
-          { texto: "Brasília", correta: true },
-          { texto: "Rio de Janeiro", correta: false },
-          { texto: "Salvador", correta: false }
-        ]
-      },
-      {
-        pergunta: "Quem é o artista Feqzin?",
-        respostas: [
-          { texto: "Um chef famoso", correta: false },
-          { texto: "Um cantor e produtor da zona norte de SP", correta: true },
-          { texto: "Um jogador de futebol", correta: false },
-          { texto: "Um influenciador digital de moda", correta: false }
-        ]
-      },
-      {
-        pergunta: "Qual destas linguagens é usada para estilizar páginas web?",
-        respostas: [
-          { texto: "HTML", correta: false },
-          { texto: "CSS", correta: true },
-          { texto: "Python", correta: false },
-          { texto: "SQL", correta: false }
-        ]
-      },
-      {
-        pergunta: "Qual é a moeda oficial do Brasil?",
-        respostas: [
-          { texto: "Real", correta: true },
-          { texto: "Dólar", correta: false },
-          { texto: "Euro", correta: false },
-          { texto: "Peso", correta: false }
-        ]
-      },
-      {
-        pergunta: "Qual destas é uma plataforma para hospedagem de código?",
-        respostas: [
-          { texto: "GitHub", correta: true },
-          { texto: "YouTube", correta: false },
-          { texto: "Spotify", correta: false },
-          { texto: "Instagram", correta: false }
-        ]
-      }
-    ];
-
-    // Itens para resgate, com custo em pontos
-    const itensResgate = [
-      { id: "camiseta", nome: "Camiseta Oficial Feqzin", custo: 50 },
-      { id: "adesivo", nome: "Adesivo Exclusivo", custo: 20 },
-      { id: "download", nome: "Download VIP da música", custo: 100 }
-    ];
-
-    let currentQuestionIndex = 0;
-    let pontosGanhosNoQuiz = 0;
-
-    // Função para atualizar a pontuação do usuário no Firestore e na tela
-    async function atualizarPontuacao(novaPontuacao) {
-      pontosUsuario = novaPontuacao;
-      pontuacaoDisplay.textContent = `Sua pontuação: ${pontosUsuario} pontos`;
-
-      if (!currentUID) return;
-      try {
-        await db.collection("usuarios").doc(currentUID).set(
-          { pontos: pontosUsuario },
-          { merge: true }
-        );
-      } catch (e) {
-        console.error("Erro ao atualizar pontuação:", e);
-      }
-    }
-
-    // Carregar pontuação do usuário
-    async function carregarPontuacao() {
-      if (!currentUID) return;
-      try {
-        const doc = await db.collection("usuarios").doc(currentUID).get();
-        if (doc.exists) {
-          pontosUsuario = doc.data().pontos || 0;
-        } else {
-          pontosUsuario = 0;
-        }
-        pontuacaoDisplay.textContent = `Sua pontuação: ${pontosUsuario} pontos`;
-      } catch (e) {
-        console.error("Erro ao carregar pontuação:", e);
-      }
-    }
-
-    // Mostrar itens de resgate habilitados/desabilitados conforme pontuação
-    function mostrarItensResgate() {
-      resgateList.innerHTML = "";
-      itensResgate.forEach(item => {
-        const btn = document.createElement("button");
-        btn.textContent = `${item.nome} - ${item.custo} pontos`;
-        btn.disabled = pontosUsuario < item.custo;
-        btn.addEventListener("click", () => {
-          if (pontosUsuario >= item.custo) {
-            if (confirm(`Deseja trocar ${item.custo} pontos por ${item.nome}?`)) {
-              pontosUsuario -= item.custo;
-              atualizarPontuacao(pontosUsuario);
-              alert(`Parabéns! Você resgatou: ${item.nome}`);
-              mostrarItensResgate();
-            }
+    // 1) Definição das variações de quiz
+    const quizVariations = {
+      quizA: {
+        label: "Quiz A: Geografia",
+        questions: [
+          {
+            question: "Qual é a capital do Brasil?",
+            answers: [
+              { text: "Rio de Janeiro", correct: false },
+              { text: "São Paulo",      correct: false },
+              { text: "Brasília",       correct: true  },
+              { text: "Salvador",       correct: false }
+            ]
           }
-        });
-        resgateList.appendChild(btn);
-      });
-    }
+        ]
+      },
+      quizB: {
+        label: "Quiz B: Arte",
+        questions: [
+          {
+            question: "Quem pintou a Mona Lisa?",
+            answers: [
+              { text: "Vincent van Gogh", correct: false },
+              { text: "Leonardo da Vinci", correct: true  },
+              { text: "Pablo Picasso",     correct: false },
+              { text: "Claude Monet",      correct: false }
+            ]
+          }
+        ]
+      },
+      quizC: {
+        label: "Quiz C: Ciências",
+        questions: [
+          {
+            question: "Qual elemento tem símbolo químico O?",
+            answers: [
+              { text: "Oxigênio", correct: true  },
+              { text: "Ozônio",   correct: false },
+              { text: "Ósmio",    correct: false },
+              { text: "Ouro",     correct: false }
+            ]
+          }
+        ]
+      },
+      quizD: {
+        label: "Quiz D: Cultura Pop",
+        questions: [
+          {
+            question: "Em que série aparece o personagem Jon Snow?",
+            answers: [
+              { text: "Vikings",         correct: false },
+              { text: "Game of Thrones", correct: true  },
+              { text: "The Witcher",     correct: false },
+              { text: "Mandalorian",     correct: false }
+            ]
+          }
+        ]
+      }
+    };
 
-    // Renderizar pergunta atual
-    function mostrarPergunta() {
-      clearStatusClass();
-      nextBtn.classList.add("hidden");
-      const perguntaAtual = perguntas[currentQuestionIndex];
-      questionContainer.innerHTML = `<div class="question"><strong>${perguntaAtual.pergunta}</strong></div>`;
-      const divRespostas = document.createElement("div");
-      divRespostas.classList.add("answers");
+    // 2) Itens disponíveis para resgate
+    const redeemItems = [
+      { id: 'merch1',    label: 'Camisa Oficial',     cost: 50 },
+      { id: 'download',  label: 'Download Exclusivo', cost: 30 },
+      { id: 'shoutout',  label: 'Shoutout nas redes', cost: 20 },
+      { id: 'demo',      label: 'Demo Track Inédita', cost: 40 }
+    ];
 
-      perguntaAtual.respostas.forEach(resposta => {
+    // Estado
+    let currentVariation = null;
+    let currentIndex     = 0;
+    let userData         = {};
+
+    // Monta botões de seleção de variação
+    function montarVariations() {
+      const sel = document.getElementById("variation-selection");
+      sel.innerHTML = "<h2>Escolha seu Quiz</h2>";
+      Object.entries(quizVariations).forEach(([key, quizObj]) => {
         const btn = document.createElement("button");
-        btn.textContent = resposta.texto;
-        btn.addEventListener("click", () => selecionarResposta(btn, resposta.correta));
-        divRespostas.appendChild(btn);
-      });
-      questionContainer.appendChild(divRespostas);
-    }
-
-    // Limpa classes de status nos botões
-    function clearStatusClass() {
-      Array.from(questionContainer.querySelectorAll("button")).forEach(button => {
-        button.style.backgroundColor = "#222";
-        button.disabled = false;
+        btn.textContent = quizObj.label;
+        btn.onclick = () => iniciarVariation(key);
+        sel.appendChild(btn);
       });
     }
 
-    // Tratamento da resposta selecionada
-    function selecionarResposta(button, correta) {
-      const buttons = questionContainer.querySelectorAll("button");
-      buttons.forEach(b => b.disabled = true);
-
-      if (correta) {
-        button.style.backgroundColor = "#1db954";
-        pontosGanhosNoQuiz++;
-      } else {
-        button.style.backgroundColor = "#f44336";
-      }
-
-      nextBtn.classList.remove("hidden");
+    // Inicia quiz escolhido
+    function iniciarVariation(key) {
+      currentVariation = key;
+      currentIndex     = 0;
+      document.getElementById("variation-selection").style.display = "none";
+      document.getElementById("quiz-container").style.display        = "block";
+      document.getElementById("resgate-section").style.display       = "none";
+      showQuestion();
     }
 
-    // Evento do botão próxima pergunta
-    nextBtn.addEventListener("click", () => {
-      currentQuestionIndex++;
-      if (currentQuestionIndex < perguntas.length) {
-        mostrarPergunta();
-      } else {
-        finalizarQuiz();
-      }
-    });
-
-    // Finalizar quiz e mostrar resultado
-    async function finalizarQuiz() {
-      quizSection.classList.add("hidden");
-      resultadoSection.classList.remove("hidden");
-      resultadoPontuacao.textContent = `Você acertou ${pontosGanhosNoQuiz} de ${perguntas.length} perguntas!`;
-
-      // Atualizar pontuação do usuário somando o que ganhou no quiz
-      await atualizarPontuacao(pontosUsuario + pontosGanhosNoQuiz);
-      mostrarItensResgate();
-      resgateSection.classList.remove("hidden");
+    // Exibe a pergunta atual
+    function showQuestion() {
+      const q = quizVariations[currentVariation].questions[currentIndex];
+      document.getElementById("message").textContent = q.question;
+      q.answers.forEach((ans, i) => {
+        const btn = document.getElementById(`a${i+1}`);
+        btn.textContent = ans.text;
+        btn.onclick = () => responder(ans.correct);
+      });
     }
 
-    // Reiniciar quiz
-    restartBtn.addEventListener("click", () => {
-      resultadoSection.classList.add("hidden");
-      currentQuestionIndex = 0;
-      pontosGanhosNoQuiz = 0;
-      mostrarPergunta();
-      quizSection.classList.remove("hidden");
-    });
+    // Processa resposta
+    async function responder(correct) {
+      const user = auth.currentUser;
+      if (!user) return;
 
-    // Controle de autenticação e UI
+      const ref  = db.collection("usuarios").doc(user.uid);
+      const snap = await ref.get();
+      const data = snap.exists ? snap.data() : { pontos:0, quizRespondido:{} };
+
+      if (data.quizRespondido?.[currentVariation] && user.email !== adminEmail) {
+        return alert("Você já respondeu este quiz.");
+      }
+
+      const pontosGanhos = correct ? 10 : 0;
+      const updates = { pontos: firebase.firestore.FieldValue.increment(pontosGanhos) };
+      if (user.email !== adminEmail) {
+        updates[`quizRespondido.${currentVariation}`] = true;
+      }
+
+      await ref.set(updates, { merge: true });
+      alert(correct ? `Correto! +${pontosGanhos} pontos` : "Errado!");
+
+      const questions = quizVariations[currentVariation].questions;
+      if (currentIndex < questions.length - 1) {
+        currentIndex++;
+        showQuestion();
+      } else {
+        // Fim do quiz: mostra resgate
+        const finalSnap = await ref.get();
+        userData = finalSnap.data();
+        document.getElementById("quiz-container").style.display  = "none";
+        document.getElementById("message").textContent          = `Quiz finalizado! Seus pontos: ${userData.pontos}`;
+        startResgate();
+      }
+    }
+
+    // Prepara e exibe seção de resgate
+    function startResgate() {
+      document.getElementById("resgate-section").style.display = "block";
+      document.getElementById("pontos-resgate").textContent    = userData.pontos;
+      const itensDiv = document.getElementById("itens-resgate");
+      itensDiv.innerHTML = "";
+      const select   = document.getElementById("item-select");
+      select.innerHTML = "<option value=''>-- selecione um item --</option>";
+
+      redeemItems.forEach(item => {
+        // lista visual
+        const div = document.createElement("div");
+        div.className = "item";
+        div.innerHTML = `<p>${item.label} (${item.cost} pts)</p>`;
+        itensDiv.appendChild(div);
+
+        // select
+        const opt = document.createElement("option");
+        opt.value   = item.id;
+        opt.textContent = `${item.label} — ${item.cost} pts`;
+        select.appendChild(opt);
+      });
+    }
+
+    // Efetua resgate
+    document.getElementById("btn-resgatar").onclick = async () => {
+      const chosen = document.getElementById("item-select").value;
+      const msg    = document.getElementById("resgate-msg");
+      msg.textContent = "";
+
+      const item = redeemItems.find(i => i.id === chosen);
+      if (!item) {
+        msg.textContent = "Selecione um item para resgatar.";
+        return;
+      }
+      if (userData.pontos < item.cost) {
+        msg.textContent = "Pontos insuficientes.";
+        return;
+      }
+
+      const ref = db.collection("usuarios").doc(auth.currentUser.uid);
+      await ref.update({
+        pontos: firebase.firestore.FieldValue.increment(-item.cost),
+        [`resgates.${item.id}`]: firebase.firestore.FieldValue.serverTimestamp()
+      });
+
+      userData.pontos -= item.cost;
+      document.getElementById("pontos-resgate").textContent = userData.pontos;
+      msg.textContent = `Você resgatou: ${item.label}!`;
+    };
+
+    // Inicializa após autenticação
     auth.onAuthStateChanged(async user => {
-      if (user) {
-        currentUser = user;
-        currentUID = user.uid;
-        authMessage.style.color = "lightgreen";
-        authMessage.textContent = `Logado como: ${user.email}`;
-
-        // Esconde form login e mostra logout e quiz
-        emailInput.style.display = "none";
-        passwordInput.style.display = "none";
-        btnLogin.style.display = "none";
-        btnSignup.style.display = "none";
-        btnResetPassword.style.display = "none";
-        btnLogout.style.display = "inline-block";
-
-        await carregarPontuacao();
-        mostrarItensResgate();
-
-        resgateSection.classList.remove("hidden");
-        quizSection.classList.remove("hidden");
-        authSection.style.display = "block";
-      } else {
-        currentUser = null;
-        currentUID = null;
-        pontosUsuario = 0;
-        pontosGanhosNoQuiz = 0;
-
-        authMessage.textContent = "";
-        emailInput.style.display = "block";
-        passwordInput.style.display = "block";
-        btnLogin.style.display = "inline-block";
-        btnSignup.style.display = "inline-block";
-        btnResetPassword.style.display = "inline-block";
-        btnLogout.style.display = "none";
-
-        resgateSection.classList.add("hidden");
-        quizSection.classList.add("hidden");
-        resultadoSection.classList.add("hidden");
-        authSection.style.display = "block";
-
-        pontuacaoDisplay.textContent = "";
-        questionContainer.innerHTML = "";
-      }
-    });
-
-    // Login
-    authForm.addEventListener("submit", e => {
-      e.preventDefault();
-      auth.signInWithEmailAndPassword(emailInput.value, passwordInput.value)
-        .catch(err => {
-          authMessage.style.color = "tomato";
-          authMessage.textContent = `Erro no login: ${err.message}`;
-        });
-      authForm.reset();
-    });
-
-    // Cadastro
-    btnSignup.addEventListener("click", () => {
-      if (!emailInput.value || !passwordInput.value) {
-        authMessage.style.color = "tomato";
-        authMessage.textContent = "Preencha email e senha para cadastrar.";
+      if (!user) {
+        document.getElementById("variation-selection").textContent = "Faça login no dashboard primeiro.";
         return;
       }
-      auth.createUserWithEmailAndPassword(emailInput.value, passwordInput.value)
-        .then(() => {
-          authMessage.style.color = "lightgreen";
-          authMessage.textContent = "Usuário criado! Faça login.";
-          authForm.reset();
-        })
-        .catch(err => {
-          authMessage.style.color = "tomato";
-          authMessage.textContent = `Erro no cadastro: ${err.message}`;
-        });
-    });
-
-    // Reset senha
-    btnResetPassword.addEventListener("click", () => {
-      if (!emailInput.value) {
-        authMessage.style.color = "tomato";
-        authMessage.textContent = "Digite seu e-mail para redefinir a senha.";
-        return;
+      const snap = await db.collection("usuarios").doc(user.uid).get();
+      userData = snap.exists ? snap.data() : { pontos:0, quizRespondido:{}, resgates:{} };
+      if (!snap.exists) {
+        await db.collection("usuarios").doc(user.uid).set(userData);
       }
-      auth.sendPasswordResetEmail(emailInput.value)
-        .then(() => {
-          authMessage.style.color = "lightgreen";
-          authMessage.textContent = "E-mail de redefinição enviado.";
-        })
-        .catch(err => {
-          authMessage.style.color = "tomato";
-          authMessage.textContent = `Erro: ${err.message}`;
-        });
+      montarVariations();
     });
-
-    // Logout
-    btnLogout.addEventListener("click", () => auth.signOut());
-
-    // Mostrar primeira pergunta ao clicar no quiz (quando logado)
-    quizSection.classList.add("hidden");
-    nextBtn.classList.add("hidden");
   </script>
 </body>
 </html>
