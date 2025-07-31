@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Quiz Feqzin</title>
+  <style>
+    body { font-family:Arial,sans-serif; background:#0e0e0e; color:#f1f1f1; max-width:600px; margin:40px auto; padding:20px; }
+    button { background:#1db954;border:none;padding:10px 20px;color:#fff;border-radius:6px;cursor:pointer;margin:5px 0;display:block; }
+    button:hover { background:#1ed760; }
+    #message { margin-bottom:20px; }
+  </style>
+</head>
+<body>
+  <h1>Quiz Feqzin</h1>
+  <div id="message">Carregando...</div>
+  <div id="quiz-container" style="display:none;">
+    <p id="question"></p>
+    <button id="a1"></button>
+    <button id="a2"></button>
+    <button id="a3"></button>
+    <button id="a4"></button>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+  <script>
+    // Mesmas chaves do dashboard
+    const firebaseConfig = {
+      apiKey: "AIzaSyBhSmocbaARqU_pPM0Tqki8d11jm97IE4M",
+      authDomain: "dashboardfeqzin.firebaseapp.com",
+      projectId: "dashboardfeqzin",
+      storageBucket: "dashboardfeqzin.firebasestorage.app",
+      messagingSenderId: "1042985498691",
+      appId: "1:1042985498691:web:16ab98f93f925ebf7b7cf6",
+      measurementId: "G-QZY8SDZX5T"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db   = firebase.firestore();
+    const adminEmail = "fernandoq87@gmail.com";
+
+    const msgEl = document.getElementById("message"),
+          qc    = document.getElementById("quiz-container"),
+          qEl   = document.getElementById("question"),
+          btns  = [document.getElementById("a1"),document.getElementById("a2"),document.getElementById("a3"),document.getElementById("a4")];
+
+    // Um quiz de exemplo
+    const quiz = {
+      question: "Qual é a capital do Brasil?",
+      answers: [
+        { text:"Rio de Janeiro", correct:false },
+        { text:"São Paulo", correct:false },
+        { text:"Brasília", correct:true },
+        { text:"Salvador", correct:false }
+      ]
+    };
+
+    auth.onAuthStateChanged(async user => {
+      if (!user) {
+        msgEl.textContent = "Você precisa estar logado no dashboard antes.";
+        return;
+      }
+      const docRef = db.collection("usuarios").doc(user.uid);
+      const doc = await docRef.get();
+      const data = doc.data() || { pontos:0, quizRespondido:false };
+      await docRef.set(data, { merge:true });
+
+      if (user.email === adminEmail || !data.quizRespondido) {
+        msgEl.textContent = "Responda o quiz abaixo:";
+        iniciarQuiz();
+      } else {
+        msgEl.textContent = `Você já respondeu. Seus pontos: ${data.pontos}`;
+      }
+    });
+
+    function iniciarQuiz() {
+      qEl.textContent = quiz.question;
+      quiz.answers.forEach((ans,i) => {
+        btns[i].textContent = ans.text;
+        btns[i].onclick = () => responder(ans.correct);
+      });
+      qc.style.display = "block";
+    }
+
+    async function responder(correct) {
+      const user = auth.currentUser;
+      if (!user) return;
+      const docRef = db.collection("usuarios").doc(user.uid);
+      const doc = await docRef.get();
+      const data = doc.data();
+
+      if (data.quizRespondido && user.email!==adminEmail) {
+        alert("Você já respondeu.");
+        return;
+      }
+
+      const ganhou = correct ? 10 : 0;
+      const updates = {
+        pontos: firebase.firestore.FieldValue.increment(ganhou)
+      };
+      if (user.email!==adminEmail) updates.quizRespondido = true;
+
+      await docRef.update(updates);
+      alert(correct ? "Correto! +10 pontos" : "Errado!");
+
+      const novo = await docRef.get();
+      msgEl.textContent = `Finalizado! Seus pontos: ${novo.data().pontos}`;
+      qc.style.display = "none";
+    }
+  </script>
+</body>
+</html>
