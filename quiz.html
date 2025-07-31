@@ -1,31 +1,67 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Quiz Feqzin</title>
   <style>
-    body { font-family:Arial,sans-serif; background:#0e0e0e; color:#f1f1f1; max-width:600px; margin:40px auto; padding:20px; }
-    button { background:#1db954;border:none;padding:10px 20px;color:#fff;border-radius:6px;cursor:pointer;margin:5px 0;display:block; }
-    button:hover { background:#1ed760; }
-    #message { margin-bottom:20px; }
+    body {
+      font-family: Arial, sans-serif;
+      background: #0e0e0e;
+      color: #f1f1f1;
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+    h1, h2 { text-align: center; }
+    #variation-selection button,
+    #quiz-container button {
+      display: block;
+      width: 100%;
+      margin: 10px 0;
+      padding: 12px;
+      background: #1db954;
+      border: none;
+      border-radius: 6px;
+      color: white;
+      font-size: 1em;
+      cursor: pointer;
+    }
+    #variation-selection button:hover,
+    #quiz-container button:hover {
+      background: #1ed760;
+    }
+    #message { margin: 20px 0; text-align: center; }
+    #quiz-container { display: none; }
   </style>
 </head>
 <body>
   <h1>Quiz Feqzin</h1>
-  <div id="message">Carregando...</div>
-  <div id="quiz-container" style="display:none;">
-    <p id="question"></p>
-    <button id="a1"></button>
-    <button id="a2"></button>
-    <button id="a3"></button>
-    <button id="a4"></button>
+
+  <!-- 1) Seleção de variações -->
+  <div id="variation-selection">
+    <h2>Escolha seu Quiz</h2>
+    <!-- Botões serão inseridos via JS -->
   </div>
 
+  <!-- 2) Tela de quiz -->
+  <div id="quiz-screen" style="display:none;">
+    <div id="message"></div>
+    <div id="quiz-container">
+      <p id="question"></p>
+      <button id="a1"></button>
+      <button id="a2"></button>
+      <button id="a3"></button>
+      <button id="a4"></button>
+    </div>
+  </div>
+
+  <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+
   <script>
-    // Mesmas chaves do dashboard
+    // 0) Config Firebase (mesmas chaves do index.html)
     const firebaseConfig = {
       apiKey: "AIzaSyBhSmocbaARqU_pPM0Tqki8d11jm97IE4M",
       authDomain: "dashboardfeqzin.firebaseapp.com",
@@ -40,74 +76,139 @@
     const db   = firebase.firestore();
     const adminEmail = "fernandoq87@gmail.com";
 
-    const msgEl = document.getElementById("message"),
-          qc    = document.getElementById("quiz-container"),
-          qEl   = document.getElementById("question"),
-          btns  = [document.getElementById("a1"),document.getElementById("a2"),document.getElementById("a3"),document.getElementById("a4")];
-
-    // Um quiz de exemplo
-    const quiz = {
-      question: "Qual é a capital do Brasil?",
-      answers: [
-        { text:"Rio de Janeiro", correct:false },
-        { text:"São Paulo", correct:false },
-        { text:"Brasília", correct:true },
-        { text:"Salvador", correct:false }
-      ]
+    // 1) Definição das variações de quiz
+    const quizVariations = {
+      quizA: {
+        label: "Quiz A: Geografia",
+        questions: [
+          {
+            question: "Qual é a capital do Brasil?",
+            answers: [
+              { text:"Rio de Janeiro", correct:false },
+              { text:"São Paulo",      correct:false },
+              { text:"Brasília",       correct:true  },
+              { text:"Salvador",       correct:false }
+            ]
+          },
+          // ... outras perguntas da variação A
+        ]
+      },
+      quizB: {
+        label: "Quiz B: Arte",
+        questions: [
+          {
+            question: "Quem pintou a Mona Lisa?",
+            answers: [
+              { text:"Vincent van Gogh", correct:false },
+              { text:"Leonardo da Vinci", correct:true  },
+              { text:"Pablo Picasso",     correct:false },
+              { text:"Claude Monet",      correct:false }
+            ]
+          },
+          // ... outras perguntas da variação B
+        ]
+      }
+      // adicione quantas variações quiser
     };
 
-    auth.onAuthStateChanged(async user => {
-      if (!user) {
-        msgEl.textContent = "Você precisa estar logado no dashboard antes.";
-        return;
-      }
-      const docRef = db.collection("usuarios").doc(user.uid);
-      const doc = await docRef.get();
-      const data = doc.data() || { pontos:0, quizRespondido:false };
-      await docRef.set(data, { merge:true });
+    // controles de estado
+    let currentVariation = null;
+    let currentIndex     = 0;
+    let userData         = {};
 
-      if (user.email === adminEmail || !data.quizRespondido) {
-        msgEl.textContent = "Responda o quiz abaixo:";
-        iniciarQuiz();
-      } else {
-        msgEl.textContent = `Você já respondeu. Seus pontos: ${data.pontos}`;
-      }
-    });
-
-    function iniciarQuiz() {
-      qEl.textContent = quiz.question;
-      quiz.answers.forEach((ans,i) => {
-        btns[i].textContent = ans.text;
-        btns[i].onclick = () => responder(ans.correct);
+    // 2) Monta botões de seleção de variação
+    function montarVariations() {
+      const sel = document.getElementById("variation-selection");
+      sel.innerHTML = "<h2>Escolha seu Quiz</h2>";
+      Object.entries(quizVariations).forEach(([key, quizObj]) => {
+        const btn = document.createElement("button");
+        btn.textContent = quizObj.label;
+        btn.onclick = () => iniciarVariation(key);
+        sel.appendChild(btn);
       });
-      qc.style.display = "block";
     }
 
+    // 3) Iniciar uma variação escolhida
+    function iniciarVariation(key) {
+      currentVariation = key;
+      currentIndex     = 0;
+      document.getElementById("variation-selection").style.display = "none";
+      carregarQuizScreen();
+    }
+
+    // 4) Carrega a tela de quiz e primeira pergunta
+    function carregarQuizScreen() {
+      const varObj = quizVariations[currentVariation];
+      document.getElementById("message").textContent = varObj.label;
+      document.getElementById("quiz-screen").style.display = "block";
+      montarPergunta(varObj.questions[currentIndex]);
+    }
+
+    // 5) Exibe pergunta e botões de resposta
+    function montarPergunta(perguntaObj) {
+      document.getElementById("quiz-container").style.display = "block";
+      document.getElementById("question").textContent = perguntaObj.question;
+      perguntaObj.answers.forEach((ans, i) => {
+        const btn = document.getElementById(`a${i+1}`);
+        btn.textContent = ans.text;
+        btn.onclick = () => responder(ans.correct);
+      });
+    }
+
+    // 6) Processa a resposta
     async function responder(correct) {
       const user = auth.currentUser;
       if (!user) return;
-      const docRef = db.collection("usuarios").doc(user.uid);
-      const doc = await docRef.get();
-      const data = doc.data();
 
-      if (data.quizRespondido && user.email!==adminEmail) {
-        alert("Você já respondeu.");
+      const docRef = db.collection("usuarios").doc(user.uid);
+      const data   = userData;
+
+      // bloqueio para usuários comuns que já responderam esta variação
+      if (data.quizRespondido?.[currentVariation] && user.email !== adminEmail) {
+        alert("Você já respondeu este quiz.");
         return;
       }
 
-      const ganhou = correct ? 10 : 0;
+      // calcula pontuação
+      const pontosGanhos = correct ? 10 : 0;
       const updates = {
-        pontos: firebase.firestore.FieldValue.increment(ganhou)
+        pontos: firebase.firestore.FieldValue.increment(pontosGanhos)
       };
-      if (user.email!==adminEmail) updates.quizRespondido = true;
+      // marca quizRespondido apenas se não for admin
+      if (user.email !== adminEmail) {
+        updates[`quizRespondido.${currentVariation}`] = true;
+      }
 
-      await docRef.update(updates);
-      alert(correct ? "Correto! +10 pontos" : "Errado!");
+      await docRef.set(updates, { merge: true });
+      alert(correct ? `Correto! +${pontosGanhos} pontos` : "Errado!");
 
-      const novo = await docRef.get();
-      msgEl.textContent = `Finalizado! Seus pontos: ${novo.data().pontos}`;
-      qc.style.display = "none";
+      // avança ou finaliza
+      const perguntas = quizVariations[currentVariation].questions;
+      if (currentIndex < perguntas.length - 1) {
+        currentIndex++;
+        montarPergunta(perguntas[currentIndex]);
+      } else {
+        // fim do quiz
+        const novo = (await docRef.get()).data();
+        document.getElementById("message").textContent = `Quiz finalizado! Seus pontos: ${novo.pontos}`;
+        document.getElementById("quiz-container").style.display = "none";
+      }
     }
+
+    // 7) Inicia tudo após autenticação
+    auth.onAuthStateChanged(async user => {
+      if (!user) {
+        document.getElementById("variation-selection").textContent = "Faça login no dashboard antes.";
+        return;
+      }
+      // busca ou cria dados do usuário
+      const doc = await db.collection("usuarios").doc(user.uid).get();
+      userData = doc.exists ? doc.data() : { pontos:0, quizRespondido:{} };
+      if (!doc.exists) {
+        await db.collection("usuarios").doc(user.uid).set(userData);
+      }
+      montarVariations();
+    });
   </script>
 </body>
 </html>
