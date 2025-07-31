@@ -5,314 +5,156 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Feqzin | Site Oficial</title>
 
-  <link
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
-  />
-
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-    integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
-    crossorigin="anonymous"
-    referrerpolicy="no-referrer"
-  />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"/>
 
   <style>
     /* ---- PALETA DE CORES ---- */
     :root {
-      --cor-destaque: #1db954; /* Verde Spotify */
-      --cor-destaque-hover: #1ed760; /* Verde mais claro para hover */
+      --cor-destaque: #1db954;
+      --cor-destaque-hover: #1ed760;
       --cor-texto: #f1f1f1;
       --cor-fundo: #0e0e0e;
       --cor-fundo-secundario: #111;
       --cor-borda-suave: #444;
     }
-
     /* ---- ESTILOS GERAIS ---- */
     body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: var(--cor-fundo);
-      color: var(--cor-texto);
-      line-height: 1.6;
+      margin: 0; font-family: Arial,sans-serif;
+      background: var(--cor-fundo); color: var(--cor-texto); line-height:1.6;
     }
-
     header {
-      background-color: rgba(0, 0, 0, 0.6);
-      background-blend-mode: darken;
-      background-size: cover;
-      background-position: center center;
-      padding: 360px 20px 40px;
-      text-align: center;
-      color: #fff;
-      position: relative;
+      background-color:rgba(0,0,0,0.6);
+      background-blend-mode:darken;
+      background-size:cover;
+      background-position:center;
+      padding:360px 20px 40px;
+      text-align:center; color:#fff; position:relative;
     }
     header::after {
-      content: "";
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 100px;
-      background: linear-gradient(
-        to bottom,
-        rgba(14, 14, 14, 0),
-        var(--cor-fundo)
-      );
-      z-index: 1;
+      content:""; position:absolute; bottom:0; left:0;
+      width:100%; height:100px;
+      background:linear-gradient(to bottom,rgba(14,14,14,0),var(--cor-fundo));
+      z-index:1;
     }
-    header h1,
-    header p {
-      position: relative;
-      z-index: 2;
-    }
-    header h1 {
-      font-size: 3em;
-      margin-bottom: 10px;
-    }
-    header p {
-      font-size: 1.2em;
-      color: #ddd;
-    }
+    header h1, header p { position:relative; z-index:2; }
+    header h1 { font-size:3em; margin-bottom:10px; }
+    header p { font-size:1.2em; color:#ddd; }
 
-    /* ---- CSS ATUALIZADO PARA A FOTO DE PERFIL ---- */
     .profile-pic {
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
-      display: block;
-      border: 4px solid var(--cor-destaque);
-      object-fit: cover;
-      background-color: #000;
-      position: absolute;
-      top: 190px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 3;
-      /* Propriedades para a animação */
-      transition: transform 0.4s ease-in-out;
-      transform-style: preserve-3d;
+      width:150px; height:150px; border-radius:50%;
+      display:block; border:4px solid var(--cor-destaque);
+      object-fit:cover; background:#000;
+      position:absolute; top:190px; left:50%;
+      transform:translateX(-50%); z-index:3;
+      transition:transform .4s ease-in-out; transform-style:preserve-3d;
     }
-
     .profile-pic:hover {
-      /* Efeito de rotação 3D ao passar o mouse */
-      transform: translateX(-50%) perspective(1000px) rotateY(25deg);
+      transform:translateX(-50%) perspective(1000px) rotateY(25deg);
     }
 
     section {
-      padding: 40px 20px;
-      max-width: 900px;
-      margin: auto;
+      padding:40px 20px; max-width:900px; margin:auto;
     }
-    section:first-of-type {
-      padding-top: 100px;
-    }
-
+    section:first-of-type { padding-top:100px; }
     h2 {
-      border-bottom: 2px solid var(--cor-borda-suave);
-      padding-bottom: 10px;
-      margin-bottom: 20px;
+      border-bottom:2px solid var(--cor-borda-suave);
+      padding-bottom:10px; margin-bottom:20px;
     }
-    a {
-      color: var(--cor-destaque);
-      text-decoration: none;
-      transition: color 0.3s;
-    }
-    a:hover {
-      color: #fff;
-    }
+    a { color:var(--cor-destaque); text-decoration:none; transition:color .3s; }
+    a:hover { color:#fff; }
 
-    .socials {
-      text-align: center;
-    }
+    .socials { text-align:center; }
     .socials a {
-      margin: 0 15px;
-      color: var(--cor-texto);
-      font-size: 2em;
-      transition: all 0.3s;
+      margin:0 15px; color:var(--cor-texto); font-size:2em; transition:all .3s;
     }
     .socials a:hover {
-      color: var(--cor-destaque);
-      transform: translateY(-5px);
+      color:var(--cor-destaque); transform:translateY(-5px);
     }
 
-    .player {
-      margin: 20px 0;
-    }
-
+    .player { margin:20px 0; }
     .countdown {
-      text-align: center;
-      font-size: 2em;
-      margin: 20px 0 10px 0;
-      color: var(--cor-destaque);
-      line-height: 1.2;
+      text-align:center; font-size:2em; margin:20px 0 10px;
+      color:var(--cor-destaque); line-height:1.2;
     }
-
     footer {
-      background: var(--cor-fundo-secundario);
-      text-align: center;
-      padding: 20px;
-      font-size: 0.9em;
-      color: #777;
+      background:var(--cor-fundo-secundario);
+      text-align:center; padding:20px;
+      font-size:.9em; color:#777;
     }
 
-    .swiper {
-      width: 100%;
-      padding-top: 20px;
-      padding-bottom: 50px;
-    }
-    .swiper-slide {
-      background-position: center;
-      background-size: cover;
-      width: 100%;
-    }
-    .video-container {
-      position: relative;
-      width: 100%;
-      padding-top: 56.25%;
-    }
+    .swiper { width:100%; padding-top:20px; padding-bottom:50px; }
+    .swiper-slide { background-position:center; background-size:cover; width:100%; }
+    .video-container { position:relative; width:100%; padding-top:56.25%; }
     .video-container iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border-radius: 12px;
-      border: 0;
+      position:absolute; top:0; left:0; width:100%; height:100%;
+      border-radius:12px; border:0;
     }
-    .swiper-button-next,
-    .swiper-button-prev {
-      color: var(--cor-destaque);
-    }
-    .swiper-pagination-bullet-active {
-      background: var(--cor-destaque);
-    }
+    .swiper-button-next, .swiper-button-prev { color:var(--cor-destaque); }
+    .swiper-pagination-bullet-active { background:var(--cor-destaque); }
 
     .pre-save-button {
-      display: inline-block;
-      background-color: var(--cor-destaque);
-      color: #fff;
-      padding: 15px 35px;
-      border-radius: 50px;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 1.1em;
-      margin-top: 20px;
-      transition: background-color 0.3s, transform 0.2s;
+      display:inline-block; background:var(--cor-destaque); color:#fff;
+      padding:15px 35px; border-radius:50px; text-decoration:none;
+      font-weight:bold; font-size:1.1em; margin-top:20px;
+      transition:background .3s, transform .2s;
     }
     .pre-save-button:hover {
-      background-color: var(--cor-destaque-hover);
-      transform: scale(1.05);
-      color: #fff;
+      background:var(--cor-destaque-hover); transform:scale(1.05);
     }
 
-    /* Estilos da seção Dashboard do Fã */
+    /* ---- Dashboard do Fã ---- */
     #fan-dashboard {
-      background: #111;
-      border: 2px solid var(--cor-destaque);
-      border-radius: 12px;
-      padding: 20px;
-      max-width: 400px;
-      margin: 40px auto;
-      color: var(--cor-texto);
-      text-align: center;
+      background:#111; border:2px solid var(--cor-destaque);
+      border-radius:12px; padding:20px;
+      max-width:400px; margin:40px auto; text-align:center;
     }
     #fan-dashboard form {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
+      display:flex; flex-direction:column; gap:10px;
     }
-    #fan-dashboard input[type="email"],
-    #fan-dashboard input[type="password"] {
-      padding: 10px;
-      border-radius: 6px;
-      border: 1px solid var(--cor-borda-suave);
-      background-color: #222;
-      color: var(--cor-texto);
-      font-size: 1em;
+    #fan-dashboard input {
+      padding:10px; border-radius:6px; border:1px solid var(--cor-borda-suave);
+      background:#222; color:var(--cor-texto); font-size:1em;
     }
     #fan-dashboard button {
-      padding: 10px;
-      border-radius: 6px;
-      border: none;
-      font-weight: bold;
-      font-size: 1em;
-      cursor: pointer;
-      transition: background-color 0.3s;
+      padding:10px; border:none; border-radius:6px;
+      font-weight:bold; font-size:1em; cursor:pointer;
+      transition:background .3s;
     }
-    #btn-login {
-      background-color: var(--cor-destaque);
-      color: #fff;
+    #btn-login { background:var(--cor-destaque); color:#fff; }
+    #btn-signup { background:#555; color:#ccc; }
+    #btn-reset-password { background:#444; color:#ccc; }
+    #btnLogout { display:none; background:#f44336; color:#fff; }
+    #auth-message { margin-top:15px; min-height:1.2em; font-weight:bold; }
+    #pontuacao-container { display:none; margin-top:20px; }
+    /* botão quiz */
+    #start-quiz {
+      display:none; margin-top:20px; padding:10px 20px;
+      background:var(--cor-destaque); color:#fff; border:none;
+      border-radius:6px; font-weight:bold; cursor:pointer;
     }
-    #btn-login:hover {
-      background-color: var(--cor-destaque-hover);
-    }
-    #btn-signup {
-      background-color: #555;
-      color: #ccc;
-    }
-    #btn-signup:hover {
-      background-color: #777;
-    }
-    #btn-reset-password {
-      background-color: #444;
-      color: #ccc;
-      margin-top: 10px;
-    }
-    #btnLogout {
-      display: none;
-      background-color: #f44336;
-      color: white;
-      margin-top: 10px;
-    }
-    #auth-message {
-      margin-top: 15px;
-      min-height: 1.2em;
-      font-weight: bold;
-    }
-    #pontuacao-container {
-      margin-top: 20px;
-    }
+    #start-quiz:hover { background:var(--cor-destaque-hover); }
 
-    @media (max-width: 600px) {
-      header h1 {
-        font-size: 2em;
-      }
-      .profile-pic {
-        width: 120px;
-        height: 120px;
-        top: 210px;
-      }
-      section:first-of-type {
-        padding-top: 80px;
-      }
-      header {
-        padding: 320px 20px 40px;
-      }
-      #fan-dashboard {
-        max-width: 90%;
-        margin: 40px auto;
-      }
+    @media (max-width:600px) {
+      header h1 { font-size:2em; }
+      .profile-pic { width:120px; height:120px; top:210px; }
+      section:first-of-type { padding-top:80px; }
+      header { padding:320px 20px 40px; }
+      #fan-dashboard { max-width:90%; }
     }
   </style>
 </head>
-
 <body>
   <header id="header-capa">
-    <h1>Feqzin</h1>
-    <p></p>
+    <h1>Feqzin</h1><p></p>
   </header>
-  <img src="" alt="Feqzin" class="profile-pic" id="foto-perfil" />
+  <img id="foto-perfil" class="profile-pic" src="" alt="Feqzin"/>
 
   <section>
     <h2>Sobre</h2>
-    <p>
-      Feqzin é um artista nascido na zona norte de São Paulo, mais precisamente
-      no bairro do Jardim Brasil. Desde 2017 canetando, iniciou sua trajetória
-      oficialmente em 2022 com a primeira track produzida no celular. Traz
-      autenticidade no vocal e está sempre inovando em suas produções.
-    </p>
+    <p>Feqzin é um artista nascido na zona norte de São Paulo, mais precisamente no bairro do Jardim Brasil. Desde 2017 canetando, iniciou sua trajetória oficialmente em 2022 com a primeira track produzida no celular. Traz autenticidade no vocal e está sempre inovando em suas produções.</p>
   </section>
 
   <section>
@@ -328,61 +170,28 @@
   <section>
     <h2>Último Lançamento</h2>
     <div class="player">
-      <iframe
-        style="border-radius: 12px"
+      <iframe style="border-radius:12px"
         src="https://open.spotify.com/embed/track/1chtxFdUNshSXBjfrI8VmE?utm_source=generator"
-        width="100%"
-        height="152"
-        frameborder="0"
-        allowfullscreen=""
+        width="100%" height="152" frameborder="0"
         allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-        loading="lazy"
-      ></iframe>
+        loading="lazy"></iframe>
     </div>
-    <div class="countdown" id="countdown"></div>
-    <div style="text-align: center;">
-      <a
-        href="https://distrokid.com/hyperfollow/feqzin/se-a-bag-pesar"
-        target="_blank"
-        class="pre-save-button"
-        >FAÇA O PRE-SAVE</a
-      >
+    <div id="countdown" class="countdown"></div>
+    <div style="text-align:center;">
+      <a class="pre-save-button"
+         href="https://distrokid.com/hyperfollow/feqzin/se-a-bag-pesar"
+         target="_blank">FAÇA O PRE-SAVE</a>
     </div>
   </section>
 
   <section>
     <h2>Redes Sociais</h2>
     <div class="socials">
-      <a
-        href="https://www.instagram.com/feqzinn/"
-        target="_blank"
-        aria-label="Instagram"
-        ><i class="fa-brands fa-instagram"></i
-      ></a>
-      <a
-        href="https://www.tiktok.com/@feqzinn"
-        target="_blank"
-        aria-label="TikTok"
-        ><i class="fa-brands fa-tiktok"></i
-      ></a>
-      <a
-        href="https://www.youtube.com/@feqzin"
-        target="_blank"
-        aria-label="YouTube"
-        ><i class="fa-brands fa-youtube"></i
-      ></a>
-      <a
-        href="https://open.spotify.com/intl-pt/artist/56eMJpXmR5veK1kOi2apO4"
-        target="_blank"
-        aria-label="Spotify"
-        ><i class="fa-brands fa-spotify"></i
-      ></a>
-      <a
-        href="https://soundcloud.com/discordia-urban"
-        target="_blank"
-        aria-label="SoundCloud"
-        ><i class="fa-brands fa-soundcloud"></i
-      ></a>
+      <a href="https://www.instagram.com/feqzinn/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+      <a href="https://www.tiktok.com/@feqzinn" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
+      <a href="https://www.youtube.com/@feqzin" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+      <a href="https://open.spotify.com/intl-pt/artist/56eMJpXmR5veK1kOi2apO4" target="_blank"><i class="fa-brands fa-spotify"></i></a>
+      <a href="https://soundcloud.com/discordia-urban" target="_blank"><i class="fa-brands fa-soundcloud"></i></a>
     </div>
   </section>
 
@@ -390,36 +199,24 @@
   <section id="fan-dashboard">
     <h2>Dashboard do Fã</h2>
     <form id="auth-form">
-      <input
-        type="email"
-        id="email"
-        placeholder="Digite seu email"
-        required
-        autocomplete="username"
-      />
-      <input
-        type="password"
-        id="password"
-        placeholder="Digite sua senha"
-        required
-        autocomplete="current-password"
-      />
+      <input type="email" id="email" placeholder="Digite seu email" required autocomplete="username"/>
+      <input type="password" id="password" placeholder="Digite sua senha" required autocomplete="current-password"/>
       <button type="submit" id="btn-login">Entrar</button>
-      <button type="button" id="btn-signup">Cadastrar</button>
-      <button type="button" id="btn-reset-password">Esqueci a senha</button>
-      <button type="button" id="btnLogout">Logout</button>
+      <button type="button"   id="btn-signup">Cadastrar</button>
+      <button type="button"   id="btn-reset-password">Esqueci a senha</button>
+      <button type="button"   id="btnLogout">Logout</button>
     </form>
-    <div id="pontuacao-container" style="display: none;">
+    <div id="pontuacao-container">
       <h3>Sua Pontuação</h3>
       <p id="pontuacao-valor">0</p>
     </div>
+    <button id="start-quiz">Comece a ganhar pontos</button>
     <div id="auth-message"></div>
   </section>
 
   <footer>© 2025 Feqzin. Todos os direitos reservados.</footer>
 
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       carregarConfiguracoes();
@@ -429,283 +226,187 @@
 
     async function carregarConfiguracoes() {
       try {
-        const response = await fetch("/api/getContentfulConfig");
-        if (!response.ok)
-          throw new Error("Falha ao carregar configurações do nosso servidor.");
-        const data = await response.json();
-
-        if (data.items.length > 0) {
-          const entradaPrincipal = data.items[0];
-          const encontrarUrlDoAsset = (assetId) => {
-            if (!assetId || !data.includes || !data.includes.Asset) return "";
-            const asset = data.includes.Asset.find((a) => a.sys.id === assetId);
-            return asset ? "https:" + asset.fields.file.url : "";
-          };
-          const idCapa = entradaPrincipal.fields.imagemDeCapa?.sys.id;
-          const idPerfil = entradaPrincipal.fields.fotoDePerfil?.sys.id;
-          const urlCapa = encontrarUrlDoAsset(idCapa);
-          const urlPerfil = encontrarUrlDoAsset(idPerfil);
-
-          if (urlCapa) {
-            document.getElementById(
-              "header-capa"
-            ).style.backgroundImage = `url(${urlCapa})`;
-          }
-          if (urlPerfil) {
-            document.getElementById("foto-perfil").src = urlPerfil;
-          }
+        const res = await fetch("/api/getContentfulConfig");
+        if (!res.ok) throw new Error();
+        const data = await res.json();
+        if (data.items.length) {
+          const e = data.items[0];
+          const findUrl = id => (data.includes?.Asset.find(a=>a.sys.id===id)?.fields.file.url || "");
+          const capa = findUrl(e.fields.imagemDeCapa?.sys.id);
+          const perf = findUrl(e.fields.fotoDePerfil?.sys.id);
+          if (capa) document.getElementById("header-capa").style.backgroundImage = `url(https:${capa})`;
+          if (perf) document.getElementById("foto-perfil").src = `https:${perf}`;
         }
-      } catch (error) {
-        console.error("Erro ao carregar configs:", error);
-      }
+      } catch {}
     }
 
     async function carregarVideosDoYouTube() {
       try {
-        const response = await fetch("/api/getYoutubeVideos");
-        if (!response.ok) throw new Error("Falha ao carregar vídeos do nosso servidor.");
-        const data = await response.json();
-
-        const wrapper = document.getElementById("youtube-carousel-wrapper");
-        wrapper.innerHTML = "";
-
-        if (data.items && data.items.length > 0) {
-          data.items.forEach((item) => {
-            const videoId = item.id.videoId;
-            const slideHTML = `
+        const res = await fetch("/api/getYoutubeVideos");
+        if (!res.ok) throw new Error();
+        const data = await res.json();
+        const w = document.getElementById("youtube-carousel-wrapper");
+        w.innerHTML = "";
+        if (data.items.length) {
+          data.items.forEach(i=>{
+            w.innerHTML += `
               <div class="swiper-slide">
                 <div class="video-container">
-                  <iframe src="https://www.youtube.com/embed/${videoId}" title="${item.snippet.title}" frameborder="0" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                  <iframe src="https://www.youtube.com/embed/${i.id.videoId}" title="${i.snippet.title}" frameborder="0" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; picture-in-picture"></iframe>
                 </div>
               </div>`;
-            wrapper.innerHTML += slideHTML;
           });
-
           new Swiper(".swiper", {
-            loop: true,
-            spaceBetween: 20,
-            slidesPerView: 1,
-            breakpoints: {
-              768: { slidesPerView: 2, spaceBetween: 30 },
-              1024: { slidesPerView: 3, spaceBetween: 30 },
-            },
-            pagination: { el: ".swiper-pagination", clickable: true },
-            navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
+            loop:true, spaceBetween:20, slidesPerView:1,
+            breakpoints:{768:{slidesPerView:2, spaceBetween:30},1024:{slidesPerView:3, spaceBetween:30}},
+            pagination:{el:".swiper-pagination",clickable:true},
+            navigation:{nextEl:".swiper-button-next",prevEl:".swiper-button-prev"}
           });
         } else {
-          console.warn("A API do YouTube não retornou vídeos (data.items está vazio).");
-          wrapper.innerHTML =
-            "<p style='text-align:center;'>Não foi possível carregar os vídeos no momento.</p>";
+          w.innerHTML = "<p style='text-align:center;'>Não foi possível carregar os vídeos no momento.</p>";
         }
-      } catch (error) {
-        console.error("Erro ao carregar vídeos do YouTube:", error);
-      }
+      } catch {}
     }
 
     function iniciarCountdown() {
-      const countdown = document.getElementById("countdown");
-      if (!countdown) return;
-      const launchDate = new Date("2025-05-31T00:00:00").getTime();
-      const interval = setInterval(() => {
-        const now = new Date().getTime();
-        const distance = launchDate - now;
-        if (distance < 0) {
-          clearInterval(interval);
-          countdown.innerHTML = "Já disponível em todas as plataformas!";
-          const preSaveButton = document.querySelector(".pre-save-button");
-          if (preSaveButton) preSaveButton.style.display = "none";
+      const el = document.getElementById("countdown");
+      const launch = new Date("2025-05-31T00:00:00").getTime();
+      const iv = setInterval(()=>{
+        const now = Date.now(), d = launch - now;
+        if (d<0) {
+          clearInterval(iv);
+          el.innerHTML = "Já disponível em todas as plataformas!";
+          document.querySelector(".pre-save-button").style.display="none";
         } else {
-          const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-          const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-          const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-          const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-          countdown.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s <br><span style="font-size: 0.5em; color: #ccc;">Para o próximo lançamento.</span>`;
+          const days = Math.floor(d/(1000*60*60*24));
+          const hrs  = Math.floor((d%(1000*60*60*24))/(1000*60*60));
+          const mins = Math.floor((d%(1000*60*60))/(1000*60));
+          const secs = Math.floor((d%(1000*60))/1000);
+          el.innerHTML = `${days}d ${hrs}h ${mins}m ${secs}s<br><span style="font-size:.5em;color:#ccc;">Para o próximo lançamento.</span>`;
         }
-      }, 1000);
+      },1000);
     }
   </script>
 
-  <!-- Firebase SDK -->
+  <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
-
   <script>
-    // TODO: Substitua os valores abaixo pelo seu próprio config do Firebase
+    // Suas chaves Firebase
     const firebaseConfig = {
       apiKey: "AIzaSyBhSmocbaARqU_pPM0Tqki8d11jm97IE4M",
-  authDomain: "dashboardfeqzin.firebaseapp.com",
-  projectId: "dashboardfeqzin",
-  storageBucket: "dashboardfeqzin.firebasestorage.app",
-  messagingSenderId: "1042985498691",
-  appId: "1:1042985498691:web:16ab98f93f925ebf7b7cf6",
-  measurementId: "G-QZY8SDZX5T"
+      authDomain: "dashboardfeqzin.firebaseapp.com",
+      projectId: "dashboardfeqzin",
+      storageBucket: "dashboardfeqzin.firebasestorage.app",
+      messagingSenderId: "1042985498691",
+      appId: "1:1042985498691:web:16ab98f93f925ebf7b7cf6",
+      measurementId: "G-QZY8SDZX5T"
     };
-
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
-    const db = firebase.firestore();
+    const db   = firebase.firestore();
 
     // Elementos
-    const authForm = document.getElementById("auth-form");
-    const emailInput = document.getElementById("email");
-    const passwordInput = document.getElementById("password");
-    const btnLogin = document.getElementById("btn-login");
-    const btnSignup = document.getElementById("btn-signup");
-    const btnResetPassword = document.getElementById("btn-reset-password");
-    const btnLogout = document.getElementById("btnLogout");
-    const authMessage = document.getElementById("auth-message");
-    const pontuacaoContainer = document.getElementById("pontuacao-container");
-    const pontuacaoValor = document.getElementById("pontuacao-valor");
+    const authForm          = document.getElementById("auth-form");
+    const emailInput        = document.getElementById("email");
+    const passwordInput     = document.getElementById("password");
+    const btnLogin          = document.getElementById("btn-login");
+    const btnSignup         = document.getElementById("btn-signup");
+    const btnResetPassword  = document.getElementById("btn-reset-password");
+    const btnLogout         = document.getElementById("btnLogout");
+    const authMessage       = document.getElementById("auth-message");
+    const pontuacaoContainer= document.getElementById("pontuacao-container");
+    const pontuacaoValor    = document.getElementById("pontuacao-valor");
+    const btnQuiz           = document.getElementById("start-quiz");
+
+    const adminEmail = "fernandoq87@gmail.com";
 
     function carregarPontuacao(uid) {
-      db.collection("usuarios")
-        .doc(uid)
-        .get()
-        .then((doc) => {
-          if (doc.exists && doc.data().pontos !== undefined) {
-            pontuacaoValor.textContent = doc.data().pontos;
-          } else {
-            db.collection("usuarios").doc(uid).set({ pontos: 0 }, { merge: true });
-            pontuacaoValor.textContent = "0";
-          }
+      db.collection("usuarios").doc(uid).get()
+        .then(doc => {
+          const data = doc.data() || {};
+          pontuacaoValor.textContent = data.pontos || 0;
           pontuacaoContainer.style.display = "block";
-        })
-        .catch((error) => {
-          console.error("Erro ao buscar pontuação:", error);
-          pontuacaoValor.textContent = "Erro";
-          pontuacaoContainer.style.display = "block";
-        });
+        }).catch(console.error);
     }
 
-    authForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const email = emailInput.value;
-      const password = passwordInput.value;
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        authMessage.style.color = "lightgreen";
+        authMessage.textContent = `Usuário logado: ${user.email}`;
 
-      auth
-        .signInWithEmailAndPassword(email, password)
-        .then((userCredential) => {
-          authMessage.style.color = "lightgreen";
-          authMessage.textContent = `Bem-vindo, ${userCredential.user.email}! Você está logado.`;
-          authForm.reset();
-        })
-        .catch((error) => {
-          authMessage.style.color = "tomato";
-          authMessage.textContent = `Erro no login: ${error.message}`;
-        });
-    });
+        // esconder form
+        emailInput.style.display = passwordInput.style.display =
+          btnLogin.style.display = btnSignup.style.display = btnResetPassword.style.display = "none";
+        btnLogout.style.display = "inline-block";
 
-    btnResetPassword.addEventListener("click", () => {
-      const email = emailInput.value.trim();
+        carregarPontuacao(user.uid);
 
-      if (!email) {
-        authMessage.style.color = "tomato";
-        authMessage.textContent = "Por favor, digite seu e-mail para redefinir a senha.";
-        return;
+        // mostrar botão quiz
+        btnQuiz.style.display = "inline-block";
+        btnQuiz.onclick = () => window.open("quiz.html", "_blank");
+
+      } else {
+        authMessage.textContent = "";
+        emailInput.style.display = passwordInput.style.display =
+          btnLogin.style.display = btnSignup.style.display = btnResetPassword.style.display = "block";
+        btnLogout.style.display = "none";
+        pontuacaoContainer.style.display = "none";
+        btnQuiz.style.display = "none";
       }
-
-      passwordInput.style.transition = "opacity 0.3s";
-      passwordInput.style.opacity = "0";
-      setTimeout(() => {
-        passwordInput.style.display = "none";
-        btnLogin.style.display = "none";
-        btnSignup.style.display = "none";
-      }, 300);
-
-      auth
-        .sendPasswordResetEmail(email)
-        .then(() => {
-          authMessage.style.color = "lightgreen";
-          authMessage.textContent = "E-mail de redefinição enviado com sucesso.";
-          alert(`Um link de redefinição de senha foi enviado para ${email}`);
-
-          passwordInput.style.display = "block";
-          setTimeout(() => {
-            passwordInput.style.opacity = "1";
-          }, 10);
-          btnLogin.style.display = "inline-block";
-          btnSignup.style.display = "inline-block";
-        })
-        .catch((error) => {
-          authMessage.style.color = "tomato";
-          authMessage.textContent = `Erro ao enviar e-mail: ${error.message}`;
-
-          passwordInput.style.display = "block";
-          setTimeout(() => {
-            passwordInput.style.opacity = "1";
-          }, 10);
-          btnLogin.style.display = "inline-block";
-          btnSignup.style.display = "inline-block";
-        });
     });
 
-    btnSignup.addEventListener("click", () => {
-      const email = emailInput.value.trim();
-      const password = passwordInput.value;
+    // Login
+    authForm.addEventListener("submit", e => {
+      e.preventDefault();
+      auth.signInWithEmailAndPassword(emailInput.value, passwordInput.value)
+        .catch(err => {
+          authMessage.style.color = "tomato";
+          authMessage.textContent = `Erro no login: ${err.message}`;
+        });
+      authForm.reset();
+    });
 
-      if (!email || !password) {
+    // Signup
+    btnSignup.addEventListener("click", () => {
+      if (!emailInput.value || !passwordInput.value) {
         authMessage.style.color = "tomato";
         authMessage.textContent = "Preencha email e senha para cadastrar.";
         return;
       }
-
-      auth
-        .createUserWithEmailAndPassword(email, password)
-        .then((userCredential) => {
-          authMessage.style.color = "lightgreen";
-          authMessage.textContent = `Usuário criado: ${userCredential.user.email}. Agora faça login.`;
-          authForm.reset();
-        })
-        .catch((error) => {
-          authMessage.style.color = "tomato";
-          authMessage.textContent = `Erro no cadastro: ${error.message}`;
-        });
-    });
-
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        btnLogout.style.display = "inline-block";
-        pontuacaoContainer.style.display = "block";
-        carregarPontuacao(user.uid);
-
-        authMessage.style.color = "lightgreen";
-        authMessage.textContent = `Usuário logado: ${user.email}`;
-
-        emailInput.style.display = "none";
-        passwordInput.style.display = "none";
-        btnLogin.style.display = "none";
-        btnSignup.style.display = "none";
-        btnResetPassword.style.display = "none";
-      } else {
-        btnLogout.style.display = "none";
-        pontuacaoContainer.style.display = "none";
-
-        authMessage.textContent = "";
-
-        emailInput.style.display = "block";
-        passwordInput.style.display = "block";
-        btnLogin.style.display = "inline-block";
-        btnSignup.style.display = "inline-block";
-        btnResetPassword.style.display = "inline-block";
-      }
-    });
-
-    btnLogout.addEventListener("click", () => {
-      auth
-        .signOut()
+      auth.createUserWithEmailAndPassword(emailInput.value, passwordInput.value)
         .then(() => {
           authMessage.style.color = "lightgreen";
-          authMessage.textContent = "Logout realizado com sucesso.";
+          authMessage.textContent = "Usuário criado! Faça login.";
           authForm.reset();
         })
-        .catch((error) => {
-          console.error("Erro ao sair:", error);
+        .catch(err => {
           authMessage.style.color = "tomato";
-          authMessage.textContent = "Erro ao sair da conta.";
+          authMessage.textContent = `Erro no cadastro: ${err.message}`;
         });
     });
+
+    // Reset password
+    btnResetPassword.addEventListener("click", () => {
+      if (!emailInput.value) {
+        authMessage.style.color = "tomato";
+        authMessage.textContent = "Digite seu e-mail para redefinir a senha.";
+        return;
+      }
+      auth.sendPasswordResetEmail(emailInput.value)
+        .then(() => {
+          authMessage.style.color = "lightgreen";
+          authMessage.textContent = "E-mail de redefinição enviado.";
+        })
+        .catch(err => {
+          authMessage.style.color = "tomato";
+          authMessage.textContent = `Erro: ${err.message}`;
+        });
+    });
+
+    // Logout
+    btnLogout.addEventListener("click", () => auth.signOut());
   </script>
 </body>
 </html>
-
