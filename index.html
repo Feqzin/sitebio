@@ -194,7 +194,7 @@
     </div>
   </section>
 
-  <!-- NOVA SEÇÃO: DASHBOARD DO Fã -->
+  <!-- NOVA SEÇÃO: DASHBOARD DO FÃ -->
   <section id="fan-dashboard">
     <h2>Dashboard do Fã</h2>
     <form id="auth-form">
@@ -215,6 +215,7 @@
     <h3>Loja de Prêmios</h3>
     <div id="loja-container"></div>
     <div id="auth-message"></div>
+    <div id="user-email" style="margin-top:16px;color:#7fffaf;font-weight:bold"></div>
   </section>
 
   <footer>© 2025 Feqzin. Todos os direitos reservados.</footer>
@@ -240,8 +241,7 @@
           if (capa) document.getElementById("header-capa").style.backgroundImage = `url(https:${capa})`;
           if (perf) document.getElementById("foto-perfil").src = `https:${perf}`;
         }
-      } catch {}
-    }
+      } catch {}    }
 
     async function carregarVideosDoYouTube() {
       try {
@@ -265,8 +265,7 @@
         } else {
           w.innerHTML = "<p style='text-align:center;'>Não foi possível carregar os vídeos no momento.</p>";
         }
-      } catch {}
-    }
+      } catch {}    }
 
     function iniciarCountdown() {
       const el = document.getElementById("countdown");
@@ -317,6 +316,7 @@
     const btnQuiz = document.getElementById("start-quiz");
     const historicoContainer = document.getElementById("historico-container");
     const lojaContainer = document.getElementById("loja-container");
+    const userEmailShow = document.getElementById("user-email");
 
     function showMessage(text, color = "lightgreen") {
       authMessage.style.color = color;
@@ -396,11 +396,13 @@
     auth.onAuthStateChanged(user => {
       if (user) {
         showMessage(`Usuário logado: ${user.email}`);
+        userEmailShow.innerHTML = `Usuário logado: <b>${user.email}</b>`;
         emailInput.style.display = passwordInput.style.display = btnLogin.style.display = btnSignup.style.display = btnResetPassword.style.display = 'none';
         btnLogout.style.display = 'inline-block';
         carregarPontuacao(user.uid); carregarHistorico(user.uid); carregarLoja();
         btnQuiz.style.display = 'inline-block'; btnQuiz.onclick = () => window.open('quiz.html','_blank');
       } else {
+        userEmailShow.innerHTML = "";
         emailInput.style.display = passwordInput.style.display = btnLogin.style.display = btnSignup.style.display = btnResetPassword.style.display = 'block';
         btnLogout.style.display = 'none';
         pontuacaoContainer.style.display = 'none'; btnQuiz.style.display = 'none';
