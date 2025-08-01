@@ -239,7 +239,8 @@
           if (capa) document.getElementById("header-capa").style.backgroundImage = `url(https:${capa})`;
           if (perf) document.getElementById("foto-perfil").src = `https:${perf}`;
         }
-      } catch {}    }
+      } catch {}    
+    }
 
     async function carregarVideosDoYouTube() {
       try {
@@ -263,14 +264,19 @@
         } else {
           w.innerHTML = "<p style='text-align:center;'>Não foi possível carregar os vídeos no momento.</p>";
         }
-      } catch {}    }
+      } catch {}    
+    }
 
     function iniciarCountdown() {
       const el = document.getElementById("countdown");
       const launch = new Date("2025-05-31T00:00:00").getTime();
       const iv = setInterval(()=>{
         const now = Date.now(), d = launch - now;
-        if (d<0) { clearInterval(iv); el.innerHTML = "Já disponível em todas as plataformas!"; document.querySelector(".pre-save-button").style.display="none"; }
+        if (d<0) { 
+          clearInterval(iv);
+          el.innerHTML = "Já disponível em todas as plataformas!";
+          document.querySelector(".pre-save-button").style.display="none"; 
+        }
         else {
           const days = Math.floor(d/(1000*60*60*24));
           const hrs  = Math.floor((d%(1000*60*60*24))/(1000*60*60));
@@ -341,7 +347,8 @@
             const item = doc.data();
             const data = item.data?.toDate ? item.data.toDate().toLocaleString() : "";
             html += `<li>[${data}] ${item.descricao} (${item.pontos>0?"+":""}${item.pontos} pts)</li>`;
-          }); html += "</ul>";
+          });
+          html += "</ul>";
           historicoContainer.innerHTML = html;
         }).catch(err => historicoContainer.innerHTML = `<p>Erro: ${err.message}</p>`);
     }
@@ -351,21 +358,26 @@
       db.collection("resgates").get()
         .then(snapshot => {
           if (snapshot.empty) return lojaContainer.innerHTML = "<p>Loja vazia.</p>";
-          let html = "";
+          let html = '<div style="display:flex;flex-wrap:wrap;gap:15px;justify-content:center;">';
           snapshot.forEach(doc => {
             const item = doc.data();
-            html += `<div style='background:#222;margin:5px;padding:10px;border-radius:6px;text-align:center; width:120px;'>
-              <img src='${item.imagemUrl}' style='width:100%;height:80px;object-fit:cover;border-radius:4px;' alt='${item.nome}' />
-              <p>${item.nome}</p>
-              <small>${item.descricao}</small>
-              <p><b>${item.custoPontos} pts</b></p>
-              <button onclick="resgatarItem('${doc.id}',${item.custoPontos})" ${item.estoque===0?"disabled":""}>
-                ${item.estoque===0?"Esgotado":"Resgatar"}
-              </button></div>`;
-          }); lojaContainer.innerHTML = html;
+            html += `
+            <div style="background:#222; border-radius:8px; padding:15px; width:140px; text-align:center;">
+              <h4 style="font-size:1em; margin:0 0 10px;">${item.nome}</h4>
+              <p style="font-size:.9em; margin:0 0 10px;">Custo: ${item.custo} pts</p>
+              <p style="font-size:.8em; margin:0 0 10px;">Estoque: ${item.estoque}</p>
+              <button style="background:var(--cor-destaque); color:#fff; border:none; padding:8px 10px; border-radius:6px; cursor:pointer;"
+                onclick="resgatarItem('${doc.id}', ${item.custo})" ${item.estoque<=0?'disabled':''}>
+                Resgatar
+              </button>
+            </div>`;
+          });
+          html += "</div>";
+          lojaContainer.innerHTML = html;
         }).catch(err => lojaContainer.innerHTML = `<p>Erro: ${err.message}</p>`);
     }
 
+    // Função corrigida de resgate
     function resgatarItem(itemId, custo) {
       const user = auth.currentUser;
       if (!user) return alert("Faça login para resgatar itens.");
@@ -375,40 +387,107 @@
       db.runTransaction(async tx => {
         const uDoc = await tx.get(userRef);
         if (!uDoc.exists) throw 'Usuário não encontrado';
-        const pts = uDoc.data().pontos||0;
+        const pts = uDoc.data().pontos || 0;
         if (pts < custo) throw 'Pontos insuficientes';
         const rDoc = await tx.get(resgateRef);
-        const est = rDoc.data().estoque||0;
-        if (est<=0) throw 'Item esgotado';
-        tx.update(userRef,{pontos:pts - custo});
+        const est = rDoc.data().estoque || 0;
+        if (est <= 0) throw 'Item esgotado';
+        tx.update(userRef, { pontos: pts - custo });
         const histRef = userRef.collection("historico").doc();
-        tx.set(histRef,{data:firebase.firestore.FieldValue.serverTimestamp(),tipo:'resgate',"descricao:`Resgatou ${rDoc.data().nome}`,pontos:-custo});
-        tx.update(resgateRef,{estoque:est -1});
-      }).then(()=>{
+        tx.set(histRef, {
+          data: firebase.firestore.FieldValue.serverTimestamp(),
+          tipo: 'resgate',
+          descricao: `Resgatou ${rDoc.data().nome}`,
+          pontos: -custo
+        });
+        tx.update(resgateRef, { estoque: est - 1 });
+      }).then(() => {
         alert("Resgate efetuado!");
-        carregarPontuacao(uid); carregarHistorico(uid); carregarLoja();
-      }).catch(e=>alert("Erro: "+e));
+        carregarPontuacao(uid);
+        carregarHistorico(uid);
+        carregarLoja();
+      }).catch(e => alert("Erro: " + e));
     }
 
-    auth.onAuthStateChanged(user => {
-      if (user) {
-        showMessage(`Usuário logado: ${user.email}`);
-        emailInput.style.display = passwordInput.style.display = btnLogin.style.display = btnSignup.style.display = btnResetPassword.style.display = 'none';
-        btnLogout.style.display = 'inline-block';
-        carregarPontuacao(user.uid); carregarHistorico(user.uid); carregarLoja();
-        btnQuiz.style.display = 'inline-block'; btnQuiz.onclick = () => window.open('quiz.html','_blank');
-      } else {
-        emailInput.style.display = passwordInput.style.display = btnLogin.style.display = btnSignup.style.display = btnResetPassword.style.display = 'block';
-        btnLogout.style.display = 'none';
-        pontuacaoContainer.style.display = 'none'; btnQuiz.style.display = 'none';
-        historicoContainer.innerHTML = ''; lojaContainer.innerHTML = '';
+    // Autenticação
+
+    authForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      btnLogin.disabled = true;
+      auth.signInWithEmailAndPassword(emailInput.value, passwordInput.value)
+        .then(() => {
+          showMessage("Login efetuado com sucesso!");
+          authForm.reset();
+        })
+        .catch(err => showMessage(err.message, "tomato"))
+        .finally(() => btnLogin.disabled = false);
+    });
+
+    btnSignup.addEventListener("click", () => {
+      if (!emailInput.value || !passwordInput.value) {
+        showMessage("Digite email e senha para cadastrar", "tomato");
+        return;
+      }
+      btnSignup.disabled = true;
+      auth.createUserWithEmailAndPassword(emailInput.value, passwordInput.value)
+        .then(cred => {
+          return db.collection("usuarios").doc(cred.user.uid).set({ pontos: 0 });
+        })
+        .then(() => showMessage("Cadastro efetuado! Faça login agora."))
+        .catch(err => showMessage(err.message, "tomato"))
+        .finally(() => btnSignup.disabled = false);
+    });
+
+    btnResetPassword.addEventListener("click", () => {
+      if (!emailInput.value) {
+        showMessage("Digite seu email para receber o link", "tomato");
+        return;
+      }
+      btnResetPassword.disabled = true;
+      auth.sendPasswordResetEmail(emailInput.value)
+        .then(() => showMessage("Link de redefinição enviado ao seu email"))
+        .catch(err => showMessage(err.message, "tomato"))
+        .finally(() => btnResetPassword.disabled = false);
+    });
+
+    btnLogout.addEventListener("click", () => {
+      if (confirm("Tem certeza que deseja sair?")) {
+        auth.signOut();
       }
     });
 
-    authForm.addEventListener('submit',e=>{e.preventDefault(); auth.signInWithEmailAndPassword(emailInput.value,passwordInput.value).catch(err=>showMessage(err.message,'tomato')); authForm.reset();});
-    btnSignup.addEventListener('click',()=>{ if(!emailInput.value||!passwordInput.value) return showMessage('Preencha email e senha','tomato'); auth.createUserWithEmailAndPassword(emailInput.value,passwordInput.value).then(()=>showMessage('Usuário criado!','lightgreen')).catch(err=>showMessage(err.message,'tomato')); });
-    btnResetPassword.addEventListener('click',()=>{ if(!emailInput.value) return showMessage('Digite email','tomato'); auth.sendPasswordResetEmail(emailInput.value).then(()=>showMessage('Email enviado')).catch(err=>showMessage(err.message,'tomato')); });
-    btnLogout.addEventListener('click',()=>auth.signOut());
+    btnQuiz.addEventListener("click", () => {
+      // Abre o quiz na mesma aba:
+      window.location.href = "quiz.html";
+    });
+
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        // Usuário logado
+        btnLogout.style.display = "inline-block";
+        btnLogin.style.display = "none";
+        btnSignup.style.display = "none";
+        btnResetPassword.style.display = "none";
+        emailInput.style.display = "none";
+        passwordInput.style.display = "none";
+        carregarPontuacao(user.uid);
+        carregarHistorico(user.uid);
+        carregarLoja();
+        btnQuiz.style.display = "inline-block";
+      } else {
+        // Deslogado
+        btnLogout.style.display = "none";
+        btnLogin.style.display = "inline-block";
+        btnSignup.style.display = "inline-block";
+        btnResetPassword.style.display = "inline-block";
+        emailInput.style.display = "inline-block";
+        passwordInput.style.display = "inline-block";
+        pontuacaoContainer.style.display = "none";
+        historicoContainer.innerHTML = "";
+        lojaContainer.innerHTML = "";
+        btnQuiz.style.display = "none";
+      }
+    });
   </script>
 </body>
 </html>
