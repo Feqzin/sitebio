@@ -129,7 +129,9 @@
     #btnLogout { display:none; background:#f44336; color:#fff; }
     #auth-message { margin-top:15px; min-height:1.2em; font-weight:bold; }
     #pontuacao-container { display:none; margin-top:20px; }
-    #start-quiz { display:none; margin-top:20px; padding:10px 20px;
+    /* botão quiz */
+    #start-quiz {
+      display:none; margin-top:20px; padding:10px 20px;
       background:var(--cor-destaque); color:#fff; border:none;
       border-radius:6px; font-weight:bold; cursor:pointer;
     }
@@ -209,10 +211,6 @@
       <p id="pontuacao-valor">0</p>
     </div>
     <button id="start-quiz">Comece a ganhar pontos</button>
-    <h3>Histórico de Atividades</h3>
-    <div id="historico-container"></div>
-    <h3>Loja de Prêmios</h3>
-    <div id="loja-container"></div>
     <div id="auth-message"></div>
   </section>
 
@@ -239,7 +237,8 @@
           if (capa) document.getElementById("header-capa").style.backgroundImage = `url(https:${capa})`;
           if (perf) document.getElementById("foto-perfil").src = `https:${perf}`;
         }
-      } catch {}    }
+      } catch {}
+    }
 
     async function carregarVideosDoYouTube() {
       try {
@@ -249,29 +248,36 @@
         const w = document.getElementById("youtube-carousel-wrapper");
         w.innerHTML = "";
         if (data.items.length) {
-          data.items.forEach(i=>{ w.innerHTML += `
+          data.items.forEach(i=>{
+            w.innerHTML += `
               <div class="swiper-slide">
                 <div class="video-container">
                   <iframe src="https://www.youtube.com/embed/${i.id.videoId}" title="${i.snippet.title}" frameborder="0" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; picture-in-picture"></iframe>
                 </div>
-              </div>` });
+              </div>`;
+          });
           new Swiper(".swiper", {
             loop:true, spaceBetween:20, slidesPerView:1,
             breakpoints:{768:{slidesPerView:2, spaceBetween:30},1024:{slidesPerView:3, spaceBetween:30}},
-            pagination:{el:".swiper-pagination",clickable:true}, navigation:{nextEl:".swiper-button-next",prevEl:".swiper-button-prev"}
+            pagination:{el:".swiper-pagination",clickable:true},
+            navigation:{nextEl:".swiper-button-next",prevEl:".swiper-button-prev"}
           });
         } else {
           w.innerHTML = "<p style='text-align:center;'>Não foi possível carregar os vídeos no momento.</p>";
         }
-      } catch {}    }
+      } catch {}
+    }
 
     function iniciarCountdown() {
       const el = document.getElementById("countdown");
       const launch = new Date("2025-05-31T00:00:00").getTime();
       const iv = setInterval(()=>{
         const now = Date.now(), d = launch - now;
-        if (d<0) { clearInterval(iv); el.innerHTML = "Já disponível em todas as plataformas!"; document.querySelector(".pre-save-button").style.display="none"; }
-        else {
+        if (d<0) {
+          clearInterval(iv);
+          el.innerHTML = "Já disponível em todas as plataformas!";
+          document.querySelector(".pre-save-button").style.display="none";
+        } else {
           const days = Math.floor(d/(1000*60*60*24));
           const hrs  = Math.floor((d%(1000*60*60*24))/(1000*60*60));
           const mins = Math.floor((d%(1000*60*60))/(1000*60));
@@ -287,6 +293,7 @@
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
   <script>
+    // Suas chaves Firebase
     const firebaseConfig = {
       apiKey: "AIzaSyBhSmocbaARqU_pPM0Tqki8d11jm97IE4M",
       authDomain: "dashboardfeqzin.firebaseapp.com",
@@ -301,25 +308,19 @@
     const db   = firebase.firestore();
 
     // Elementos
-    const authForm = document.getElementById("auth-form");
-    const emailInput = document.getElementById("email");
-    const passwordInput = document.getElementById("password");
-    const btnLogin = document.getElementById("btn-login");
-    const btnSignup = document.getElementById("btn-signup");
-    const btnResetPassword = document.getElementById("btn-reset-password");
-    const btnLogout = document.getElementById("btnLogout");
-    const authMessage = document.getElementById("auth-message");
-    const pontuacaoContainer = document.getElementById("pontuacao-container");
-    const pontuacaoValor = document.getElementById("pontuacao-valor");
-    const btnQuiz = document.getElementById("start-quiz");
-    const historicoContainer = document.getElementById("historico-container");
-    const lojaContainer = document.getElementById("loja-container");
+    const authForm          = document.getElementById("auth-form");
+    const emailInput        = document.getElementById("email");
+    const passwordInput     = document.getElementById("password");
+    const btnLogin          = document.getElementById("btn-login");
+    const btnSignup         = document.getElementById("btn-signup");
+    const btnResetPassword  = document.getElementById("btn-reset-password");
+    const btnLogout         = document.getElementById("btnLogout");
+    const authMessage       = document.getElementById("auth-message");
+    const pontuacaoContainer= document.getElementById("pontuacao-container");
+    const pontuacaoValor    = document.getElementById("pontuacao-valor");
+    const btnQuiz           = document.getElementById("start-quiz");
 
-    function showMessage(text, color = "lightgreen") {
-      authMessage.style.color = color;
-      authMessage.textContent = text;
-      setTimeout(() => { authMessage.textContent = ""; }, 6000);
-    }
+    const adminEmail = "fernandoq87@gmail.com";
 
     function carregarPontuacao(uid) {
       db.collection("usuarios").doc(uid).get()
@@ -327,88 +328,85 @@
           const data = doc.data() || {};
           pontuacaoValor.textContent = data.pontos || 0;
           pontuacaoContainer.style.display = "block";
-        }).catch(err => showMessage("Erro ao carregar pontuação: " + err.message, "tomato"));
-    }
-
-    function carregarHistorico(uid) {
-      historicoContainer.innerHTML = "<p>Carregando histórico...</p>";
-      db.collection("usuarios").doc(uid).collection("historico")
-        .orderBy("data", "desc").limit(20).get()
-        .then(snapshot => {
-          if (snapshot.empty) return historicoContainer.innerHTML = "<p>Sem histórico.</p>";
-          let html = "<ul style='text-align:left;'>";
-          snapshot.forEach(doc => {
-            const item = doc.data();
-            const data = item.data?.toDate ? item.data.toDate().toLocaleString() : "";
-            html += `<li>[${data}] ${item.descricao} (${item.pontos>0?"+":""}${item.pontos} pts)</li>`;
-          }); html += "</ul>";
-          historicoContainer.innerHTML = html;
-        }).catch(err => historicoContainer.innerHTML = `<p>Erro: ${err.message}</p>`);
-    }
-
-    function carregarLoja() {
-      lojaContainer.innerHTML = "<p>Carregando loja...</p>";
-      db.collection("resgates").get()
-        .then(snapshot => {
-          if (snapshot.empty) return lojaContainer.innerHTML = "<p>Loja vazia.</p>";
-          let html = "";
-          snapshot.forEach(doc => {
-            const item = doc.data();
-            html += `<div style='background:#222;margin:5px;padding:10px;border-radius:6px;text-align:center; width:120px;'>
-              <img src='${item.imagemUrl}' style='width:100%;height:80px;object-fit:cover;border-radius:4px;' alt='${item.nome}' />
-              <p>${item.nome}</p>
-              <small>${item.descricao}</small>
-              <p><b>${item.custoPontos} pts</b></p>
-              <button onclick="resgatarItem('${doc.id}',${item.custoPontos})" ${item.estoque===0?"disabled":""}>
-                ${item.estoque===0?"Esgotado":"Resgatar"}
-              </button></div>`;
-          }); lojaContainer.innerHTML = html;
-        }).catch(err => lojaContainer.innerHTML = `<p>Erro: ${err.message}</p>`);
-    }
-
-    function resgatarItem(itemId, custo) {
-      const user = auth.currentUser;
-      if (!user) return alert("Faça login para resgatar itens.");
-      const uid = user.uid;
-      const userRef = db.collection("usuarios").doc(uid);
-      const resgateRef = db.collection("resgates").doc(itemId);
-      db.runTransaction(async tx => {
-        const uDoc = await tx.get(userRef);
-        if (!uDoc.exists) throw 'Usuário não encontrado';
-        const pts = uDoc.data().pontos||0;
-        if (pts < custo) throw 'Pontos insuficientes';
-        const rDoc = await tx.get(resgateRef);
-        const est = rDoc.data().estoque||0;
-        if (est<=0) throw 'Item esgotado';
-        tx.update(userRef,{pontos:pts - custo});
-        const histRef = userRef.collection("historico").doc();
-        tx.set(histRef,{data:firebase.firestore.FieldValue.serverTimestamp(),tipo:'resgate',"descricao:`Resgatou ${rDoc.data().nome}`,pontos:-custo});
-        tx.update(resgateRef,{estoque:est -1});
-      }).then(()=>{
-        alert("Resgate efetuado!");
-        carregarPontuacao(uid); carregarHistorico(uid); carregarLoja();
-      }).catch(e=>alert("Erro: "+e));
+        }).catch(console.error);
     }
 
     auth.onAuthStateChanged(user => {
       if (user) {
-        showMessage(`Usuário logado: ${user.email}`);
-        emailInput.style.display = passwordInput.style.display = btnLogin.style.display = btnSignup.style.display = btnResetPassword.style.display = 'none';
-        btnLogout.style.display = 'inline-block';
-        carregarPontuacao(user.uid); carregarHistorico(user.uid); carregarLoja();
-        btnQuiz.style.display = 'inline-block'; btnQuiz.onclick = () => window.open('quiz.html','_blank');
+        authMessage.style.color = "lightgreen";
+        authMessage.textContent = `Usuário logado: ${user.email}`;
+
+        // esconder form
+        emailInput.style.display = passwordInput.style.display =
+          btnLogin.style.display = btnSignup.style.display = btnResetPassword.style.display = "none";
+        btnLogout.style.display = "inline-block";
+
+        carregarPontuacao(user.uid);
+
+        // mostrar botão quiz
+        btnQuiz.style.display = "inline-block";
+        btnQuiz.onclick = () => window.open("quiz.html", "_blank");
+
       } else {
-        emailInput.style.display = passwordInput.style.display = btnLogin.style.display = btnSignup.style.display = btnResetPassword.style.display = 'block';
-        btnLogout.style.display = 'none';
-        pontuacaoContainer.style.display = 'none'; btnQuiz.style.display = 'none';
-        historicoContainer.innerHTML = ''; lojaContainer.innerHTML = '';
+        authMessage.textContent = "";
+        emailInput.style.display = passwordInput.style.display =
+          btnLogin.style.display = btnSignup.style.display = btnResetPassword.style.display = "block";
+        btnLogout.style.display = "none";
+        pontuacaoContainer.style.display = "none";
+        btnQuiz.style.display = "none";
       }
     });
 
-    authForm.addEventListener('submit',e=>{e.preventDefault(); auth.signInWithEmailAndPassword(emailInput.value,passwordInput.value).catch(err=>showMessage(err.message,'tomato')); authForm.reset();});
-    btnSignup.addEventListener('click',()=>{ if(!emailInput.value||!passwordInput.value) return showMessage('Preencha email e senha','tomato'); auth.createUserWithEmailAndPassword(emailInput.value,passwordInput.value).then(()=>showMessage('Usuário criado!','lightgreen')).catch(err=>showMessage(err.message,'tomato')); });
-    btnResetPassword.addEventListener('click',()=>{ if(!emailInput.value) return showMessage('Digite email','tomato'); auth.sendPasswordResetEmail(emailInput.value).then(()=>showMessage('Email enviado')).catch(err=>showMessage(err.message,'tomato')); });
-    btnLogout.addEventListener('click',()=>auth.signOut());
+    // Login
+    authForm.addEventListener("submit", e => {
+      e.preventDefault();
+      auth.signInWithEmailAndPassword(emailInput.value, passwordInput.value)
+        .catch(err => {
+          authMessage.style.color = "tomato";
+          authMessage.textContent = `Erro no login: ${err.message}`;
+        });
+      authForm.reset();
+    });
+
+    // Signup
+    btnSignup.addEventListener("click", () => {
+      if (!emailInput.value || !passwordInput.value) {
+        authMessage.style.color = "tomato";
+        authMessage.textContent = "Preencha email e senha para cadastrar.";
+        return;
+      }
+      auth.createUserWithEmailAndPassword(emailInput.value, passwordInput.value)
+        .then(() => {
+          authMessage.style.color = "lightgreen";
+          authMessage.textContent = "Usuário criado! Faça login.";
+          authForm.reset();
+        })
+        .catch(err => {
+          authMessage.style.color = "tomato";
+          authMessage.textContent = `Erro no cadastro: ${err.message}`;
+        });
+    });
+
+    // Reset password
+    btnResetPassword.addEventListener("click", () => {
+      if (!emailInput.value) {
+        authMessage.style.color = "tomato";
+        authMessage.textContent = "Digite seu e-mail para redefinir a senha.";
+        return;
+      }
+      auth.sendPasswordResetEmail(emailInput.value)
+        .then(() => {
+          authMessage.style.color = "lightgreen";
+          authMessage.textContent = "E-mail de redefinição enviado.";
+        })
+        .catch(err => {
+          authMessage.style.color = "tomato";
+          authMessage.textContent = `Erro: ${err.message}`;
+        });
+    });
+
+    // Logout
+    btnLogout.addEventListener("click", () => auth.signOut());
   </script>
 </body>
 </html>
