@@ -5,33 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Feqzin | Site Oficial</title>
 
-  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous"/>
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600,700&display=swap" rel="stylesheet">
   <style>
     :root {
       --cor-destaque: #1db954;
       --cor-destaque-hover: #1ed760;
       --cor-texto: #f1f1f1;
-      --cor-fundo: #181818;
-      --cor-fundo-secundario: #222;
+      --cor-fundo: #0e0e0e;
+      --cor-fundo-secundario: #111;
       --cor-borda-suave: #444;
-      --cor-input: #292929;
-      --radius: 18px;
-      --font-main: 'Montserrat', Arial, sans-serif;
     }
-    html, body {
-      background: var(--cor-fundo);
-      color: var(--cor-texto);
-      font-family: var(--font-main);
-      margin: 0; padding: 0;
-      min-height: 100vh;
-      width: 100vw;
-      box-sizing: border-box;
+    body {
+      margin: 0; font-family: 'Montserrat', Arial, sans-serif;
+      background: var(--cor-fundo); color: var(--cor-texto); line-height:1.6;
     }
-
-    /* Mantém o estilo do restante do site */
     header {
       background-color:rgba(0,0,0,0.6);
       background-blend-mode:darken;
@@ -43,7 +32,7 @@
     header::after {
       content:""; position:absolute; bottom:0; left:0;
       width:100%; height:100px;
-      background:linear-gradient(to bottom,rgba(24,24,24,0),var(--cor-fundo));
+      background:linear-gradient(to bottom,rgba(14,14,14,0),var(--cor-fundo));
       z-index:1;
     }
     header h1, header p { position:relative; z-index:2; }
@@ -55,20 +44,29 @@
       object-fit:cover; background:#000;
       position:absolute; top:190px; left:50%;
       transform:translateX(-50%); z-index:3;
-      transition:transform .4s; transform-style:preserve-3d;
+      transition:transform .4s ease-in-out; transform-style:preserve-3d;
     }
     .profile-pic:hover {
       transform:translateX(-50%) perspective(1000px) rotateY(25deg);
     }
-    section { padding:40px 20px; max-width:900px; margin:auto;}
-    section:first-of-type { padding-top:100px;}
-    h2 { border-bottom:2px solid var(--cor-borda-suave); padding-bottom:10px; margin-bottom:20px;}
-    a { color:var(--cor-destaque); text-decoration:none; transition:color .3s;}
-    a:hover { color:#fff;}
-    .socials { text-align:center;}
-    .socials a { margin:0 15px; color:var(--cor-texto); font-size:2em; transition:all .3s;}
-    .socials a:hover { color:var(--cor-destaque); transform:translateY(-5px);}
-    .player { margin:20px 0;}
+    section {
+      padding:40px 20px; max-width:900px; margin:auto;
+    }
+    section:first-of-type { padding-top:100px; }
+    h2 {
+      border-bottom:2px solid var(--cor-borda-suave);
+      padding-bottom:10px; margin-bottom:20px;
+    }
+    a { color:var(--cor-destaque); text-decoration:none; transition:color .3s; }
+    a:hover { color:#fff; }
+    .socials { text-align:center; }
+    .socials a {
+      margin:0 15px; color:var(--cor-texto); font-size:2em; transition:all .3s;
+    }
+    .socials a:hover {
+      color:var(--cor-destaque); transform:translateY(-5px);
+    }
+    .player { margin:20px 0; }
     .countdown {
       text-align:center; font-size:2em; margin:20px 0 10px;
       color:var(--cor-destaque); line-height:1.2;
@@ -78,238 +76,447 @@
       text-align:center; padding:20px;
       font-size:.9em; color:#777;
     }
-    /* ------------------- FÃ DASHBOARD ------------------- */
-    .dashboard-ctn {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 80vh;
-      margin: 0 auto 70px auto;
+    .swiper { width:100%; padding-top:20px; padding-bottom:50px; }
+    .swiper-slide { background-position:center; background-size:cover; width:100%; }
+    .video-container { position:relative; width:100%; padding-top:56.25%; }
+    .video-container iframe {
+      position:absolute; top:0; left:0; width:100%; height:100%;
+      border-radius:12px; border:0;
     }
-    .dashboard-box {
-      background: #333d3c;
-      border-radius: 24px;
-      padding: 34px 36px 30px 36px;
-      box-shadow: 0 8px 34px #000a;
+    .swiper-button-next, .swiper-button-prev { color:var(--cor-destaque); }
+    .swiper-pagination-bullet-active { background:var(--cor-destaque); }
+    .pre-save-button {
+      display:inline-block; background:var(--cor-destaque); color:#fff;
+      padding:15px 35px; border-radius:50px; text-decoration:none;
+      font-weight:bold; font-size:1.1em; margin-top:20px;
+      transition:background .3s, transform .2s;
+    }
+    .pre-save-button:hover {
+      background:var(--cor-destaque-hover); transform:scale(1.05);
+    }
+    /* ----- DASHBOARD -------- */
+    .dashboard-outer {
+      width: 100vw; display: flex; justify-content: center; align-items: center; margin: 60px 0;
+    }
+    .dashboard {
+      background: #222;
+      border-radius: 22px;
+      padding: 44px 40px 36px 40px;
+      box-shadow: 0 0 32px 0 #000a;
       display: flex;
       flex-direction: column;
       align-items: center;
-      width: 470px;
-      max-width: 94vw;
-      min-height: 420px;
+      width: 400px;
+      min-width: 320px;
+      max-width: 98vw;
       position: relative;
-      margin: 70px auto 40px auto;
-      border: 2.5px solid var(--cor-destaque);
-      transition: box-shadow 0.2s;
+      z-index: 2;
+      margin: 0 auto 55px auto;
     }
-    .dashboard-box .logout-ctn {
-      position: absolute;
-      top: 22px; left: 28px;
-      display: flex; flex-direction: column; align-items: flex-start;
+    .dashboard-title {
+      font-size: 2.1em;
+      font-weight: 800;
+      letter-spacing: .7px;
+      color: #fff;
+      width: 100%;
+      text-align: center;
+      margin: 0 0 18px 0;
     }
-    .dashboard-box .user-email {
-      color: #fff; font-size: 1.03em; margin-bottom: 3px; font-weight: 500;
-      opacity: 0.93; letter-spacing: .04em;
+    #auth-form {
+      display: flex; flex-direction: column; width: 100%; gap: 11px;
+      margin-bottom: 13px;
     }
-    .dashboard-box .btn-logout {
-      background: #ff8346;
+    #auth-form input {
+      padding: 13px; border-radius: 7px; border: 1.5px solid #3a3a3a;
+      background: #181919; color: #fff; font-size: 1em; font-family: inherit;
+      outline: none; font-weight: 500;
+    }
+    #auth-form input:focus {
+      border-color: #1db954;
+      background: #181919;
+    }
+    #auth-form button {
+      padding: 12px; border: none; border-radius: 7px; font-weight: 700; font-size: 1em; font-family: inherit; cursor: pointer;
+      transition: background .18s;
+      margin-top: 0;
+    }
+    #btn-login { background: #00ff55; color: #181818; }
+    #btn-login:hover { background: #1ed760; }
+    #btn-signup, #btn-reset-password {
+      background: #616161; color: #eee;
+      margin-top: 0;
+    }
+    #btn-signup:hover, #btn-reset-password:hover { background: #888; }
+    #auth-message {
+      min-height: 18px;
+      margin-bottom: 8px;
+      font-size: 1em;
+      text-align: center;
+    }
+    /* Dashboard completa (após login) */
+    .dashboard-completa { display: none; width: 100%; }
+    .dashboard-top {
+      width: 100%;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 0px;
+    }
+    .user-side {
+      display: flex; flex-direction: column; align-items: flex-start; z-index: 1;
+    }
+    .user-email {
+      color: #ddd;
+      font-size: 1em;
+      margin-bottom: 5px;
+      font-weight: 500;
+      opacity: 0.93;
+    }
+    .btn-logout {
+      background: #ff5e3a;
       color: #fff;
       border: none;
-      border-radius: 11px;
-      font-weight: 700;
+      border-radius: 8px;
+      font-weight: 600;
       font-size: 1em;
-      padding: 7px 22px 7px 22px;
+      padding: 8px 24px;
       cursor: pointer;
-      margin-bottom: 2px;
-      box-shadow: 0 2px 8px #0002;
-      transition: background .18s;
+      box-shadow: 0 2px 12px #0003;
+      transition: background 0.2s;
+      margin-bottom: 6px;
     }
-    .dashboard-box .btn-logout:hover { background: #ffb087; color: #242424;}
-    .dashboard-title {
-      font-size: 2.5em;
-      font-weight: 800;
-      letter-spacing: 1px;
+    .btn-logout:hover { background: #ff9277; }
+    .historico {
+      background: #202223;
+      border-radius: 12px;
+      padding: 16px 22px 16px 22px;
+      box-shadow: 0 1px 8px #0002;
+      color: #dbeed7;
+      font-size: 0.98em;
+      min-width: 180px;
+      max-width: 320px;
+      max-height: 155px;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      border: 1px solid #232;
+      opacity: 0.96;
+    }
+    .historico b {
       color: #fff;
+      font-size: 1em;
+      font-weight: 600;
+      margin-bottom: 3px;
+      display: block;
+    }
+    .pontuacao-section {
       text-align: center;
-      margin: 20px 0 18px 0;
+      margin-bottom: 10px;
     }
-    .dashboard-box .pontuacao-section {
-      text-align: center; margin-bottom: 10px;
-    }
-    .dashboard-box .pontuacao-label {
-      font-size: 1.09em; color: #c3f8d3;
+    .pontuacao-label {
+      font-size: 1.03em;
+      color: #d8ffe0;
       letter-spacing: .01em;
     }
-    .dashboard-box .pontuacao-valor {
-      font-size: 2.2em; font-weight: 700;
-      color: #fff; margin: 2px 0 0 0; letter-spacing: .01em;
+    .pontuacao-valor {
+      font-size: 2.1em;
+      font-weight: 700;
+      color: #fff;
+      margin: 2px 0 0 0;
+      letter-spacing: .01em;
     }
-    .dashboard-box .btn-green {
-      background: var(--cor-destaque);
+    .btn-green {
+      background: #00ff55;
       color: #181818;
       border: none;
-      border-radius: 13px;
-      padding: 11px 35px;
+      border-radius: 9px;
+      padding: 10px 32px;
       font-size: 1.08em;
       font-weight: 700;
-      margin: 17px 0 20px 0;
-      box-shadow: 0 0 9px #1db95433;
+      margin: 17px 0 22px 0;
+      box-shadow: 0 0 9px #00ff5555;
       cursor: pointer;
       transition: background .19s;
     }
-    .dashboard-box .btn-green:hover { background: var(--cor-destaque-hover);}
-    /* --- LOGIN FORM --- */
-    #dashboard-login-form {
-      display: flex; flex-direction: column; width: 100%; align-items: center; gap: 13px;
-      margin-top: 10px;
+    .btn-green:hover {
+      background: #30ff99;
     }
-    #dashboard-login-form input {
+    .loja-section {
       width: 100%;
-      padding: 13px 15px;
-      border-radius: 9px;
-      border: none;
-      background: var(--cor-input);
+      margin-top: 7px;
+      text-align: center;
+    }
+    .loja-title {
+      font-size: 1.19em;
       color: #fff;
-      font-size: 1.08em;
-      margin-bottom: 0;
-      outline: none;
-      font-family: var(--font-main);
-      box-shadow: 0 0 0 2px #0005;
-      transition: box-shadow .16s;
-    }
-    #dashboard-login-form input:focus {
-      box-shadow: 0 0 0 2.5px var(--cor-destaque);
-      background: #232323;
-    }
-    #dashboard-login-form button {
-      width: 100%;
-      padding: 13px;
-      font-size: 1.1em;
-      font-weight: bold;
-      border-radius: 9px;
-      border: none;
-      background: var(--cor-destaque);
-      color: #232323;
-      cursor: pointer;
-      margin-bottom: 0;
-      font-family: var(--font-main);
-      transition: background .18s;
-    }
-    #dashboard-login-form button:hover { background: var(--cor-destaque-hover);}
-    #dashboard-login-form .btn-secondary {
-      background: #7d7d7d;
-      color: #fff;
-      margin-top: 0;
-      font-size: 1.07em;
-    }
-    #dashboard-login-form .btn-tertiary {
-      background: #444;
-      color: #e9e9e9;
-      font-size: 1.07em;
-      margin-bottom: 7px;
-    }
-    .dashboard-box .error-message {
-      color: #ff7c7c;
-      font-size: 0.97em;
-      margin-bottom: 10px;
       font-weight: 600;
-      min-height: 18px;
+      margin-bottom: 13px;
     }
-    /* HISTÓRICO LATERAL */
-    .historico-lateral {
-      position: absolute;
-      top: 44px; right: -295px;
-      background: #29322f;
-      border-radius: 15px;
-      padding: 17px 22px 17px 22px;
-      box-shadow: 0 1px 8px #0002;
-      color: #e4ffe8;
-      font-size: 1.01em;
-      min-width: 210px;
-      max-width: 295px;
-      max-height: 190px;
-      text-align: left;
-      border: 1.5px solid #1db95444;
-      opacity: 0.95;
-      display: flex; flex-direction: column; gap: 5px;
-      z-index: 9;
-      overflow-y: auto;
+    .loja-carousel-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 13px;
+      width: 100%;
     }
-    .historico-lateral b {
-      color: #fff; font-size: 1.07em; font-weight: 700;
-      margin-bottom: 5px; display: block;
+    .carousel-arrow {
+      background: none;
+      border: none;
+      color: #00ff55;
+      font-size: 2.6em;
+      font-weight: 700;
+      cursor: pointer;
+      padding: 0 11px;
+      transition: color .18s;
+      user-select: none;
     }
-    @media (max-width: 1050px) {
-      .historico-lateral {
-        position: static;
-        margin: 30px auto 0 auto;
-        right: auto;
-        max-width: 96vw;
-        min-width: 0;
-      }
+    .carousel-arrow:active { color: #30ff99; }
+    .loja-cards {
+      display: flex;
+      flex-direction: row;
+      gap: 17px;
+      overflow: hidden;
+      width: 440px; /* 4 cards */
+      min-height: 170px;
+      align-items: stretch;
+      justify-content: center;
+      transition: all 0.3s cubic-bezier(.6,-0.28,.74,.05);
     }
-    @media (max-width: 800px) {
-      .dashboard-ctn { margin-bottom: 40px;}
-      .dashboard-box { padding: 6vw 3vw 7vw 3vw; }
-      .dashboard-title { font-size: 1.3em;}
-      .historico-lateral { padding: 13px 9vw; max-height: 160px;}
+    .loja-card {
+      background: #191c1c;
+      border-radius: 16px;
+      padding: 12px 14px 16px 14px;
+      box-shadow: 0 0 0 2px #00ff5528;
+      width: 100px;
+      min-width: 96px;
+      max-width: 120px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: transform .23s cubic-bezier(.23,1.5,.32,1), box-shadow .18s;
+      position: relative;
+      cursor: pointer;
     }
-    @media (max-width: 600px) {
-      .dashboard-box { padding: 2vw 0.5vw 4vw 0.5vw;}
-      .historico-lateral { font-size: 0.93em; padding: 10px 2vw;}
+    .loja-card:hover {
+      transform: scale(1.07) translateY(-5px) rotateZ(-1deg);
+      box-shadow: 0 8px 30px #00ff5544;
+      z-index: 2;
+    }
+    .loja-card img {
+      width: 68px; height: 68px;
+      border-radius: 10px;
+      object-fit: cover;
+      margin-bottom: 7px;
+      border: 1.5px solid #00ff5533;
+      background: #131313;
+    }
+    .loja-card-nome {
+      font-size: 1.06em;
+      font-weight: 600;
+      margin: 2px 0 1px 0;
+      color: #fff;
+      text-align: center;
+      min-height: 1.7em;
+    }
+    .loja-card-desc {
+      font-size: 0.89em;
+      color: #b9eec5;
+      margin-bottom: 8px;
+      text-align: center;
+      min-height: 1.3em;
+    }
+    .loja-card-pontos {
+      color: #00ff55;
+      font-weight: 700;
+      font-size: 1em;
+      margin: 0 0 6px 0;
+    }
+    .btn-resgatar {
+      background: #00ff55;
+      color: #111;
+      border: none;
+      border-radius: 7px;
+      padding: 6px 18px;
+      font-weight: 700;
+      font-size: 1em;
+      cursor: pointer;
+      margin-top: 5px;
+    }
+    .btn-resgatar[disabled] {
+      background: #333;
+      color: #888;
+      cursor: not-allowed;
+    }
+    @media (max-width: 1000px) {
+      .dashboard-outer { padding: 0 2vw;}
+      .dashboard { width: 98vw; padding: 22px 2vw 16px 2vw; min-width: 0;}
+      .dashboard-title { font-size: 1.4em;}
+      .historico { max-width: 100vw; min-width: 0;}
+      .loja-cards { width: 98vw; min-width: 0; }
+    }
+    @media (max-width: 700px) {
+      .dashboard { padding: 7vw 1vw 7vw 1vw;}
+      .loja-cards { gap: 4px; width: 135px; }
+      .loja-card { padding: 6px 2px 7px 2px; width: 80px; min-width: 60px;}
+      .loja-card img { width: 38px; height: 38px;}
+      .carousel-arrow { font-size: 1.3em;}
     }
   </style>
-</head>
-<body>
-  <!-- ...o resto do seu site (header, sections, etc) ... -->
-
-  <!-- DASHBOARD (centralizada) -->
-  <div class="dashboard-ctn">
-    <div class="dashboard-box" id="dashboardBox">
-      <div class="logout-ctn" style="display: none;">
-        <div class="user-email" id="dashboardUserEmail"></div>
-        <button class="btn-logout" id="dashboardLogout">Logout</button>
-      </div>
-      <div class="dashboard-title">Fã Dashboard</div>
-
-      <form id="dashboard-login-form">
-        <input type="email" id="dashboardEmail" placeholder="Digite seu email" autocomplete="username" required />
-        <input type="password" id="dashboardPassword" placeholder="Digite sua senha" autocomplete="current-password" required />
-        <button type="submit" id="dashboardBtnLogin">Entrar</button>
-        <button type="button" class="btn-secondary" id="dashboardBtnSignup">Cadastrar</button>
-        <button type="button" class="btn-tertiary" id="dashboardBtnReset">Esqueci a senha</button>
-        <div class="error-message" id="dashboardErrorMsg"></div>
-      </form>
-
-      <!-- DADOS SÓ APÓS LOGIN -->
-      <div class="pontuacao-section" id="pontuacaoSection" style="display:none;">
-        <div class="pontuacao-label">Sua Pontuação</div>
-        <div class="pontuacao-valor" id="dashboardPontuacao">0</div>
-      </div>
-      <button class="btn-green" id="dashboardQuizBtn" style="display:none;">Comece a ganhar pontos</button>
-
-      <div class="loja-section" id="dashboardLojaSection" style="display:none;">
-        <div class="loja-title">Loja de Prêmios</div>
-        <div style="display:flex;align-items:center;justify-content:center;margin-top:8px;">
-          <button class="carousel-arrow" id="dashboardPrevBtn">&#60;</button>
-          <div style="width:270px;display:flex;overflow:hidden;gap:16px;" id="dashboardLojaCards"></div>
-          <button class="carousel-arrow" id="dashboardNextBtn">&#62;</button>
-        </div>
-      </div>
-    </div>
-    <!-- HISTÓRICO lateral, só aparece após login -->
-    <div class="historico-lateral" id="dashboardHistorico" style="display:none;">
-      <b>Histórico de Atividades</b>
-      <div id="dashboardHistoricoLista">...</div>
-    </div>
-  </div>
-  <!-- ...restante do site, footer, etc... -->
-
+  <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+</head>
+<body>
+  <header id="header-capa">
+    <h1>Feqzin</h1><p></p>
+  </header>
+  <img id="foto-perfil" class="profile-pic" src="" alt="Feqzin"/>
+  <section>
+    <h2>Sobre</h2>
+    <p>Feqzin é um artista nascido na zona norte de São Paulo, mais precisamente no bairro do Jardim Brasil. Desde 2017 canetando, iniciou sua trajetória oficialmente em 2022 com a primeira track produzida no celular. Traz autenticidade no vocal e está sempre inovando em suas produções.</p>
+  </section>
+  <section>
+    <h2>Meus Vídeos</h2>
+    <div class="swiper">
+      <div class="swiper-wrapper" id="youtube-carousel-wrapper"></div>
+      <div class="swiper-pagination"></div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
+    </div>
+  </section>
+  <section>
+    <h2>Último Lançamento</h2>
+    <div class="player">
+      <iframe style="border-radius:12px"
+        src="https://open.spotify.com/embed/track/1chtxFdUNshSXBjfrI8VmE?utm_source=generator"
+        width="100%" height="152" frameborder="0"
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+        loading="lazy"></iframe>
+    </div>
+    <div id="countdown" class="countdown"></div>
+    <div style="text-align:center;">
+      <a class="pre-save-button"
+         href="https://distrokid.com/hyperfollow/feqzin/se-a-bag-pesar"
+         target="_blank">FAÇA O PRE-SAVE</a>
+    </div>
+  </section>
+  <section>
+    <h2>Redes Sociais</h2>
+    <div class="socials">
+      <a href="https://www.instagram.com/feqzinn/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+      <a href="https://www.tiktok.com/@feqzinn" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
+      <a href="https://www.youtube.com/@feqzin" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+      <a href="https://open.spotify.com/intl-pt/artist/56eMJpXmR5veK1kOi2apO4" target="_blank"><i class="fa-brands fa-spotify"></i></a>
+      <a href="https://soundcloud.com/discordia-urban" target="_blank"><i class="fa-brands fa-soundcloud"></i></a>
+    </div>
+  </section>
+  <!-- --------- DASHBOARD --------- -->
+  <section style="padding:0;margin:0;">
+    <div class="dashboard-outer">
+      <div class="dashboard">
+        <div class="dashboard-title">Dashboard do Fã</div>
+        <form id="auth-form" autocomplete="on">
+          <input type="email" id="email" placeholder="Digite seu email" required autocomplete="username"/>
+          <input type="password" id="password" placeholder="Digite sua senha" required autocomplete="current-password"/>
+          <button type="submit" id="btn-login">Entrar</button>
+          <button type="button" id="btn-signup">Cadastrar</button>
+          <button type="button" id="btn-reset-password">Esqueci a senha</button>
+        </form>
+        <div id="auth-message"></div>
+        <!-- Dashboard completa: aparece só depois do login -->
+        <div class="dashboard-completa" id="dashboard-logado">
+          <div class="dashboard-top">
+            <div class="user-side">
+              <div class="user-email" id="user-email"></div>
+              <button class="btn-logout" id="btnLogout" style="display:none;">Logout</button>
+            </div>
+            <div class="historico" id="historico-container" style="min-width:210px; margin-top:0;">
+              <b>Histórico de Atividades</b>
+              <span>Faça login para visualizar</span>
+            </div>
+          </div>
+          <div class="pontuacao-section" id="pontuacao-container">
+            <div class="pontuacao-label">Sua Pontuação</div>
+            <div class="pontuacao-valor" id="pontuacao-valor">0</div>
+          </div>
+          <button class="btn-green" id="start-quiz">Comece a ganhar pontos</button>
+          <div class="loja-section">
+            <div class="loja-title">Loja de Prêmios</div>
+            <div class="loja-carousel-container">
+              <button class="carousel-arrow" id="prevBtn">&#60;</button>
+              <div class="loja-cards" id="lojaCards"></div>
+              <button class="carousel-arrow" id="nextBtn">&#62;</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <footer>© 2025 Feqzin. Todos os direitos reservados.</footer>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script>
-    // Inicializar Firebase
+    document.addEventListener("DOMContentLoaded", () => {
+      carregarConfiguracoes();
+      carregarVideosDoYouTube();
+      iniciarCountdown();
+    });
+    async function carregarConfiguracoes() {
+      try {
+        const res = await fetch("/api/getContentfulConfig");
+        if (!res.ok) throw new Error();
+        const data = await res.json();
+        if (data.items.length) {
+          const e = data.items[0];
+          const findUrl = id => (data.includes?.Asset.find(a=>a.sys.id===id)?.fields.file.url || "");
+          const capa = findUrl(e.fields.imagemDeCapa?.sys.id);
+          const perf = findUrl(e.fields.fotoDePerfil?.sys.id);
+          if (capa) document.getElementById("header-capa").style.backgroundImage = `url(https:${capa})`;
+          if (perf) document.getElementById("foto-perfil").src = `https:${perf}`;
+        }
+      } catch {}
+    }
+    async function carregarVideosDoYouTube() {
+      try {
+        const res = await fetch("/api/getYoutubeVideos");
+        if (!res.ok) throw new Error();
+        const data = await res.json();
+        const w = document.getElementById("youtube-carousel-wrapper");
+        w.innerHTML = "";
+        if (data.items.length) {
+          data.items.forEach(i=>{ w.innerHTML += `
+              <div class="swiper-slide">
+                <div class="video-container">
+                  <iframe src="https://www.youtube.com/embed/${i.id.videoId}" title="${i.snippet.title}" frameborder="0" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; picture-in-picture"></iframe>
+                </div>
+              </div>` });
+          new Swiper(".swiper", {
+            loop:true, spaceBetween:20, slidesPerView:1,
+            breakpoints:{768:{slidesPerView:2, spaceBetween:30},1024:{slidesPerView:3, spaceBetween:30}},
+            pagination:{el:".swiper-pagination",clickable:true},navigation:{nextEl:".swiper-button-next",prevEl:".swiper-button-prev"}
+          });
+        } else {
+          w.innerHTML = "<p style='text-align:center;'>Não foi possível carregar os vídeos no momento.</p>";
+        }
+      } catch {}
+    }
+    function iniciarCountdown() {
+      const el = document.getElementById("countdown");
+      const launch = new Date("2025-05-31T00:00:00").getTime();
+      const iv = setInterval(()=>{
+        const now = Date.now(), d = launch - now;
+        if (d<0) { clearInterval(iv); el.innerHTML = "Já disponível em todas as plataformas!"; document.querySelector(".pre-save-button").style.display="none"; }
+        else {
+          const days = Math.floor(d/(1000*60*60*24));
+          const hrs  = Math.floor((d%(1000*60*60*24))/(1000*60*60));
+          const mins = Math.floor((d%(1000*60*60))/(1000*60));
+          const secs = Math.floor((d%(1000*60))/1000);
+          el.innerHTML = `${days}d ${hrs}h ${mins}m ${secs}s<br><span style="font-size:.5em;color:#ccc;">Para o próximo lançamento.</span>`;
+        }
+      },1000);
+    }
+    // --------- FIREBASE DASHBOARD ---------
     const firebaseConfig = {
       apiKey: "AIzaSyBhSmocbaARqU_pPM0Tqki8d11jm97IE4M",
       authDomain: "dashboardfeqzin.firebaseapp.com",
@@ -322,123 +529,103 @@
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
     const db   = firebase.firestore();
-
     // Elementos
-    const dashboardBox = document.getElementById('dashboardBox');
-    const loginForm = document.getElementById('dashboard-login-form');
-    const emailInput = document.getElementById('dashboardEmail');
-    const passInput = document.getElementById('dashboardPassword');
-    const btnLogin = document.getElementById('dashboardBtnLogin');
-    const btnSignup = document.getElementById('dashboardBtnSignup');
-    const btnReset = document.getElementById('dashboardBtnReset');
-    const logoutCtn = dashboardBox.querySelector('.logout-ctn');
-    const btnLogout = document.getElementById('dashboardLogout');
-    const userEmail = document.getElementById('dashboardUserEmail');
-    const errorMsg = document.getElementById('dashboardErrorMsg');
-    const pontuacaoSection = document.getElementById('pontuacaoSection');
-    const pontuacaoValor = document.getElementById('dashboardPontuacao');
-    const quizBtn = document.getElementById('dashboardQuizBtn');
-    const lojaSection = document.getElementById('dashboardLojaSection');
-    const lojaCards = document.getElementById('dashboardLojaCards');
-    const prevBtn = document.getElementById('dashboardPrevBtn');
-    const nextBtn = document.getElementById('dashboardNextBtn');
-    const historicoBox = document.getElementById('dashboardHistorico');
-    const historicoLista = document.getElementById('dashboardHistoricoLista');
-
-    let lojaPremios = [];
-    let pos = 0, viewCount = 2; // Exibe 2 cards por vez
-
-    function showError(msg) {
-      errorMsg.textContent = msg || "";
-      if (msg) setTimeout(()=>errorMsg.textContent = "", 6000);
+    const authForm = document.getElementById("auth-form");
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
+    const btnLogin = document.getElementById("btn-login");
+    const btnSignup = document.getElementById("btn-signup");
+    const btnResetPassword = document.getElementById("btn-reset-password");
+    const btnLogout = document.getElementById("btnLogout");
+    const authMessage = document.getElementById("auth-message");
+    const pontuacaoContainer = document.getElementById("pontuacao-container");
+    const pontuacaoValor = document.getElementById("pontuacao-valor");
+    const btnQuiz = document.getElementById("start-quiz");
+    const historicoContainer = document.getElementById("historico-container");
+    const lojaCards = document.getElementById('lojaCards');
+    const userEmailShow = document.getElementById("user-email");
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const dashboardLogado = document.getElementById("dashboard-logado");
+    let premios = [];
+    let lojaPos = 0;
+    const viewCount = 4; // Mostra 4 prêmios
+    function showMessage(text, color = "lightgreen") {
+      authMessage.style.color = color;
+      authMessage.textContent = text;
+      setTimeout(() => { authMessage.textContent = ""; }, 6000);
     }
-
-    // ----- Login
-    loginForm.onsubmit = e => {
-      e.preventDefault();
-      auth.signInWithEmailAndPassword(emailInput.value, passInput.value)
-        .catch(err => showError(err.message));
-    };
-    btnSignup.onclick = () => {
-      if (!emailInput.value || !passInput.value) return showError('Preencha email e senha');
-      auth.createUserWithEmailAndPassword(emailInput.value, passInput.value)
-        .then(()=>showError('Usuário criado!'))
-        .catch(err => showError(err.message));
-    };
-    btnReset.onclick = () => {
-      if (!emailInput.value) return showError('Digite seu email');
-      auth.sendPasswordResetEmail(emailInput.value)
-        .then(()=>showError('Email enviado'))
-        .catch(err => showError(err.message));
-    };
-    btnLogout.onclick = ()=>auth.signOut();
-
-    // ----- Render Loja Carousel
-    function renderLojaCarousel() {
-      lojaCards.innerHTML = "";
-      for (let i = pos; i < Math.min(pos + viewCount, lojaPremios.length); i++) {
-        const item = lojaPremios[i];
-        lojaCards.innerHTML += `
-          <div style="
-            background:#181c18;border-radius:16px;padding:13px 14px 16px 14px;
-            box-shadow:0 0 0 2px #1db95444;width:120px;min-width:110px;
-            display:flex;flex-direction:column;align-items:center;position:relative;transition:.2s;">
-            <img src="${item.imagemUrl}" alt="${item.nome}" style="width:68px;height:68px;border-radius:10px;object-fit:cover;margin-bottom:7px;border:1.5px solid #1db95455;background:#131313;">
-            <div style="font-size:1.13em;font-weight:700;color:#fff;text-align:center;min-height:1.7em;margin:2px 0 1px 0;">${item.nome}</div>
-            <div style="font-size:.97em;color:#b9eec5;margin-bottom:8px;text-align:center;min-height:1.3em;">${item.descricao}</div>
-            <div style="color:#38ff99;font-weight:700;font-size:1em;margin:0 0 6px 0;">${item.custoPontos} pts</div>
-            <button onclick="resgatarItem('${item.id}',${item.custoPontos})"
-              ${item.estoque===0?"disabled":""}
-              style="background:${item.estoque===0?"#333":"#1db954"};color:${item.estoque===0?"#888":"#111"};
-              border:none;border-radius:7px;padding:6px 18px;font-weight:700;font-size:1em;cursor:pointer;margin-top:5px;">
-              ${item.estoque===0?"Esgotado":"Resgatar"}
-            </button>
-          </div>
-        `;
-      }
-      prevBtn.disabled = (pos === 0);
-      nextBtn.disabled = (pos >= lojaPremios.length - viewCount);
-      prevBtn.style.opacity = prevBtn.disabled ? 0.4 : 1;
-      nextBtn.style.opacity = nextBtn.disabled ? 0.4 : 1;
-    }
-    prevBtn.onclick = ()=>{ if(pos>0){pos--;renderLojaCarousel();}};
-    nextBtn.onclick = ()=>{ if(pos<lojaPremios.length-viewCount){pos++;renderLojaCarousel();}};
-
-    // ---- Dashboard/Historico after login
     function carregarPontuacao(uid) {
-      db.collection("usuarios").doc(uid).get().then(doc => {
-        const data = doc.data() || {};
-        pontuacaoValor.textContent = data.pontos || 0;
-      });
+      db.collection("usuarios").doc(uid).get()
+        .then(doc => {
+          const data = doc.data() || {};
+          pontuacaoValor.textContent = data.pontos || 0;
+          pontuacaoContainer.style.display = "block";
+        }).catch(err => showMessage("Erro ao carregar pontuação: " + err.message, "tomato"));
     }
     function carregarHistorico(uid) {
-      historicoLista.innerHTML = "Carregando histórico...";
-      db.collection("usuarios").doc(uid).collection("historico").orderBy("data", "desc").limit(8).get()
+      historicoContainer.innerHTML = "<b>Histórico de Atividades</b><span>Carregando...</span>";
+      db.collection("usuarios").doc(uid).collection("historico")
+        .orderBy("data", "desc").limit(20).get()
         .then(snapshot => {
-          if (snapshot.empty) return historicoLista.innerHTML = "Sem histórico.";
-          let html = "<ul style='padding-left:18px;'>";
+          if (snapshot.empty) return historicoContainer.innerHTML = "<b>Histórico de Atividades</b><span>Sem histórico.</span>";
+          let html = "<b>Histórico de Atividades</b>";
           snapshot.forEach(doc => {
             const item = doc.data();
             const data = item.data?.toDate ? item.data.toDate().toLocaleString() : "";
-            html += `<li style="margin-bottom:3px;font-size:.97em;">[${data}] ${item.descricao} (${item.pontos>0?"+":""}${item.pontos} pts)</li>`;
-          }); html += "</ul>";
-          historicoLista.innerHTML = html;
-        });
+            html += `<span style="color:${item.pontos<0?'#ffa6a6':'#b6ffce'}">${item.pontos>0?'+':''}${item.pontos} pts</span>
+            <span style="font-size:0.97em; color:#f2fff2ad">${item.descricao}</span>`;
+          });
+          historicoContainer.innerHTML = html;
+        }).catch(err => historicoContainer.innerHTML = `<b>Histórico de Atividades</b><span>Erro: ${err.message}</span>`);
     }
+    function renderLoja() {
+      lojaCards.innerHTML = '';
+      for (let i = lojaPos; i < Math.min(lojaPos + viewCount, premios.length); i++) {
+        const item = premios[i];
+        lojaCards.innerHTML += `
+          <div class="loja-card">
+            <img src="${item.imagemUrl}" alt="${item.nome}">
+            <div class="loja-card-nome">${item.nome}</div>
+            <div class="loja-card-desc">${item.descricao}</div>
+            <div class="loja-card-pontos">${item.custoPontos} pts</div>
+            <button class="btn-resgatar" ${item.estoque === 0 ? "disabled" : ""}
+              onclick="resgatarItem('${item.id}',${item.custoPontos})">${item.estoque === 0 ? "Esgotado" : "Resgatar"}</button>
+          </div>
+        `;
+      }
+      prevBtn.disabled = (lojaPos === 0);
+      nextBtn.disabled = (lojaPos >= premios.length - viewCount);
+      prevBtn.style.opacity = prevBtn.disabled ? 0.4 : 1;
+      nextBtn.style.opacity = nextBtn.disabled ? 0.4 : 1;
+    }
+    prevBtn.onclick = () => {
+      if (lojaPos > 0) {
+        lojaPos--;
+        renderLoja();
+      }
+    };
+    nextBtn.onclick = () => {
+      if (lojaPos < premios.length - viewCount) {
+        lojaPos++;
+        renderLoja();
+      }
+    };
     function carregarLoja() {
-      lojaCards.innerHTML = "Carregando...";
-      db.collection("resgates").get().then(snapshot => {
-        lojaPremios = [];
-        snapshot.forEach(doc => {
-          const item = doc.data();
-          lojaPremios.push({...item, id: doc.id});
+      db.collection("resgates").get()
+        .then(snapshot => {
+          premios = [];
+          snapshot.forEach(doc => {
+            let d = doc.data();
+            premios.push({
+              ...d,
+              id: doc.id
+            });
+          });
+          lojaPos = 0;
+          renderLoja();
         });
-        pos = 0;
-        renderLojaCarousel();
-      });
     }
-
-    // ----- Resgate
     window.resgatarItem = function(itemId, custo) {
       const user = auth.currentUser;
       if (!user) return alert("Faça login para resgatar itens.");
@@ -461,31 +648,32 @@
         alert("Resgate efetuado!");
         carregarPontuacao(uid); carregarHistorico(uid); carregarLoja();
       }).catch(e=>alert("Erro: "+e));
-    };
+    }
 
-    // ---- Login State
+    // --- Alterna dashboard (só login OU dashboard completa) ---
     auth.onAuthStateChanged(user => {
       if (user) {
-        // Após login
-        loginForm.style.display = "none";
-        logoutCtn.style.display = "flex";
-        userEmail.textContent = user.email;
-        pontuacaoSection.style.display = "";
-        lojaSection.style.display = "";
-        quizBtn.style.display = "";
-        historicoBox.style.display = "";
+        // Após login: esconde formulário, mostra dashboard completa
+        document.getElementById('dashboard-logado').style.display = "block";
+        authForm.style.display = "none";
+        userEmailShow.innerHTML = user.email;
+        btnLogout.style.display = 'inline-block';
         carregarPontuacao(user.uid); carregarHistorico(user.uid); carregarLoja();
-        quizBtn.onclick = () => window.open('quiz.html','_blank');
+        btnQuiz.style.display = 'inline-block'; btnQuiz.onclick = () => window.open('quiz.html','_blank');
       } else {
-        // Antes do login
-        loginForm.style.display = "flex";
-        logoutCtn.style.display = "none";
-        pontuacaoSection.style.display = "none";
-        lojaSection.style.display = "none";
-        quizBtn.style.display = "none";
-        historicoBox.style.display = "none";
+        // Antes do login: só mostra o formulário centralizado
+        document.getElementById('dashboard-logado').style.display = "none";
+        authForm.style.display = "flex";
+        userEmailShow.innerHTML = "";
+        btnLogout.style.display = 'none';
+        pontuacaoContainer.style.display = 'none'; btnQuiz.style.display = 'none';
+        historicoContainer.innerHTML = '<b>Histórico de Atividades</b><span>Faça login para visualizar</span>'; lojaCards.innerHTML = '';
       }
     });
+    authForm.addEventListener('submit',e=>{e.preventDefault(); auth.signInWithEmailAndPassword(emailInput.value,passwordInput.value).catch(err=>showMessage(err.message,'tomato')); authForm.reset();});
+    btnSignup.addEventListener('click',()=>{ if(!emailInput.value||!passwordInput.value) return showMessage('Preencha email e senha','tomato'); auth.createUserWithEmailAndPassword(emailInput.value,passwordInput.value).then(()=>showMessage('Usuário criado!','lightgreen')).catch(err=>showMessage(err.message,'tomato')); });
+    btnResetPassword.addEventListener('click',()=>{ if(!emailInput.value) return showMessage('Digite email','tomato'); auth.sendPasswordResetEmail(emailInput.value).then(()=>showMessage('Email enviado')).catch(err=>showMessage(err.message,'tomato')); });
+    btnLogout.addEventListener('click',()=>auth.signOut());
   </script>
 </body>
 </html>
