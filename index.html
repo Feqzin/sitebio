@@ -413,7 +413,7 @@
     .input-senha-wrapper input[type="password"],
     .input-senha-wrapper input[type="text"] {
       width: 100%;
-      padding-left: 36px;
+      padding-right: 36px;
       box-sizing: border-box;
     }
     .senha-olho {
@@ -481,7 +481,6 @@
       <a href="https://soundcloud.com/discordia-urban" target="_blank"><i class="fa-brands fa-soundcloud"></i></a>
     </div>
   </section>
-
   <!-- --------- DASHBOARD --------- -->
   <section style="padding:0;margin:0;">
     <div id="dashboard-flex-container" class="dashboard-flex-container">
@@ -495,10 +494,10 @@
           <form id="auth-form" autocomplete="on">
             <input type="email" id="email" placeholder="Digite seu email" required autocomplete="username"/>
             <div class="input-senha-wrapper">
+              <input type="password" id="password" placeholder="Digite sua senha" required autocomplete="current-password"/>
               <span class="senha-olho" id="togglePassword">
                 <i class="fa-solid fa-eye"></i>
               </span>
-              <input type="password" id="password" placeholder="Digite sua senha" required autocomplete="current-password"/>
             </div>
             <button type="submit" id="btn-login">Entrar</button>
             <button type="button" id="btn-signup">Cadastrar</button>
@@ -533,7 +532,6 @@
     </div>
   </section>
   <footer>© 2025 Feqzin. Todos os direitos reservados.</footer>
-
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
@@ -664,6 +662,7 @@
           historicoContainer.innerHTML = html;
         }).catch(err => historicoContainer.innerHTML = `<b>Histórico de Atividades</b><span>Erro: ${err.message}</span>`);
     }
+    // ------ CARROSSEL LOJA DE PRÊMIOS: LIMITE 4 ITENS ------
     function renderLoja() {
       lojaCards.innerHTML = '';
       for (let i = lojaPos; i < Math.min(lojaPos + viewCount, premios.length); i++) {
@@ -680,7 +679,7 @@
         `;
       }
       prevBtn.disabled = (lojaPos === 0);
-      nextBtn.disabled = (lojaPos >= premios.length - viewCount);
+      nextBtn.disabled = (lojaPos >= Math.max(0, premios.length - viewCount));
       prevBtn.style.opacity = prevBtn.disabled ? 0.4 : 1;
       nextBtn.style.opacity = nextBtn.disabled ? 0.4 : 1;
     }
@@ -691,7 +690,7 @@
       }
     };
     nextBtn.onclick = () => {
-      if (lojaPos < premios.length - viewCount) {
+      if (lojaPos < Math.max(0, premios.length - viewCount)) {
         lojaPos++;
         renderLoja();
       }
@@ -734,7 +733,6 @@
         carregarPontuacao(uid); carregarHistorico(uid); carregarLoja();
       }).catch(e=>alert("Erro: "+e));
     }
-
     // --- Alterna dashboard (só login OU dashboard completa) ---
     auth.onAuthStateChanged(user => {
       if (user) {
@@ -767,7 +765,6 @@
     btnSignup.addEventListener('click',()=>{ if(!emailInput.value||!passwordInput.value) return showMessage('Preencha email e senha','tomato'); auth.createUserWithEmailAndPassword(emailInput.value,passwordInput.value).then(()=>showMessage('Usuário criado!','lightgreen')).catch(err=>showMessage(err.message,'tomato')); });
     btnResetPassword.addEventListener('click',()=>{ if(!emailInput.value) return showMessage('Digite email','tomato'); auth.sendPasswordResetEmail(emailInput.value).then(()=>showMessage('Email enviado')).catch(err=>showMessage(err.message,'tomato')); });
     btnLogout.addEventListener('click',()=>auth.signOut());
-
     // --- Olho do campo de senha ---
     const togglePassword = document.getElementById("togglePassword");
     togglePassword.addEventListener("click", function() {
