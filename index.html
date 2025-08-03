@@ -1,29 +1,38 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Feqzin | Site Oficial</title>
-
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous"/>
 
   <style>
-    /* ---- PALETA DE CORES ---- */
     :root {
-      --cor-destaque: #1db954;
-      --cor-destaque-hover: #1ed760;
-      --cor-texto: #f1f1f1;
-      --cor-fundo: #0e0e0e;
-      --cor-fundo-secundario: #111;
-      --cor-borda-suave: #444;
+      --green: #00ff55;
+      --green-light: #30ff99;
+      --bg: #181818;
+      --bg-card: #222;
+      --border: #222e;
+      --white: #fff;
+      --muted: #d8ffe0;
+      --red: #ff5e3a;
+      --radius: 22px;
     }
-    /* ---- ESTILOS GERAIS ---- */
+    html, body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: 'Montserrat', Arial, sans-serif;
+      margin: 0; padding: 0;
+      min-height: 100vh;
+      width: 100vw;
+    }
     body {
-      margin: 0; font-family: Arial,sans-serif;
-      background: var(--cor-fundo); color: var(--cor-texto); line-height:1.6;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      width: 100vw;
     }
     header {
       background-color:rgba(0,0,0,0.6);
@@ -36,111 +45,286 @@
     header::after {
       content:""; position:absolute; bottom:0; left:0;
       width:100%; height:100px;
-      background:linear-gradient(to bottom,rgba(14,14,14,0),var(--cor-fundo));
+      background:linear-gradient(to bottom,rgba(14,14,14,0),var(--bg));
       z-index:1;
     }
     header h1, header p { position:relative; z-index:2; }
     header h1 { font-size:3em; margin-bottom:10px; }
     header p { font-size:1.2em; color:#ddd; }
-
     .profile-pic {
       width:150px; height:150px; border-radius:50%;
-      display:block; border:4px solid var(--cor-destaque);
+      display:block; border:4px solid var(--green);
       object-fit:cover; background:#000;
       position:absolute; top:190px; left:50%;
       transform:translateX(-50%); z-index:3;
-      transition:transform .4s ease-in-out; transform-style:preserve-3d;
+      transition:transform .4s; transform-style:preserve-3d;
     }
     .profile-pic:hover {
       transform:translateX(-50%) perspective(1000px) rotateY(25deg);
     }
 
-    section {
-      padding:40px 20px; max-width:900px; margin:auto;
+    /* DASHBOARD LAYOUT */
+    .dashboard-layout {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      justify-content: center;
+      width: 100vw;
+      max-width: 1100px;
+      margin: 40px auto 48px auto;
+      position: relative;
+      min-height: 600px;
+      gap: 42px;
     }
-    section:first-of-type { padding-top:100px; }
-    h2 {
-      border-bottom:2px solid var(--cor-borda-suave);
-      padding-bottom:10px; margin-bottom:20px;
+    .dashboard {
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      padding: 44px 40px 36px 40px;
+      box-shadow: 0 0 32px 0 #000a;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 700px;
+      min-width: 320px;
+      max-width: 95vw;
+      position: relative;
+      z-index: 2;
     }
-    a { color:var(--cor-destaque); text-decoration:none; transition:color .3s; }
-    a:hover { color:#fff; }
+    .dashboard-top {
+      width: 100%;
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-start;
+      margin-bottom: 0px;
+    }
+    .user-side {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      z-index: 1;
+    }
+    .user-email {
+      color: #ddd;
+      font-size: 1em;
+      margin-bottom: 5px;
+      font-weight: 500;
+      opacity: 0.93;
+    }
+    .btn-logout {
+      background: var(--red);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 1em;
+      padding: 8px 24px;
+      cursor: pointer;
+      box-shadow: 0 2px 12px #0003;
+      transition: background 0.2s;
+      margin-bottom: 6px;
+    }
+    .btn-logout:hover { background: #ff9277; }
 
-    .socials { text-align:center; }
-    .socials a {
-      margin:0 15px; color:var(--cor-texto); font-size:2em; transition:all .3s;
+    /* Histórico Lateral */
+    .historico-lateral {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      min-width: 260px;
+      max-width: 310px;
+      margin-top: 30px;
     }
-    .socials a:hover {
-      color:var(--cor-destaque); transform:translateY(-5px);
+    .historico {
+      background: #202223;
+      border-radius: 12px;
+      padding: 16px 22px 16px 22px;
+      box-shadow: 0 1px 8px #0002;
+      color: #dbeed7;
+      font-size: 0.98em;
+      min-width: 180px;
+      max-width: 320px;
+      max-height: 220px;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      border: 1px solid #232;
+      opacity: 0.96;
+      overflow-y: auto;
     }
-
-    .player { margin:20px 0; }
-    .countdown {
-      text-align:center; font-size:2em; margin:20px 0 10px;
-      color:var(--cor-destaque); line-height:1.2;
-    }
-    footer {
-      background:var(--cor-fundo-secundario);
-      text-align:center; padding:20px;
-      font-size:.9em; color:#777;
-    }
-
-    .swiper { width:100%; padding-top:20px; padding-bottom:50px; }
-    .swiper-slide { background-position:center; background-size:cover; width:100%; }
-    .video-container { position:relative; width:100%; padding-top:56.25%; }
-    .video-container iframe {
-      position:absolute; top:0; left:0; width:100%; height:100%;
-      border-radius:12px; border:0;
-    }
-    .swiper-button-next, .swiper-button-prev { color:var(--cor-destaque); }
-    .swiper-pagination-bullet-active { background:var(--cor-destaque); }
-
-    .pre-save-button {
-      display:inline-block; background:var(--cor-destaque); color:#fff;
-      padding:15px 35px; border-radius:50px; text-decoration:none;
-      font-weight:bold; font-size:1.1em; margin-top:20px;
-      transition:background .3s, transform .2s;
-    }
-    .pre-save-button:hover {
-      background:var(--cor-destaque-hover); transform:scale(1.05);
+    .historico b {
+      color: #fff;
+      font-size: 1em;
+      font-weight: 600;
+      margin-bottom: 3px;
+      display: block;
     }
 
-    /* ---- Dashboard do Fã ---- */
-    #fan-dashboard {
-      background:#111; border:2px solid var(--cor-destaque);
-      border-radius:12px; padding:20px;
-      max-width:400px; margin:40px auto; text-align:center;
+    .dashboard-title {
+      font-size: 2.4em;
+      font-weight: 800;
+      letter-spacing: .7px;
+      color: var(--white);
+      width: 100%;
+      text-align: center;
+      margin: 0 0 18px 0;
     }
-    #fan-dashboard form {
-      display:flex; flex-direction:column; gap:10px;
+    .pontuacao-section {
+      text-align: center;
+      margin-bottom: 10px;
     }
-    #fan-dashboard input {
-      padding:10px; border-radius:6px; border:1px solid var(--cor-borda-suave);
-      background:#222; color:var(--cor-texto); font-size:1em;
+    .pontuacao-label {
+      font-size: 1.03em;
+      color: var(--muted);
+      letter-spacing: .01em;
     }
-    #fan-dashboard button {
-      padding:10px; border:none; border-radius:6px;
-      font-weight:bold; font-size:1em; cursor:pointer;
-      transition:background .3s;
+    .pontuacao-valor {
+      font-size: 2.1em;
+      font-weight: 700;
+      color: #fff;
+      margin: 2px 0 0 0;
+      letter-spacing: .01em;
     }
-    #btn-login { background:var(--cor-destaque); color:#fff; }
-    #btn-signup { background:#555; color:#ccc; }
-    #btn-reset-password { background:#444; color:#ccc; }
-    #btnLogout { display:none; background:#f44336; color:#fff; }
-    #auth-message { margin-top:15px; min-height:1.2em; font-weight:bold; }
-    #pontuacao-container { display:none; margin-top:20px; }
-    #start-quiz { display:none; margin-top:20px; padding:10px 20px;
-      background:var(--cor-destaque); color:#fff; border:none;
-      border-radius:6px; font-weight:bold; cursor:pointer;
+    .btn-green {
+      background: var(--green);
+      color: #181818;
+      border: none;
+      border-radius: 9px;
+      padding: 10px 32px;
+      font-size: 1.08em;
+      font-weight: 700;
+      margin: 17px 0 22px 0;
+      box-shadow: 0 0 9px #00ff5555;
+      cursor: pointer;
+      transition: background .19s;
     }
-    #start-quiz:hover { background:var(--cor-destaque-hover); }
+    .btn-green:hover {
+      background: var(--green-light);
+    }
+    .loja-section {
+      width: 100%;
+      margin-top: 7px;
+      text-align: center;
+    }
+    .loja-title {
+      font-size: 1.19em;
+      color: #fff;
+      font-weight: 600;
+      margin-bottom: 13px;
+    }
+    .loja-carousel-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 13px;
+      width: 100%;
+    }
+    .carousel-arrow {
+      background: none;
+      border: none;
+      color: var(--green);
+      font-size: 2.6em;
+      font-weight: 700;
+      cursor: pointer;
+      padding: 0 11px;
+      transition: color .18s;
+      user-select: none;
+    }
+    .carousel-arrow:active { color: var(--green-light); }
+    .loja-cards {
+      display: flex;
+      flex-direction: row;
+      gap: 17px;
+      overflow: hidden;
+      width: 560px; /* 4 cards */
+      min-height: 170px;
+      align-items: stretch;
+      justify-content: center;
+      transition: all 0.3s cubic-bezier(.6,-0.28,.74,.05);
+    }
+    .loja-card {
+      background: #191c1c;
+      border-radius: 16px;
+      padding: 12px 14px 16px 14px;
+      box-shadow: 0 0 0 2px #00ff5528;
+      width: 112px;
+      min-width: 106px;
+      max-width: 120px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: transform .23s cubic-bezier(.23,1.5,.32,1), box-shadow .18s;
+      position: relative;
+      cursor: pointer;
+    }
+    .loja-card:hover {
+      transform: scale(1.07) translateY(-5px) rotateZ(-1deg);
+      box-shadow: 0 8px 30px #00ff5544;
+      z-index: 2;
+    }
+    .loja-card img {
+      width: 68px; height: 68px;
+      border-radius: 10px;
+      object-fit: cover;
+      margin-bottom: 7px;
+      border: 1.5px solid #00ff5533;
+      background: #131313;
+    }
+    .loja-card-nome {
+      font-size: 1.06em;
+      font-weight: 600;
+      margin: 2px 0 1px 0;
+      color: #fff;
+      text-align: center;
+      min-height: 1.7em;
+    }
+    .loja-card-desc {
+      font-size: 0.89em;
+      color: #b9eec5;
+      margin-bottom: 8px;
+      text-align: center;
+      min-height: 1.3em;
+    }
+    .loja-card-pontos {
+      color: var(--green);
+      font-weight: 700;
+      font-size: 1em;
+      margin: 0 0 6px 0;
+    }
+    .btn-resgatar {
+      background: var(--green);
+      color: #111;
+      border: none;
+      border-radius: 7px;
+      padding: 6px 18px;
+      font-weight: 700;
+      font-size: 1em;
+      cursor: pointer;
+      margin-top: 5px;
+      transition: background .2s;
+    }
+    .btn-resgatar[disabled] {
+      background: #333;
+      color: #888;
+      cursor: not-allowed;
+    }
 
-    @media (max-width:600px) {
-      header h1 { font-size:2em; }
-      .profile-pic { width:120px; height:120px; top:210px; }
-      section:first-of-type { padding-top:80px; }
-      header { padding:320px 20px 40px; }
-      #fan-dashboard { max-width:90%; }
+    /* Responsivo */
+    @media (max-width: 1000px) {
+      .dashboard-layout { flex-direction: column; align-items: center; gap: 0;}
+      .dashboard { width: 98vw; padding: 22px 2vw 16px 2vw; min-width: 0;}
+      .dashboard-title { font-size: 1.4em;}
+      .historico-lateral { position: static; margin: 20px auto 0 auto; align-items: center; }
+      .historico { max-width: 100vw; min-width: 0;}
+      .loja-cards { width: 99vw; min-width: 0; }
+    }
+    @media (max-width: 700px) {
+      .dashboard { padding: 7vw 1vw 7vw 1vw;}
+      .loja-cards { gap: 4px; width: 135px; }
+      .loja-card { padding: 6px 2px 7px 2px; width: 80px; min-width: 60px;}
+      .loja-card img { width: 38px; height: 38px;}
+      .carousel-arrow { font-size: 1.3em;}
     }
   </style>
 </head>
@@ -185,7 +369,6 @@
   <section>
     <h2>Redes Sociais</h2>
     <div class="socials">
-      <a href="https://
       <a href="https://www.instagram.com/feqzinn/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
       <a href="https://www.tiktok.com/@feqzinn" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
       <a href="https://www.youtube.com/@feqzin" target="_blank"><i class="fa-brands fa-youtube"></i></a>
@@ -194,101 +377,118 @@
     </div>
   </section>
 
-  <!-- NOVA SEÇÃO: DASHBOARD DO FÃ -->
-  <section id="fan-dashboard">
-    <h2>Dashboard do Fã</h2>
-    <form id="auth-form">
-      <input type="email" id="email" placeholder="Digite seu email" required autocomplete="username"/>
-      <input type="password" id="password" placeholder="Digite sua senha" required autocomplete="current-password"/>
-      <button type="submit" id="btn-login">Entrar</button>
-      <button type="button"   id="btn-signup">Cadastrar</button>
-      <button type="button"   id="btn-reset-password">Esqueci a senha</button>
-      <button type="button"   id="btnLogout">Logout</button>
-    </form>
-    <div id="pontuacao-container">
-      <h3>Sua Pontuação</h3>
-      <p id="pontuacao-valor">0</p>
+  <!-- DASHBOARD FAN -->
+  <div class="dashboard-layout" id="dashboard-area" style="margin-bottom:60px;">
+    <div class="dashboard">
+      <div class="dashboard-top">
+        <div class="user-side">
+          <div class="user-email" id="user-email"></div>
+          <button class="btn-logout" id="btnLogout" style="display:none;">Logout</button>
+        </div>
+      </div>
+      <div class="dashboard-title">Fã Dashboard</div>
+      <form id="auth-form">
+        <input type="email" id="email" placeholder="Digite seu email" required autocomplete="username"/>
+        <input type="password" id="password" placeholder="Digite sua senha" required autocomplete="current-password"/>
+        <button type="submit" id="btn-login">Entrar</button>
+        <button type="button" id="btn-signup">Cadastrar</button>
+        <button type="button" id="btn-reset-password">Esqueci a senha</button>
+      </form>
+      <div class="pontuacao-section" id="pontuacao-container" style="display:none;">
+        <div class="pontuacao-label">Sua Pontuação</div>
+        <div class="pontuacao-valor" id="pontuacao-valor">0</div>
+      </div>
+      <button class="btn-green" id="start-quiz" style="display:none;">Comece a ganhar pontos</button>
+      <div class="loja-section">
+        <div class="loja-title">Loja de Prêmios</div>
+        <div class="loja-carousel-container">
+          <button class="carousel-arrow" id="prevBtn">&#60;</button>
+          <div class="loja-cards" id="lojaCards">
+            <!-- Cards (JS via Firebase) -->
+          </div>
+          <button class="carousel-arrow" id="nextBtn">&#62;</button>
+        </div>
+      </div>
+      <div id="auth-message" style="min-height:18px;margin-top:12px;"></div>
     </div>
-    <button id="start-quiz">Comece a ganhar pontos</button>
-    <h3>Histórico de Atividades</h3>
-    <div id="historico-container"></div>
-    <h3>Loja de Prêmios</h3>
-    <div id="loja-container"></div>
-    <div id="auth-message"></div>
-    <div id="user-email" style="margin-top:16px;color:#7fffaf;font-weight:bold"></div>
-  </section>
+    <div class="historico-lateral">
+      <div class="historico" id="historico-container">
+        <b>Histórico de Atividades</b>
+        <span>Faça login para visualizar</span>
+      </div>
+    </div>
+  </div>
 
   <footer>© 2025 Feqzin. Todos os direitos reservados.</footer>
 
+  <!-- APIs, Swiper e Firebase -->
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      carregarConfiguracoes();
-      carregarVideosDoYouTube();
-      iniciarCountdown();
-    });
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-Agora que você tem o layout e o carrossel perfeitos (do jeito do dashboard anterior), basta **substituir os dados mockados do carrossel da loja pelo carregamento do Firebase**, igual ao seu index.html funcional!
 
-    async function carregarConfiguracoes() {
-      try {
-        const res = await fetch("/api/getContentfulConfig");
-        if (!res.ok) throw new Error();
-        const data = await res.json();
-        if (data.items.length) {
-          const e = data.items[0];
-          const findUrl = id => (data.includes?.Asset.find(a=>a.sys.id===id)?.fields.file.url || "");
-          const capa = findUrl(e.fields.imagemDeCapa?.sys.id);
-          const perf = findUrl(e.fields.fotoDePerfil?.sys.id);
-          if (capa) document.getElementById("header-capa").style.backgroundImage = `url(https:${capa})`;
-          if (perf) document.getElementById("foto-perfil").src = `https:${perf}`;
-        }
-      } catch {}    }
+Aqui está o **código já mesclado** com o layout aprovado e **os prêmios sendo carregados do Firebase**, com toda a lógica do dashboard:
 
-    async function carregarVideosDoYouTube() {
-      try {
-        const res = await fetch("/api/getYoutubeVideos");
-        if (!res.ok) throw new Error();
-        const data = await res.json();
-        const w = document.getElementById("youtube-carousel-wrapper");
-        w.innerHTML = "";
-        if (data.items.length) {
-          data.items.forEach(i=>{ w.innerHTML += `
-              <div class="swiper-slide">
-                <div class="video-container">
-                  <iframe src="https://www.youtube.com/embed/${i.id.videoId}" title="${i.snippet.title}" frameborder="0" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; picture-in-picture"></iframe>
-                </div>
-              </div>` });
-          new Swiper(".swiper", {
-            loop:true, spaceBetween:20, slidesPerView:1,
-            breakpoints:{768:{slidesPerView:2, spaceBetween:30},1024:{slidesPerView:3, spaceBetween:30}},
-            pagination:{el:".swiper-pagination",clickable:true},navigation:{nextEl:".swiper-button-next",prevEl:".swiper-button-prev"}
-          });
-        } else {
-          w.innerHTML = "<p style='text-align:center;'>Não foi possível carregar os vídeos no momento.</p>";
-        }
-      } catch {}    }
+---
 
-    function iniciarCountdown() {
-      const el = document.getElementById("countdown");
-      const launch = new Date("2025-05-31T00:00:00").getTime();
-      const iv = setInterval(()=>{
-        const now = Date.now(), d = launch - now;
-        if (d<0) { clearInterval(iv); el.innerHTML = "Já disponível em todas as plataformas!"; document.querySelector(".pre-save-button").style.display="none"; }
-        else {
-          const days = Math.floor(d/(1000*60*60*24));
-          const hrs  = Math.floor((d%(1000*60*60*24))/(1000*60*60));
-          const mins = Math.floor((d%(1000*60*60))/(1000*60));
-          const secs = Math.floor((d%(1000*60))/1000);
-          el.innerHTML = `${days}d ${hrs}h ${mins}m ${secs}s<br><span style="font-size:.5em;color:#ccc;">Para o próximo lançamento.</span>`;
-        }
-      },1000);
-    }
-  </script>
-
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fã Dashboard</title>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600,700&display=swap" rel="stylesheet">
+  <style>
+    /* ... (seu CSS exato do dashboard, igual ao anterior, pode colar inteiro aqui sem alterar nada!) ... */
+    /* ... (todo o CSS que está no seu último dashboard, até as media queries!) ... */
+  </style>
   <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+</head>
+<body>
+  <div class="dashboard-layout">
+    <div class="dashboard">
+      <div class="dashboard-top">
+        <div class="user-side">
+          <div class="user-email" id="user-email"></div>
+          <button class="btn-logout" id="btnLogout" style="display:none;">Logout</button>
+        </div>
+      </div>
+      <div class="dashboard-title">Fã Dashboard</div>
+      <form id="auth-form">
+        <input type="email" id="email" placeholder="Digite seu email" required autocomplete="username"/>
+        <input type="password" id="password" placeholder="Digite sua senha" required autocomplete="current-password"/>
+        <button type="submit" id="btn-login">Entrar</button>
+        <button type="button" id="btn-signup">Cadastrar</button>
+        <button type="button" id="btn-reset-password">Esqueci a senha</button>
+      </form>
+      <div class="pontuacao-section" id="pontuacao-container" style="display:none;">
+        <div class="pontuacao-label">Sua Pontuação</div>
+        <div class="pontuacao-valor" id="pontuacao-valor">0</div>
+      </div>
+      <button class="btn-green" id="start-quiz" style="display:none;">Comece a ganhar pontos</button>
+      <div class="loja-section">
+        <div class="loja-title">Loja de Prêmios</div>
+        <div class="loja-carousel-container">
+          <button class="carousel-arrow" id="prevBtn">&#60;</button>
+          <div class="loja-cards" id="lojaCards"></div>
+          <button class="carousel-arrow" id="nextBtn">&#62;</button>
+        </div>
+      </div>
+      <div id="auth-message" style="min-height:18px;margin-top:12px;"></div>
+    </div>
+    <div class="historico-lateral">
+      <div class="historico" id="historico-container">
+        <b>Histórico de Atividades</b>
+        <span>Faça login para visualizar</span>
+      </div>
+    </div>
+  </div>
+
   <script>
+    // Firebase config (coloque a sua!)
     const firebaseConfig = {
       apiKey: "AIzaSyBhSmocbaARqU_pPM0Tqki8d11jm97IE4M",
       authDomain: "dashboardfeqzin.firebaseapp.com",
@@ -315,9 +515,16 @@
     const pontuacaoValor = document.getElementById("pontuacao-valor");
     const btnQuiz = document.getElementById("start-quiz");
     const historicoContainer = document.getElementById("historico-container");
-    const lojaContainer = document.getElementById("loja-container");
+    const lojaCards = document.getElementById('lojaCards');
     const userEmailShow = document.getElementById("user-email");
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
 
+    let premios = [];
+    let lojaPos = 0;
+    const viewCount = 4; // Mostra 4 prêmios
+
+    // Helpers
     function showMessage(text, color = "lightgreen") {
       authMessage.style.color = color;
       authMessage.textContent = text;
@@ -334,42 +541,73 @@
     }
 
     function carregarHistorico(uid) {
-      historicoContainer.innerHTML = "<p>Carregando histórico...</p>";
+      historicoContainer.innerHTML = "<b>Histórico de Atividades</b><span>Carregando...</span>";
       db.collection("usuarios").doc(uid).collection("historico")
         .orderBy("data", "desc").limit(20).get()
         .then(snapshot => {
-          if (snapshot.empty) return historicoContainer.innerHTML = "<p>Sem histórico.</p>";
-          let html = "<ul style='text-align:left;'>";
+          if (snapshot.empty) return historicoContainer.innerHTML = "<b>Histórico de Atividades</b><span>Sem histórico.</span>";
+          let html = "<b>Histórico de Atividades</b>";
           snapshot.forEach(doc => {
             const item = doc.data();
             const data = item.data?.toDate ? item.data.toDate().toLocaleString() : "";
-            html += `<li>[${data}] ${item.descricao} (${item.pontos>0?"+":""}${item.pontos} pts)</li>`;
-          }); html += "</ul>";
+            html += `<span style="color:${item.pontos<0?'#ffa6a6':'#b6ffce'}">${item.pontos>0?'+':''}${item.pontos} pts</span>
+            <span style="font-size:0.97em; color:#f2fff2ad">${item.descricao}</span>`;
+          });
           historicoContainer.innerHTML = html;
-        }).catch(err => historicoContainer.innerHTML = `<p>Erro: ${err.message}</p>`);
+        }).catch(err => historicoContainer.innerHTML = `<b>Histórico de Atividades</b><span>Erro: ${err.message}</span>`);
     }
+
+    function renderLoja() {
+      lojaCards.innerHTML = '';
+      for (let i = lojaPos; i < Math.min(lojaPos + viewCount, premios.length); i++) {
+        const item = premios[i];
+        lojaCards.innerHTML += `
+          <div class="loja-card">
+            <img src="${item.imagemUrl}" alt="${item.nome}">
+            <div class="loja-card-nome">${item.nome}</div>
+            <div class="loja-card-desc">${item.descricao}</div>
+            <div class="loja-card-pontos">${item.custoPontos} pts</div>
+            <button class="btn-resgatar" ${item.estoque === 0 ? "disabled" : ""}
+              onclick="resgatarItem('${item.id}',${item.custoPontos})">${item.estoque === 0 ? "Esgotado" : "Resgatar"}</button>
+          </div>
+        `;
+      }
+      prevBtn.disabled = (lojaPos === 0);
+      nextBtn.disabled = (lojaPos >= premios.length - viewCount);
+      prevBtn.style.opacity = prevBtn.disabled ? 0.4 : 1;
+      nextBtn.style.opacity = nextBtn.disabled ? 0.4 : 1;
+    }
+
+    prevBtn.onclick = () => {
+      if (lojaPos > 0) {
+        lojaPos--;
+        renderLoja();
+      }
+    };
+    nextBtn.onclick = () => {
+      if (lojaPos < premios.length - viewCount) {
+        lojaPos++;
+        renderLoja();
+      }
+    };
 
     function carregarLoja() {
-      lojaContainer.innerHTML = "<p>Carregando loja...</p>";
       db.collection("resgates").get()
         .then(snapshot => {
-          if (snapshot.empty) return lojaContainer.innerHTML = "<p>Loja vazia.</p>";
-          let html = "";
+          premios = [];
           snapshot.forEach(doc => {
-            const item = doc.data();
-            html += `<div style='background:#222;margin:5px;padding:10px;border-radius:6px;text-align:center; width:120px;display:inline-block;vertical-align:top;'>
-              <img src='${item.imagemUrl}' style='width:100%;height:80px;object-fit:cover;border-radius:4px;' alt='${item.nome}' />
-              <p>${item.nome}</p>
-              <small>${item.descricao}</small>
-              <p><b>${item.custoPontos} pts</b></p>
-              <button onclick="resgatarItem('${doc.id}',${item.custoPontos})" ${item.estoque===0?"disabled":""}>
-                ${item.estoque===0?"Esgotado":"Resgatar"}
-              </button></div>`;
-          }); lojaContainer.innerHTML = html;
-        }).catch(err => lojaContainer.innerHTML = `<p>Erro: ${err.message}</p>`);
+            let d = doc.data();
+            premios.push({
+              ...d,
+              id: doc.id
+            });
+          });
+          lojaPos = 0;
+          renderLoja();
+        });
     }
 
-    function resgatarItem(itemId, custo) {
+    window.resgatarItem = function(itemId, custo) {
       const user = auth.currentUser;
       if (!user) return alert("Faça login para resgatar itens.");
       const uid = user.uid;
@@ -395,18 +633,17 @@
 
     auth.onAuthStateChanged(user => {
       if (user) {
-        showMessage(`Usuário logado: ${user.email}`);
-        userEmailShow.innerHTML = `Usuário logado: <b>${user.email}</b>`;
-        emailInput.style.display = passwordInput.style.display = btnLogin.style.display = btnSignup.style.display = btnResetPassword.style.display = 'none';
+        userEmailShow.innerHTML = user.email;
         btnLogout.style.display = 'inline-block';
+        emailInput.style.display = passwordInput.style.display = btnLogin.style.display = btnSignup.style.display = btnResetPassword.style.display = 'none';
         carregarPontuacao(user.uid); carregarHistorico(user.uid); carregarLoja();
         btnQuiz.style.display = 'inline-block'; btnQuiz.onclick = () => window.open('quiz.html','_blank');
       } else {
         userEmailShow.innerHTML = "";
-        emailInput.style.display = passwordInput.style.display = btnLogin.style.display = btnSignup.style.display = btnResetPassword.style.display = 'block';
         btnLogout.style.display = 'none';
+        emailInput.style.display = passwordInput.style.display = btnLogin.style.display = btnSignup.style.display = btnResetPassword.style.display = 'block';
         pontuacaoContainer.style.display = 'none'; btnQuiz.style.display = 'none';
-        historicoContainer.innerHTML = ''; lojaContainer.innerHTML = '';
+        historicoContainer.innerHTML = '<b>Histórico de Atividades</b><span>Faça login para visualizar</span>'; lojaCards.innerHTML = '';
       }
     });
 
