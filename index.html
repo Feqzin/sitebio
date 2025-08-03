@@ -96,26 +96,12 @@
     }
 
     /* --- CENTRALIZA DASHBOARD + HISTÓRICO DEPOIS DO LOGIN --- */
-  .dashboard-flex-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 78vh;
-  width: 100vw;
-  gap: 40px;
-  position: relative;
-  transition: all .25s;
-  max-width: 900px;
-  margin: 0 auto;
-}
-@media (max-width: 950px) {
-  .dashboard-flex-container {
-    flex-direction: column;
-    align-items: center;
-    min-height: unset;
-    gap: 0;
-    max-width: 98vw;
-  }
+.dashboard-flex-container {
+  display: flex;              /* Ativa o flexbox */
+  justify-content: center;    /* Centraliza horizontalmente */
+  align-items: center;        /* Centraliza verticalmente */
+  min-height: 78vh;           /* O container pega pelo menos 78% da altura da tela */
+  width: 100vw;               /* Ocupa toda a largura */
 }
 
     /* Mantém dashboard centralizada mesmo quando histórico aparece */
