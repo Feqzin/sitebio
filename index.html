@@ -246,19 +246,33 @@
       .historico { max-width: 100vw; min-width: 0;}
     }
 
-    /* --- AJUSTE DO BOTÃO E DA SEÇÃO DE PONTUAÇÃO --- */
+    /* --- AJUSTE DEFINITIVO DA PONTUAÇÃO E BOTÃO --- */
     .pontuacao-section {
-      text-align: center;
+      width: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: center;
       margin-bottom: 0;
+      margin-top: 0;
+    }
+    .pontuacao-label {
+      font-size: 1.18em;
+      font-weight: bold;
+      color: #fff;
+      margin-bottom: 7px;
+    }
+    .pontuacao-valor {
+      font-size: 2em;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 18px; /* Distância até o botão */
     }
     #start-quiz {
       display: block;
-      margin: 15px auto 22px auto;
+      margin: 0 auto 18px auto;
       font-weight: 700;
-      font-size: 1.12em;
+      font-size: 1.1em;
       padding: 13px 36px;
       border-radius: 9px;
       background: #00ff55;
@@ -269,19 +283,6 @@
     }
     #start-quiz:hover {
       background: #30ff99;
-    }
-
-    .pontuacao-label {
-      font-size: 1.03em;
-      color: #d8ffe0;
-      letter-spacing: .01em;
-    }
-    .pontuacao-valor {
-      font-size: 2.1em;
-      font-weight: 700;
-      color: #fff;
-      margin: 2px 0 0 0;
-      letter-spacing: .01em;
     }
 
     .loja-section {
@@ -485,6 +486,7 @@
       <a href="https://soundcloud.com/discordia-urban" target="_blank"><i class="fa-brands fa-soundcloud"></i></a>
     </div>
   </section>
+  <!-- --------- DASHBOARD --------- -->
   <section style="padding:0;margin:0;">
     <div id="dashboard-flex-container" class="dashboard-flex-container">
       <div class="dashboard-outer" style="z-index:2;">
@@ -524,6 +526,7 @@
           </div>
         </div>
       </div>
+      <!-- Histórico FIXO à direita da dashboard -->
       <div class="historico-externo" id="historico-externo" style="display:none;">
         <div class="historico" id="historico-container">
           <b>Histórico de Atividades</b>
@@ -597,6 +600,7 @@
         }
       },1000);
     }
+    // --------- FIREBASE DASHBOARD ---------
     const firebaseConfig = {
       apiKey: "AIzaSyBhSmocbaARqU_pPM0Tqki8d11jm97IE4M",
       authDomain: "dashboardfeqzin.firebaseapp.com",
@@ -609,6 +613,7 @@
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
     const db   = firebase.firestore();
+    // Elementos
     const authForm = document.getElementById("auth-form");
     const emailInput = document.getElementById("email");
     const passwordInput = document.getElementById("password");
