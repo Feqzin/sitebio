@@ -94,17 +94,14 @@
     .pre-save-button:hover {
       background:var(--cor-destaque-hover); transform:scale(1.05);
     }
-
     /* --- CENTRALIZA DASHBOARD + HISTÓRICO DEPOIS DO LOGIN --- */
-.dashboard-flex-container {
-  display: flex;              /* Ativa o flexbox */
-  justify-content: center;    /* Centraliza horizontalmente */
-  align-items: center;        /* Centraliza verticalmente */
-  min-height: 78vh;           /* O container pega pelo menos 78% da altura da tela */
-  width: 100vw;               /* Ocupa toda a largura */
-}
-
-    /* Mantém dashboard centralizada mesmo quando histórico aparece */
+    .dashboard-flex-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 78vh;
+      width: 100vw;
+    }
     .dashboard-outer {
       display: flex;
       flex-direction: column;
@@ -169,7 +166,6 @@
       font-size: 1em;
       text-align: center;
     }
-
     .dashboard-top-center {
       width: 100%;
       display: flex;
@@ -203,7 +199,6 @@
       margin-top: 2px;
     }
     .btn-logout:hover { background: #ff7b4d; }
-
     .historico-externo {
       min-width: 265px;
       z-index: 1;
@@ -237,7 +232,6 @@
       color: #f0f0f0a8;
       font-size: 0.99em;
     }
-
     @media (max-width: 950px) {
       .dashboard-flex-container {
         flex-direction: column;
@@ -253,7 +247,6 @@
       .dashboard-title { font-size: 1.4em;}
       .historico { max-width: 100vw; min-width: 0;}
     }
-    /* ... resto igual ... */
     .pontuacao-section {
       text-align: center;
       margin-bottom: 10px;
@@ -410,6 +403,34 @@
       .loja-card img { width: 38px; height: 38px;}
       .carousel-arrow { font-size: 1.3em;}
     }
+    /* ------- Olho no campo de senha -------- */
+    .input-senha-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+      width: 100%;
+    }
+    .input-senha-wrapper input[type="password"],
+    .input-senha-wrapper input[type="text"] {
+      width: 100%;
+      padding-left: 36px;
+      box-sizing: border-box;
+    }
+    .senha-olho {
+      position: absolute;
+      left: 9px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: #888;
+      font-size: 1.18em;
+      z-index: 2;
+      user-select: none;
+      transition: color .2s;
+    }
+    .senha-olho:active {
+      color: #1db954;
+    }
   </style>
   <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
@@ -473,7 +494,12 @@
           <div class="dashboard-title">Dashboard do Fã</div>
           <form id="auth-form" autocomplete="on">
             <input type="email" id="email" placeholder="Digite seu email" required autocomplete="username"/>
-            <input type="password" id="password" placeholder="Digite sua senha" required autocomplete="current-password"/>
+            <div class="input-senha-wrapper">
+              <span class="senha-olho" id="togglePassword">
+                <i class="fa-solid fa-eye"></i>
+              </span>
+              <input type="password" id="password" placeholder="Digite sua senha" required autocomplete="current-password"/>
+            </div>
             <button type="submit" id="btn-login">Entrar</button>
             <button type="button" id="btn-signup">Cadastrar</button>
             <button type="button" id="btn-reset-password">Esqueci a senha</button>
@@ -741,6 +767,22 @@
     btnSignup.addEventListener('click',()=>{ if(!emailInput.value||!passwordInput.value) return showMessage('Preencha email e senha','tomato'); auth.createUserWithEmailAndPassword(emailInput.value,passwordInput.value).then(()=>showMessage('Usuário criado!','lightgreen')).catch(err=>showMessage(err.message,'tomato')); });
     btnResetPassword.addEventListener('click',()=>{ if(!emailInput.value) return showMessage('Digite email','tomato'); auth.sendPasswordResetEmail(emailInput.value).then(()=>showMessage('Email enviado')).catch(err=>showMessage(err.message,'tomato')); });
     btnLogout.addEventListener('click',()=>auth.signOut());
+
+    // --- Olho do campo de senha ---
+    const togglePassword = document.getElementById("togglePassword");
+    togglePassword.addEventListener("click", function() {
+      const input = passwordInput;
+      const icon = this.querySelector("i");
+      if (input.type === "password") {
+        input.type = "text";
+        icon.classList.remove("fa-eye");
+        icon.classList.add("fa-eye-slash");
+      } else {
+        input.type = "password";
+        icon.classList.remove("fa-eye-slash");
+        icon.classList.add("fa-eye");
+      }
+    });
   </script>
 </body>
 </html>
