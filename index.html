@@ -391,6 +391,26 @@
       .loja-card img { width: 38px; height: 38px;}
       .carousel-arrow { font-size: 1.3em;}
     }
+    .dashboard-header-row {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+@media (max-width: 700px) {
+  .dashboard-header-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 7px;
+  }
+  .historico {
+    margin-left: 0;
+    margin-top: 10px;
+    min-width: 0;
+    max-width: 98vw;
+  }
+}
   </style>
   <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
@@ -456,30 +476,33 @@
           <button type="button" id="btn-reset-password">Esqueci a senha</button>
         </form>
         <div id="auth-message"></div>
+        
         <!-- Dashboard completa: aparece só depois do login -->
         <div class="dashboard-completa" id="dashboard-logado">
-          <div class="dashboard-top">
-            <div class="user-side">
-              <div class="user-email" id="user-email"></div>
-              <button class="btn-logout" id="btnLogout" style="display:none;">Logout</button>
-            </div>
-            <div class="historico" id="historico-container" >
-              <b>Histórico de Atividades</b>
-              <span>Faça login para visualizar</span>
-            </div>
-          </div>
-          <div class="pontuacao-section" id="pontuacao-container">
-            <div class="pontuacao-label">Sua Pontuação</div>
-            <div class="pontuacao-valor" id="pontuacao-valor">0</div>
-          </div>
-          <button class="btn-green" id="start-quiz">Comece a ganhar pontos</button>
-          <div class="loja-section">
-            <div class="loja-title">Loja de Prêmios</div>
-            <div class="loja-carousel-container">
-              <button class="carousel-arrow" id="prevBtn">&#60;</button>
-              <div class="loja-cards" id="lojaCards"></div>
-              <button class="carousel-arrow" id="nextBtn">&#62;</button>
-            </div>
+   <div class="dashboard-header-row">
+  <div class="user-side">
+    <div class="user-email" id="user-email"></div>
+    <button class="btn-logout" id="btnLogout" style="display:none;">Logout</button>
+  </div>
+  <div class="historico" id="historico-container">
+    <b>Histórico de Atividades</b>
+    <span>Faça login para visualizar</span>
+  </div>
+</div>
+<div class="dashboard-title">Dashboard do Fã</div>
+<div class="pontuacao-section" id="pontuacao-container">
+  <div class="pontuacao-label">Sua Pontuação</div>
+  <div class="pontuacao-valor" id="pontuacao-valor">0</div>
+</div>
+<button class="btn-green" id="start-quiz">Comece a ganhar pontos</button>
+<div class="loja-section">
+  <div class="loja-title">Loja de Prêmios</div>
+  <div class="loja-carousel-container">
+    <button class="carousel-arrow" id="prevBtn">&#60;</button>
+    <div class="loja-cards" id="lojaCards"></div>
+    <button class="carousel-arrow" id="nextBtn">&#62;</button>
+  </div>
+</div>
           </div>
         </div>
       </div>
