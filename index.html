@@ -20,7 +20,6 @@
       margin: 0; font-family: 'Montserrat', Arial, sans-serif;
       background: var(--cor-fundo); color: var(--cor-texto); line-height:1.6;
     }
-    /* --- HEADER, PROFILE, ETC: mantido igual ao seu --- */
     header {
       background-color:rgba(0,0,0,0.6);
       background-blend-mode:darken;
@@ -94,7 +93,6 @@
     .pre-save-button:hover {
       background:var(--cor-destaque-hover); transform:scale(1.05);
     }
-    /* --- CENTRALIZA DASHBOARD + HISTÓRICO DEPOIS DO LOGIN --- */
     .dashboard-flex-container {
       display: flex;
       justify-content: center;
@@ -103,13 +101,13 @@
       width: 100vw;
     }
     .dashboard-outer {
+      width: 540px; /* aumentada para caber os cards */
+      min-width: 320px;
+      max-width: 98vw;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: flex-start;
-      width: 540px;
-      min-width: 320px;
-      max-width: 98vw;
       position: relative;
       z-index: 2;
       margin: 0;
@@ -314,7 +312,7 @@
       flex-direction: row;
       gap: 17px;
       overflow: hidden;
-      width: 480px;
+      width: 480px; /* aumentada para caber 4 cards inteiros */
       min-height: 170px;
       align-items: stretch;
       justify-content: center;
@@ -403,7 +401,6 @@
       .loja-card img { width: 38px; height: 38px;}
       .carousel-arrow { font-size: 1.3em;}
     }
-    /* ------- Olho no campo de senha -------- */
     .input-senha-wrapper {
       position: relative;
       display: flex;
@@ -481,7 +478,6 @@
       <a href="https://soundcloud.com/discordia-urban" target="_blank"><i class="fa-brands fa-soundcloud"></i></a>
     </div>
   </section>
-  <!-- --------- DASHBOARD --------- -->
   <section style="padding:0;margin:0;">
     <div id="dashboard-flex-container" class="dashboard-flex-container">
       <div class="dashboard-outer" style="z-index:2;">
@@ -504,7 +500,6 @@
             <button type="button" id="btn-reset-password">Esqueci a senha</button>
           </form>
           <div id="auth-message"></div>
-          <!-- Dashboard completa: aparece só depois do login -->
           <div class="dashboard-completa" id="dashboard-logado">
             <div class="pontuacao-section" id="pontuacao-container">
               <div class="pontuacao-label">Sua Pontuação</div>
@@ -522,7 +517,6 @@
           </div>
         </div>
       </div>
-      <!-- Histórico FIXO à direita da dashboard -->
       <div class="historico-externo" id="historico-externo" style="display:none;">
         <div class="historico" id="historico-container">
           <b>Histórico de Atividades</b>
@@ -596,7 +590,6 @@
         }
       },1000);
     }
-    // --------- FIREBASE DASHBOARD ---------
     const firebaseConfig = {
       apiKey: "AIzaSyBhSmocbaARqU_pPM0Tqki8d11jm97IE4M",
       authDomain: "dashboardfeqzin.firebaseapp.com",
@@ -609,7 +602,6 @@
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
     const db   = firebase.firestore();
-    // Elementos
     const authForm = document.getElementById("auth-form");
     const emailInput = document.getElementById("email");
     const passwordInput = document.getElementById("password");
@@ -627,12 +619,11 @@
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
     const dashboardLogado = document.getElementById("dashboard-logado");
-    // NOVO: Top e histórico externo
     const dashboardTopCenter = document.getElementById('dashboard-top-center');
     const historicoExterno = document.getElementById('historico-externo');
     let premios = [];
     let lojaPos = 0;
-    const viewCount = 4; // Mostra 4 prêmios
+    const viewCount = 4;
     function showMessage(text, color = "lightgreen") {
       authMessage.style.color = color;
       authMessage.textContent = text;
@@ -662,7 +653,6 @@
           historicoContainer.innerHTML = html;
         }).catch(err => historicoContainer.innerHTML = `<b>Histórico de Atividades</b><span>Erro: ${err.message}</span>`);
     }
-    // ------ CARROSSEL LOJA DE PRÊMIOS: LIMITE 4 ITENS ------
     function renderLoja() {
       lojaCards.innerHTML = '';
       for (let i = lojaPos; i < Math.min(lojaPos + viewCount, premios.length); i++) {
@@ -733,7 +723,6 @@
         carregarPontuacao(uid); carregarHistorico(uid); carregarLoja();
       }).catch(e=>alert("Erro: "+e));
     }
-    // --- Alterna dashboard (só login OU dashboard completa) ---
     auth.onAuthStateChanged(user => {
       if (user) {
         dashboardTopCenter.style.display = "flex";
@@ -744,7 +733,6 @@
         btnLogout.style.display = 'inline-block';
         carregarPontuacao(user.uid); carregarHistorico(user.uid); carregarLoja();
         btnQuiz.style.display = 'inline-block'; btnQuiz.onclick = () => window.open('quiz.html','_blank');
-        // Centraliza dashboard e histórico juntos no centro da tela
         document.getElementById('dashboard-flex-container').style.justifyContent = "center";
         document.getElementById('dashboard-flex-container').style.alignItems = "center";
       } else {
@@ -756,7 +744,6 @@
         btnLogout.style.display = 'none';
         pontuacaoContainer.style.display = 'none'; btnQuiz.style.display = 'none';
         historicoContainer.innerHTML = '<b>Histórico de Atividades</b><span>Faça login para visualizar</span>'; lojaCards.innerHTML = '';
-        // Centraliza dashboard sozinho no centro da tela
         document.getElementById('dashboard-flex-container').style.justifyContent = "center";
         document.getElementById('dashboard-flex-container').style.alignItems = "center";
       }
@@ -765,7 +752,6 @@
     btnSignup.addEventListener('click',()=>{ if(!emailInput.value||!passwordInput.value) return showMessage('Preencha email e senha','tomato'); auth.createUserWithEmailAndPassword(emailInput.value,passwordInput.value).then(()=>showMessage('Usuário criado!','lightgreen')).catch(err=>showMessage(err.message,'tomato')); });
     btnResetPassword.addEventListener('click',()=>{ if(!emailInput.value) return showMessage('Digite email','tomato'); auth.sendPasswordResetEmail(emailInput.value).then(()=>showMessage('Email enviado')).catch(err=>showMessage(err.message,'tomato')); });
     btnLogout.addEventListener('click',()=>auth.signOut());
-    // --- Olho do campo de senha ---
     const togglePassword = document.getElementById("togglePassword");
     togglePassword.addEventListener("click", function() {
       const input = passwordInput;
