@@ -95,28 +95,18 @@
       background:var(--cor-destaque-hover); transform:scale(1.05);
     }
 
-    /* DASHBOARD FLEX CONTAINER */
+    /* DASHBOARD */
     .dashboard-flex-container {
       display: flex;
-      justify-content: flex-start; /* <-- Ajuste para puxar a dashboard pra direita */
+      justify-content: center;
       align-items: flex-start;
+      min-height: 80vh;
       width: 100%;
-      min-height: 430px;
-      gap: 58px;
-      margin-top: 10px;
-      margin-bottom: 32px;
-      transition: all .2s;
+      margin: 0;
+      padding: 0;
+      gap: 40px;
+      position: relative;
     }
-    @media (max-width: 950px) {
-      .dashboard-flex-container {
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 10px;
-        margin-bottom: 0;
-      }
-    }
-
     .dashboard-outer {
       display: flex;
       flex-direction: column;
@@ -220,9 +210,8 @@
     /* Histórico fora da dashboard */
     .historico-externo {
       position: relative;
-      margin-left: 40px;
-      margin-top: 32px;
       min-width: 265px;
+      margin-top: 32px;
       z-index: 1;
       display: flex;
       flex-direction: column;
@@ -255,6 +244,7 @@
     }
 
     @media (max-width: 950px) {
+      .dashboard-flex-container { flex-direction: column; align-items: center; gap: 0; }
       .historico-externo {
         position: static;
         margin-left: 0;
@@ -265,9 +255,7 @@
         margin-bottom: 0;
       }
     }
-
     @media (max-width: 650px) {
-      .dashboard-flex-container,
       .dashboard-outer { width: 98vw; min-width: 0; }
       .dashboard { padding: 22px 2vw 16px 2vw; }
       .dashboard-title { font-size: 1.4em;}
@@ -291,6 +279,8 @@
       letter-spacing: .01em;
     }
     .btn-green {
+      display: block;
+      margin: 0 auto 22px auto;
       background: #00ff55;
       color: #181818;
       border: none;
@@ -298,13 +288,9 @@
       padding: 10px 32px;
       font-size: 1.08em;
       font-weight: 700;
-      margin: 17px 0 22px 0;
       box-shadow: 0 0 9px #00ff5555;
       cursor: pointer;
       transition: background .19s;
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
     }
     .btn-green:hover {
       background: #30ff99;
@@ -420,8 +406,8 @@
       cursor: not-allowed;
     }
     @media (max-width: 1000px) {
-      .dashboard-outer { padding: 0 2vw;}
-      .dashboard { width: 98vw; padding: 22px 2vw 16px 2vw; min-width: 0;}
+      .dashboard-flex-container { gap: 0; }
+      .dashboard-outer { width: 98vw; padding: 22px 2vw 16px 2vw; min-width: 0;}
       .dashboard-title { font-size: 1.4em;}
       .historico { max-width: 100vw; min-width: 0;}
       .loja-cards { width: 98vw; min-width: 0; }
@@ -444,49 +430,10 @@
     <h1>Feqzin</h1><p></p>
   </header>
   <img id="foto-perfil" class="profile-pic" src="" alt="Feqzin"/>
-  <section>
-    <h2>Sobre</h2>
-    <p>Feqzin é um artista nascido na zona norte de São Paulo, mais precisamente no bairro do Jardim Brasil. Desde 2017 canetando, iniciou sua trajetória oficialmente em 2022 com a primeira track produzida no celular. Traz autenticidade no vocal e está sempre inovando em suas produções.</p>
-  </section>
-  <section>
-    <h2>Meus Vídeos</h2>
-    <div class="swiper">
-      <div class="swiper-wrapper" id="youtube-carousel-wrapper"></div>
-      <div class="swiper-pagination"></div>
-      <div class="swiper-button-prev"></div>
-      <div class="swiper-button-next"></div>
-    </div>
-  </section>
-  <section>
-    <h2>Último Lançamento</h2>
-    <div class="player">
-      <iframe style="border-radius:12px"
-        src="https://open.spotify.com/embed/track/1chtxFdUNshSXBjfrI8VmE?utm_source=generator"
-        width="100%" height="152" frameborder="0"
-        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-        loading="lazy"></iframe>
-    </div>
-    <div id="countdown" class="countdown"></div>
-    <div style="text-align:center;">
-      <a class="pre-save-button"
-         href="https://distrokid.com/hyperfollow/feqzin/se-a-bag-pesar"
-         target="_blank">FAÇA O PRE-SAVE</a>
-    </div>
-  </section>
-  <section>
-    <h2>Redes Sociais</h2>
-    <div class="socials">
-      <a href="https://www.instagram.com/feqzinn/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
-      <a href="https://www.tiktok.com/@feqzinn" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
-      <a href="https://www.youtube.com/@feqzin" target="_blank"><i class="fa-brands fa-youtube"></i></a>
-      <a href="https://open.spotify.com/intl-pt/artist/56eMJpXmR5veK1kOi2apO4" target="_blank"><i class="fa-brands fa-spotify"></i></a>
-      <a href="https://soundcloud.com/discordia-urban" target="_blank"><i class="fa-brands fa-soundcloud"></i></a>
-    </div>
-  </section>
-
+  <!-- ... demais sections ... -->
   <!-- --------- DASHBOARD --------- -->
-  <section style="padding:0;margin:0;">
-    <div id="dashboard-flex-container" class="dashboard-flex-container">
+   <section style="padding:0; margin:0;">
+    <div class="dashboard-flex-container">
       <div class="dashboard-outer" style="z-index:2;">
         <div class="dashboard-top-center" id="dashboard-top-center" style="display:none;">
           <div class="user-email" id="user-email"></div>
@@ -732,7 +679,6 @@
     // --- Alterna dashboard (só login OU dashboard completa) ---
     auth.onAuthStateChanged(user => {
       if (user) {
-        document.getElementById("dashboard-flex-container").style.justifyContent = "flex-start";
         dashboardTopCenter.style.display = "flex";
         historicoExterno.style.display = "flex";
         document.getElementById('dashboard-logado').style.display = "block";
@@ -742,7 +688,6 @@
         carregarPontuacao(user.uid); carregarHistorico(user.uid); carregarLoja();
         btnQuiz.style.display = 'inline-block'; btnQuiz.onclick = () => window.open('quiz.html','_blank');
       } else {
-        document.getElementById("dashboard-flex-container").style.justifyContent = "center";
         dashboardTopCenter.style.display = "none";
         historicoExterno.style.display = "none";
         document.getElementById('dashboard-logado').style.display = "none";
@@ -760,3 +705,4 @@
   </script>
 </body>
 </html>
+
