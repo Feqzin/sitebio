@@ -1,38 +1,26 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Feqzin | Site Oficial</title>
-  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous"/>
 
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600,700&display=swap" rel="stylesheet">
   <style>
+    /* ---- SUA PALETA DE CORES E ESTILO PRINCIPAL (restante do site) ---- */
     :root {
-      --green: #00ff55;
-      --green-light: #30ff99;
-      --bg: #181818;
-      --bg-card: #222;
-      --border: #222e;
-      --white: #fff;
-      --muted: #d8ffe0;
-      --red: #ff5e3a;
-      --radius: 22px;
-    }
-    html, body {
-      background: var(--bg);
-      color: var(--white);
-      font-family: 'Montserrat', Arial, sans-serif;
-      margin: 0; padding: 0;
-      min-height: 100vh;
-      width: 100vw;
+      --cor-destaque: #1db954;
+      --cor-destaque-hover: #1ed760;
+      --cor-texto: #f1f1f1;
+      --cor-fundo: #0e0e0e;
+      --cor-fundo-secundario: #111;
+      --cor-borda-suave: #444;
     }
     body {
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-      width: 100vw;
+      margin: 0; font-family: Arial, sans-serif;
+      background: var(--cor-fundo); color: var(--cor-texto); line-height:1.6;
     }
     header {
       background-color:rgba(0,0,0,0.6);
@@ -45,7 +33,7 @@
     header::after {
       content:""; position:absolute; bottom:0; left:0;
       width:100%; height:100px;
-      background:linear-gradient(to bottom,rgba(14,14,14,0),var(--bg));
+      background:linear-gradient(to bottom,rgba(14,14,14,0),var(--cor-fundo));
       z-index:1;
     }
     header h1, header p { position:relative; z-index:2; }
@@ -53,17 +41,62 @@
     header p { font-size:1.2em; color:#ddd; }
     .profile-pic {
       width:150px; height:150px; border-radius:50%;
-      display:block; border:4px solid var(--green);
+      display:block; border:4px solid var(--cor-destaque);
       object-fit:cover; background:#000;
       position:absolute; top:190px; left:50%;
       transform:translateX(-50%); z-index:3;
-      transition:transform .4s; transform-style:preserve-3d;
+      transition:transform .4s ease-in-out; transform-style:preserve-3d;
     }
     .profile-pic:hover {
       transform:translateX(-50%) perspective(1000px) rotateY(25deg);
     }
-
-    /* DASHBOARD LAYOUT */
+    section {
+      padding:40px 20px; max-width:900px; margin:auto;
+    }
+    section:first-of-type { padding-top:100px; }
+    h2 {
+      border-bottom:2px solid var(--cor-borda-suave);
+      padding-bottom:10px; margin-bottom:20px;
+    }
+    a { color:var(--cor-destaque); text-decoration:none; transition:color .3s; }
+    a:hover { color:#fff; }
+    .socials { text-align:center; }
+    .socials a {
+      margin:0 15px; color:var(--cor-texto); font-size:2em; transition:all .3s;
+    }
+    .socials a:hover {
+      color:var(--cor-destaque); transform:translateY(-5px);
+    }
+    .player { margin:20px 0; }
+    .countdown {
+      text-align:center; font-size:2em; margin:20px 0 10px;
+      color:var(--cor-destaque); line-height:1.2;
+    }
+    footer {
+      background:var(--cor-fundo-secundario);
+      text-align:center; padding:20px;
+      font-size:.9em; color:#777;
+    }
+    .swiper { width:100%; padding-top:20px; padding-bottom:50px; }
+    .swiper-slide { background-position:center; background-size:cover; width:100%; }
+    .video-container { position:relative; width:100%; padding-top:56.25%; }
+    .video-container iframe {
+      position:absolute; top:0; left:0; width:100%; height:100%;
+      border-radius:12px; border:0;
+    }
+    .swiper-button-next, .swiper-button-prev { color:var(--cor-destaque); }
+    .swiper-pagination-bullet-active { background:var(--cor-destaque); }
+    .pre-save-button {
+      display:inline-block; background:var(--cor-destaque); color:#fff;
+      padding:15px 35px; border-radius:50px; text-decoration:none;
+      font-weight:bold; font-size:1.1em; margin-top:20px;
+      transition:background .3s, transform .2s;
+    }
+    .pre-save-button:hover {
+      background:var(--cor-destaque-hover); transform:scale(1.05);
+    }
+    /* ---- DASHBOARD LAYOUT CUSTOMIZADO ---- */
+    /* (coloque o CSS do dashboard estiloso aqui, do jeito que você aprovou! Abaixo já está o básico, mas se quiser mais detalhes, use o que está na sua versão aprovada) */
     .dashboard-layout {
       display: flex;
       flex-direction: row;
@@ -71,14 +104,14 @@
       justify-content: center;
       width: 100vw;
       max-width: 1100px;
-      margin: 40px auto 48px auto;
       position: relative;
-      min-height: 600px;
+      min-height: 650px;
       gap: 42px;
+      margin: 60px auto 60px auto;
     }
     .dashboard {
-      background: var(--bg-card);
-      border-radius: var(--radius);
+      background: #222;
+      border-radius: 22px;
       padding: 44px 40px 36px 40px;
       box-shadow: 0 0 32px 0 #000a;
       display: flex;
@@ -111,7 +144,7 @@
       opacity: 0.93;
     }
     .btn-logout {
-      background: var(--red);
+      background: #ff5e3a;
       color: #fff;
       border: none;
       border-radius: 8px;
@@ -124,8 +157,7 @@
       margin-bottom: 6px;
     }
     .btn-logout:hover { background: #ff9277; }
-
-    /* Histórico Lateral */
+    /* Histórico Fixo Lateral */
     .historico-lateral {
       position: relative;
       display: flex;
@@ -144,14 +176,13 @@
       font-size: 0.98em;
       min-width: 180px;
       max-width: 320px;
-      max-height: 220px;
+      max-height: 155px;
       text-align: left;
       display: flex;
       flex-direction: column;
       gap: 4px;
       border: 1px solid #232;
       opacity: 0.96;
-      overflow-y: auto;
     }
     .historico b {
       color: #fff;
@@ -160,12 +191,11 @@
       margin-bottom: 3px;
       display: block;
     }
-
     .dashboard-title {
       font-size: 2.4em;
       font-weight: 800;
       letter-spacing: .7px;
-      color: var(--white);
+      color: #fff;
       width: 100%;
       text-align: center;
       margin: 0 0 18px 0;
@@ -176,7 +206,7 @@
     }
     .pontuacao-label {
       font-size: 1.03em;
-      color: var(--muted);
+      color: #d8ffe0;
       letter-spacing: .01em;
     }
     .pontuacao-valor {
@@ -187,7 +217,7 @@
       letter-spacing: .01em;
     }
     .btn-green {
-      background: var(--green);
+      background: #00ff55;
       color: #181818;
       border: none;
       border-radius: 9px;
@@ -200,7 +230,7 @@
       transition: background .19s;
     }
     .btn-green:hover {
-      background: var(--green-light);
+      background: #30ff99;
     }
     .loja-section {
       width: 100%;
@@ -223,7 +253,7 @@
     .carousel-arrow {
       background: none;
       border: none;
-      color: var(--green);
+      color: #00ff55;
       font-size: 2.6em;
       font-weight: 700;
       cursor: pointer;
@@ -231,7 +261,7 @@
       transition: color .18s;
       user-select: none;
     }
-    .carousel-arrow:active { color: var(--green-light); }
+    .carousel-arrow:active { color: #30ff99; }
     .loja-cards {
       display: flex;
       flex-direction: row;
@@ -287,13 +317,13 @@
       min-height: 1.3em;
     }
     .loja-card-pontos {
-      color: var(--green);
+      color: #00ff55;
       font-weight: 700;
       font-size: 1em;
       margin: 0 0 6px 0;
     }
     .btn-resgatar {
-      background: var(--green);
+      background: #00ff55;
       color: #111;
       border: none;
       border-radius: 7px;
@@ -302,15 +332,12 @@
       font-size: 1em;
       cursor: pointer;
       margin-top: 5px;
-      transition: background .2s;
     }
     .btn-resgatar[disabled] {
       background: #333;
       color: #888;
       cursor: not-allowed;
     }
-
-    /* Responsivo */
     @media (max-width: 1000px) {
       .dashboard-layout { flex-direction: column; align-items: center; gap: 0;}
       .dashboard { width: 98vw; padding: 22px 2vw 16px 2vw; min-width: 0;}
@@ -327,18 +354,20 @@
       .carousel-arrow { font-size: 1.3em;}
     }
   </style>
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
 </head>
 <body>
   <header id="header-capa">
     <h1>Feqzin</h1><p></p>
   </header>
   <img id="foto-perfil" class="profile-pic" src="" alt="Feqzin"/>
-
   <section>
     <h2>Sobre</h2>
     <p>Feqzin é um artista nascido na zona norte de São Paulo, mais precisamente no bairro do Jardim Brasil. Desde 2017 canetando, iniciou sua trajetória oficialmente em 2022 com a primeira track produzida no celular. Traz autenticidade no vocal e está sempre inovando em suas produções.</p>
   </section>
-
   <section>
     <h2>Meus Vídeos</h2>
     <div class="swiper">
@@ -348,7 +377,6 @@
       <div class="swiper-button-next"></div>
     </div>
   </section>
-
   <section>
     <h2>Último Lançamento</h2>
     <div class="player">
@@ -365,7 +393,6 @@
          target="_blank">FAÇA O PRE-SAVE</a>
     </div>
   </section>
-
   <section>
     <h2>Redes Sociais</h2>
     <div class="socials">
@@ -376,119 +403,110 @@
       <a href="https://soundcloud.com/discordia-urban" target="_blank"><i class="fa-brands fa-soundcloud"></i></a>
     </div>
   </section>
-
-  <!-- DASHBOARD FAN -->
-  <div class="dashboard-layout" id="dashboard-area" style="margin-bottom:60px;">
-    <div class="dashboard">
-      <div class="dashboard-top">
-        <div class="user-side">
-          <div class="user-email" id="user-email"></div>
-          <button class="btn-logout" id="btnLogout" style="display:none;">Logout</button>
-        </div>
-      </div>
-      <div class="dashboard-title">Fã Dashboard</div>
-      <form id="auth-form">
-        <input type="email" id="email" placeholder="Digite seu email" required autocomplete="username"/>
-        <input type="password" id="password" placeholder="Digite sua senha" required autocomplete="current-password"/>
-        <button type="submit" id="btn-login">Entrar</button>
-        <button type="button" id="btn-signup">Cadastrar</button>
-        <button type="button" id="btn-reset-password">Esqueci a senha</button>
-      </form>
-      <div class="pontuacao-section" id="pontuacao-container" style="display:none;">
-        <div class="pontuacao-label">Sua Pontuação</div>
-        <div class="pontuacao-valor" id="pontuacao-valor">0</div>
-      </div>
-      <button class="btn-green" id="start-quiz" style="display:none;">Comece a ganhar pontos</button>
-      <div class="loja-section">
-        <div class="loja-title">Loja de Prêmios</div>
-        <div class="loja-carousel-container">
-          <button class="carousel-arrow" id="prevBtn">&#60;</button>
-          <div class="loja-cards" id="lojaCards">
-            <!-- Cards (JS via Firebase) -->
+  <!-- --------- DASHBOARD NOVA --------- -->
+  <section style="padding:0;margin:0;">
+    <div class="dashboard-layout">
+      <div class="dashboard">
+        <div class="dashboard-top">
+          <div class="user-side">
+            <div class="user-email" id="user-email"></div>
+            <button class="btn-logout" id="btnLogout" style="display:none;">Logout</button>
           </div>
-          <button class="carousel-arrow" id="nextBtn">&#62;</button>
+        </div>
+        <div class="dashboard-title">Fã Dashboard</div>
+        <form id="auth-form">
+          <input type="email" id="email" placeholder="Digite seu email" required autocomplete="username"/>
+          <input type="password" id="password" placeholder="Digite sua senha" required autocomplete="current-password"/>
+          <button type="submit" id="btn-login">Entrar</button>
+          <button type="button" id="btn-signup">Cadastrar</button>
+          <button type="button" id="btn-reset-password">Esqueci a senha</button>
+        </form>
+        <div class="pontuacao-section" id="pontuacao-container" style="display:none;">
+          <div class="pontuacao-label">Sua Pontuação</div>
+          <div class="pontuacao-valor" id="pontuacao-valor">0</div>
+        </div>
+        <button class="btn-green" id="start-quiz" style="display:none;">Comece a ganhar pontos</button>
+        <div class="loja-section">
+          <div class="loja-title">Loja de Prêmios</div>
+          <div class="loja-carousel-container">
+            <button class="carousel-arrow" id="prevBtn">&#60;</button>
+            <div class="loja-cards" id="lojaCards"></div>
+            <button class="carousel-arrow" id="nextBtn">&#62;</button>
+          </div>
+        </div>
+        <div id="auth-message" style="min-height:18px;margin-top:12px;"></div>
+      </div>
+      <div class="historico-lateral">
+        <div class="historico" id="historico-container">
+          <b>Histórico de Atividades</b>
+          <span>Faça login para visualizar</span>
         </div>
       </div>
-      <div id="auth-message" style="min-height:18px;margin-top:12px;"></div>
     </div>
-    <div class="historico-lateral">
-      <div class="historico" id="historico-container">
-        <b>Histórico de Atividades</b>
-        <span>Faça login para visualizar</span>
-      </div>
-    </div>
-  </div>
-
+  </section>
   <footer>© 2025 Feqzin. Todos os direitos reservados.</footer>
-
-  <!-- APIs, Swiper e Firebase -->
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-Agora que você tem o layout e o carrossel perfeitos (do jeito do dashboard anterior), basta **substituir os dados mockados do carrossel da loja pelo carregamento do Firebase**, igual ao seu index.html funcional!
-
-Aqui está o **código já mesclado** com o layout aprovado e **os prêmios sendo carregados do Firebase**, com toda a lógica do dashboard:
-
----
-
-```html
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fã Dashboard</title>
-  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600,700&display=swap" rel="stylesheet">
-  <style>
-    /* ... (seu CSS exato do dashboard, igual ao anterior, pode colar inteiro aqui sem alterar nada!) ... */
-    /* ... (todo o CSS que está no seu último dashboard, até as media queries!) ... */
-  </style>
-  <!-- Firebase SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
-</head>
-<body>
-  <div class="dashboard-layout">
-    <div class="dashboard">
-      <div class="dashboard-top">
-        <div class="user-side">
-          <div class="user-email" id="user-email"></div>
-          <button class="btn-logout" id="btnLogout" style="display:none;">Logout</button>
-        </div>
-      </div>
-      <div class="dashboard-title">Fã Dashboard</div>
-      <form id="auth-form">
-        <input type="email" id="email" placeholder="Digite seu email" required autocomplete="username"/>
-        <input type="password" id="password" placeholder="Digite sua senha" required autocomplete="current-password"/>
-        <button type="submit" id="btn-login">Entrar</button>
-        <button type="button" id="btn-signup">Cadastrar</button>
-        <button type="button" id="btn-reset-password">Esqueci a senha</button>
-      </form>
-      <div class="pontuacao-section" id="pontuacao-container" style="display:none;">
-        <div class="pontuacao-label">Sua Pontuação</div>
-        <div class="pontuacao-valor" id="pontuacao-valor">0</div>
-      </div>
-      <button class="btn-green" id="start-quiz" style="display:none;">Comece a ganhar pontos</button>
-      <div class="loja-section">
-        <div class="loja-title">Loja de Prêmios</div>
-        <div class="loja-carousel-container">
-          <button class="carousel-arrow" id="prevBtn">&#60;</button>
-          <div class="loja-cards" id="lojaCards"></div>
-          <button class="carousel-arrow" id="nextBtn">&#62;</button>
-        </div>
-      </div>
-      <div id="auth-message" style="min-height:18px;margin-top:12px;"></div>
-    </div>
-    <div class="historico-lateral">
-      <div class="historico" id="historico-container">
-        <b>Histórico de Atividades</b>
-        <span>Faça login para visualizar</span>
-      </div>
-    </div>
-  </div>
-
   <script>
-    // Firebase config (coloque a sua!)
+    document.addEventListener("DOMContentLoaded", () => {
+      carregarConfiguracoes();
+      carregarVideosDoYouTube();
+      iniciarCountdown();
+    });
+    async function carregarConfiguracoes() {
+      try {
+        const res = await fetch("/api/getContentfulConfig");
+        if (!res.ok) throw new Error();
+        const data = await res.json();
+        if (data.items.length) {
+          const e = data.items[0];
+          const findUrl = id => (data.includes?.Asset.find(a=>a.sys.id===id)?.fields.file.url || "");
+          const capa = findUrl(e.fields.imagemDeCapa?.sys.id);
+          const perf = findUrl(e.fields.fotoDePerfil?.sys.id);
+          if (capa) document.getElementById("header-capa").style.backgroundImage = `url(https:${capa})`;
+          if (perf) document.getElementById("foto-perfil").src = `https:${perf}`;
+        }
+      } catch {}
+    }
+    async function carregarVideosDoYouTube() {
+      try {
+        const res = await fetch("/api/getYoutubeVideos");
+        if (!res.ok) throw new Error();
+        const data = await res.json();
+        const w = document.getElementById("youtube-carousel-wrapper");
+        w.innerHTML = "";
+        if (data.items.length) {
+          data.items.forEach(i=>{ w.innerHTML += `
+              <div class="swiper-slide">
+                <div class="video-container">
+                  <iframe src="https://www.youtube.com/embed/${i.id.videoId}" title="${i.snippet.title}" frameborder="0" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; picture-in-picture"></iframe>
+                </div>
+              </div>` });
+          new Swiper(".swiper", {
+            loop:true, spaceBetween:20, slidesPerView:1,
+            breakpoints:{768:{slidesPerView:2, spaceBetween:30},1024:{slidesPerView:3, spaceBetween:30}},
+            pagination:{el:".swiper-pagination",clickable:true},navigation:{nextEl:".swiper-button-next",prevEl:".swiper-button-prev"}
+          });
+        } else {
+          w.innerHTML = "<p style='text-align:center;'>Não foi possível carregar os vídeos no momento.</p>";
+        }
+      } catch {}
+    }
+    function iniciarCountdown() {
+      const el = document.getElementById("countdown");
+      const launch = new Date("2025-05-31T00:00:00").getTime();
+      const iv = setInterval(()=>{
+        const now = Date.now(), d = launch - now;
+        if (d<0) { clearInterval(iv); el.innerHTML = "Já disponível em todas as plataformas!"; document.querySelector(".pre-save-button").style.display="none"; }
+        else {
+          const days = Math.floor(d/(1000*60*60*24));
+          const hrs  = Math.floor((d%(1000*60*60*24))/(1000*60*60));
+          const mins = Math.floor((d%(1000*60*60))/(1000*60));
+          const secs = Math.floor((d%(1000*60))/1000);
+          el.innerHTML = `${days}d ${hrs}h ${mins}m ${secs}s<br><span style="font-size:.5em;color:#ccc;">Para o próximo lançamento.</span>`;
+        }
+      },1000);
+    }
+    // --------- FIREBASE DASHBOARD ---------
     const firebaseConfig = {
       apiKey: "AIzaSyBhSmocbaARqU_pPM0Tqki8d11jm97IE4M",
       authDomain: "dashboardfeqzin.firebaseapp.com",
@@ -501,7 +519,6 @@ Aqui está o **código já mesclado** com o layout aprovado e **os prêmios send
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
     const db   = firebase.firestore();
-
     // Elementos
     const authForm = document.getElementById("auth-form");
     const emailInput = document.getElementById("email");
@@ -519,18 +536,14 @@ Aqui está o **código já mesclado** com o layout aprovado e **os prêmios send
     const userEmailShow = document.getElementById("user-email");
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
-
     let premios = [];
     let lojaPos = 0;
     const viewCount = 4; // Mostra 4 prêmios
-
-    // Helpers
     function showMessage(text, color = "lightgreen") {
       authMessage.style.color = color;
       authMessage.textContent = text;
       setTimeout(() => { authMessage.textContent = ""; }, 6000);
     }
-
     function carregarPontuacao(uid) {
       db.collection("usuarios").doc(uid).get()
         .then(doc => {
@@ -539,7 +552,6 @@ Aqui está o **código já mesclado** com o layout aprovado e **os prêmios send
           pontuacaoContainer.style.display = "block";
         }).catch(err => showMessage("Erro ao carregar pontuação: " + err.message, "tomato"));
     }
-
     function carregarHistorico(uid) {
       historicoContainer.innerHTML = "<b>Histórico de Atividades</b><span>Carregando...</span>";
       db.collection("usuarios").doc(uid).collection("historico")
@@ -556,7 +568,6 @@ Aqui está o **código já mesclado** com o layout aprovado e **os prêmios send
           historicoContainer.innerHTML = html;
         }).catch(err => historicoContainer.innerHTML = `<b>Histórico de Atividades</b><span>Erro: ${err.message}</span>`);
     }
-
     function renderLoja() {
       lojaCards.innerHTML = '';
       for (let i = lojaPos; i < Math.min(lojaPos + viewCount, premios.length); i++) {
@@ -577,7 +588,6 @@ Aqui está o **código já mesclado** com o layout aprovado e **os prêmios send
       prevBtn.style.opacity = prevBtn.disabled ? 0.4 : 1;
       nextBtn.style.opacity = nextBtn.disabled ? 0.4 : 1;
     }
-
     prevBtn.onclick = () => {
       if (lojaPos > 0) {
         lojaPos--;
@@ -590,7 +600,6 @@ Aqui está o **código já mesclado** com o layout aprovado e **os prêmios send
         renderLoja();
       }
     };
-
     function carregarLoja() {
       db.collection("resgates").get()
         .then(snapshot => {
@@ -606,7 +615,6 @@ Aqui está o **código já mesclado** com o layout aprovado e **os prêmios send
           renderLoja();
         });
     }
-
     window.resgatarItem = function(itemId, custo) {
       const user = auth.currentUser;
       if (!user) return alert("Faça login para resgatar itens.");
@@ -630,7 +638,6 @@ Aqui está o **código já mesclado** com o layout aprovado e **os prêmios send
         carregarPontuacao(uid); carregarHistorico(uid); carregarLoja();
       }).catch(e=>alert("Erro: "+e));
     }
-
     auth.onAuthStateChanged(user => {
       if (user) {
         userEmailShow.innerHTML = user.email;
@@ -646,7 +653,6 @@ Aqui está o **código já mesclado** com o layout aprovado e **os prêmios send
         historicoContainer.innerHTML = '<b>Histórico de Atividades</b><span>Faça login para visualizar</span>'; lojaCards.innerHTML = '';
       }
     });
-
     authForm.addEventListener('submit',e=>{e.preventDefault(); auth.signInWithEmailAndPassword(emailInput.value,passwordInput.value).catch(err=>showMessage(err.message,'tomato')); authForm.reset();});
     btnSignup.addEventListener('click',()=>{ if(!emailInput.value||!passwordInput.value) return showMessage('Preencha email e senha','tomato'); auth.createUserWithEmailAndPassword(emailInput.value,passwordInput.value).then(()=>showMessage('Usuário criado!','lightgreen')).catch(err=>showMessage(err.message,'tomato')); });
     btnResetPassword.addEventListener('click',()=>{ if(!emailInput.value) return showMessage('Digite email','tomato'); auth.sendPasswordResetEmail(emailInput.value).then(()=>showMessage('Email enviado')).catch(err=>showMessage(err.message,'tomato')); });
