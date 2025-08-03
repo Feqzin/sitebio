@@ -156,85 +156,84 @@
     }
     /* Dashboard completa (após login) */
     .dashboard-completa { display: none; width: 100%; }
-    .dashboard-top {
-  width: 100%;
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  margin-bottom: 8px;
-}
 
-.user-side {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 6px;
-  min-width: 185px;
-}
+    /* NOVO: linha superior com email/logout e histórico */
+    .dashboard-header-row {
+      width: 100%;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 6px;
+    }
+    .user-side {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 6px;
+      min-width: 185px;
+    }
+    .user-email {
+      color: #fff;
+      font-size: 1.07em;
+      margin-bottom: 2px;
+      font-weight: 600;
+      opacity: 0.97;
+      letter-spacing: 0.01em;
+    }
+    .btn-logout {
+      background: #ffa37d;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 1em;
+      padding: 7px 22px;
+      cursor: pointer;
+      box-shadow: 0 2px 8px #0003;
+      transition: background 0.2s;
+      margin-top: 2px;
+    }
+    .btn-logout:hover { background: #ff7b4d; }
+    .historico {
+      background: #232726;
+      color: #fff;
+      padding: 14px 22px 10px 18px;
+      border-radius: 12px;
+      min-width: 215px;
+      max-width: 310px;
+      margin-top: 0;
+      margin-left: 24px;
+      box-shadow: 0 1px 14px #0002;
+      font-size: 1em;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      opacity: 0.98;
+    }
+    .historico b {
+      color: #fff;
+      font-size: 1.04em;
+      display: block;
+      margin-bottom: 5px;
+    }
+    .historico span {
+      color: #f0f0f0a8;
+      font-size: 0.99em;
+    }
+    @media (max-width: 650px) {
+      .dashboard-header-row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 7px;
+      }
+      .historico {
+        margin-left: 0;
+        margin-top: 10px;
+        min-width: 0;
+        max-width: 98vw;
+      }
+    }
 
-.user-email {
-  color: #fff;
-  font-size: 1.07em;
-  margin-bottom: 2px;
-  font-weight: 600;
-  opacity: 0.97;
-  letter-spacing: 0.01em;
-}
-
-.btn-logout {
-  background: #ffa37d;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  font-weight: bold;
-  font-size: 1em;
-  padding: 7px 22px;
-  cursor: pointer;
-  box-shadow: 0 2px 8px #0003;
-  transition: background 0.2s;
-  margin-top: 2px;
-}
-.btn-logout:hover { background: #ff7b4d; }
-
-.historico {
-  background: #232726;
-  color: #fff;
-  padding: 14px 22px 10px 18px;
-  border-radius: 12px;
-  min-width: 215px;
-  max-width: 310px;
-  margin-top: 0;
-  margin-left: 24px;
-  box-shadow: 0 1px 14px #0002;
-  font-size: 1em;
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-  opacity: 0.98;
-}
-.historico b {
-  color: #fff;
-  font-size: 1.04em;
-  display: block;
-  margin-bottom: 5px;
-}
-.historico span {
-  color: #f0f0f0a8;
-  font-size: 0.99em;
-}
-
-@media (max-width: 650px) {
-  .dashboard-top {
-    flex-direction: column;
-    align-items: stretch;
-  }
-  .historico {
-    margin-left: 0;
-    margin-top: 10px;
-    min-width: 0;
-    max-width: 98vw;
-  }
-}
     .pontuacao-section {
       text-align: center;
       margin-bottom: 10px;
@@ -391,26 +390,6 @@
       .loja-card img { width: 38px; height: 38px;}
       .carousel-arrow { font-size: 1.3em;}
     }
-    .dashboard-header-row {
-  width: 100%;
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  margin-bottom: 6px;
-}
-@media (max-width: 700px) {
-  .dashboard-header-row {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 7px;
-  }
-  .historico {
-    margin-left: 0;
-    margin-top: 10px;
-    min-width: 0;
-    max-width: 98vw;
-  }
-}
   </style>
   <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
@@ -446,7 +425,7 @@
     </div>
     <div id="countdown" class="countdown"></div>
     <div style="text-align:center;">
-      <a class="pre-save-button"
+            <a class="pre-save-button"
          href="https://distrokid.com/hyperfollow/feqzin/se-a-bag-pesar"
          target="_blank">FAÇA O PRE-SAVE</a>
     </div>
@@ -457,7 +436,6 @@
       <a href="https://www.instagram.com/feqzinn/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
       <a href="https://www.tiktok.com/@feqzinn" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
       <a href="https://www.youtube.com/@feqzin" target="_blank"><i class="fa-brands fa-youtube"></i></a>
-      <a href="https://open.spotify.com/intl-pt/artist/56
       <a href="https://open.spotify.com/intl-pt/artist/56eMJpXmR5veK1kOi2apO4" target="_blank"><i class="fa-brands fa-spotify"></i></a>
       <a href="https://soundcloud.com/discordia-urban" target="_blank"><i class="fa-brands fa-soundcloud"></i></a>
     </div>
@@ -467,6 +445,17 @@
   <section style="padding:0;margin:0;">
     <div class="dashboard-outer">
       <div class="dashboard">
+        <!-- Linha superior: email/logout + histórico, lado a lado -->
+        <div class="dashboard-header-row" id="dashboard-header-row" style="display:none;">
+          <div class="user-side">
+            <div class="user-email" id="user-email"></div>
+            <button class="btn-logout" id="btnLogout" style="display:none;">Logout</button>
+          </div>
+          <div class="historico" id="historico-container">
+            <b>Histórico de Atividades</b>
+            <span>Faça login para visualizar</span>
+          </div>
+        </div>
         <div class="dashboard-title">Dashboard do Fã</div>
         <form id="auth-form" autocomplete="on">
           <input type="email" id="email" placeholder="Digite seu email" required autocomplete="username"/>
@@ -476,33 +465,20 @@
           <button type="button" id="btn-reset-password">Esqueci a senha</button>
         </form>
         <div id="auth-message"></div>
-        
         <!-- Dashboard completa: aparece só depois do login -->
         <div class="dashboard-completa" id="dashboard-logado">
-   <div class="dashboard-header-row">
-  <div class="user-side">
-    <div class="user-email" id="user-email"></div>
-    <button class="btn-logout" id="btnLogout" style="display:none;">Logout</button>
-  </div>
-  <div class="historico" id="historico-container">
-    <b>Histórico de Atividades</b>
-    <span>Faça login para visualizar</span>
-  </div>
-</div>
-<div class="dashboard-title">Dashboard do Fã</div>
-<div class="pontuacao-section" id="pontuacao-container">
-  <div class="pontuacao-label">Sua Pontuação</div>
-  <div class="pontuacao-valor" id="pontuacao-valor">0</div>
-</div>
-<button class="btn-green" id="start-quiz">Comece a ganhar pontos</button>
-<div class="loja-section">
-  <div class="loja-title">Loja de Prêmios</div>
-  <div class="loja-carousel-container">
-    <button class="carousel-arrow" id="prevBtn">&#60;</button>
-    <div class="loja-cards" id="lojaCards"></div>
-    <button class="carousel-arrow" id="nextBtn">&#62;</button>
-  </div>
-</div>
+          <div class="pontuacao-section" id="pontuacao-container">
+            <div class="pontuacao-label">Sua Pontuação</div>
+            <div class="pontuacao-valor" id="pontuacao-valor">0</div>
+          </div>
+          <button class="btn-green" id="start-quiz">Comece a ganhar pontos</button>
+          <div class="loja-section">
+            <div class="loja-title">Loja de Prêmios</div>
+            <div class="loja-carousel-container">
+              <button class="carousel-arrow" id="prevBtn">&#60;</button>
+              <div class="loja-cards" id="lojaCards"></div>
+              <button class="carousel-arrow" id="nextBtn">&#62;</button>
+            </div>
           </div>
         </div>
       </div>
@@ -602,6 +578,7 @@
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
     const dashboardLogado = document.getElementById("dashboard-logado");
+    const dashboardHeaderRow = document.getElementById("dashboard-header-row");
     let premios = [];
     let lojaPos = 0;
     const viewCount = 4; // Mostra 4 prêmios
@@ -708,7 +685,8 @@
     // --- Alterna dashboard (só login OU dashboard completa) ---
     auth.onAuthStateChanged(user => {
       if (user) {
-        // Após login: esconde formulário, mostra dashboard completa
+        // Mostra o header acima do título
+        dashboardHeaderRow.style.display = "flex";
         document.getElementById('dashboard-logado').style.display = "block";
         authForm.style.display = "none";
         userEmailShow.innerHTML = user.email;
@@ -717,6 +695,7 @@
         btnQuiz.style.display = 'inline-block'; btnQuiz.onclick = () => window.open('quiz.html','_blank');
       } else {
         // Antes do login: só mostra o formulário centralizado
+        dashboardHeaderRow.style.display = "none";
         document.getElementById('dashboard-logado').style.display = "none";
         authForm.style.display = "flex";
         userEmailShow.innerHTML = "";
@@ -732,3 +711,4 @@
   </script>
 </body>
 </html>
+
