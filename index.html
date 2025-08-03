@@ -98,14 +98,26 @@
     /* DASHBOARD */
     #painel-flex-container {
       display: flex;
+      flex-direction: row;
       justify-content: center;
-      align-items: flex-start;
-      position:relative;
+      align-items: center;
       min-height: 600px;
       transition: justify-content .28s cubic-bezier(.6,-0.28,.74,.05);
+      width: 100%;
     }
+    /* Antes do login - dashboard centralizada */
+    #painel-flex-container.painel-centralizado {
+      justify-content: center !important;
+      align-items: center !important;
+      min-height: 600px;
+      height: 75vh;
+    }
+    /* Após login - dashboard na esquerda, histórico na direita */
     #painel-flex-container.dashboard-logado-ativo {
       justify-content: flex-start !important;
+      align-items: flex-start !important;
+      height: auto;
+      min-height: 600px;
       gap: 60px;
     }
     @media (max-width: 950px) {
@@ -115,6 +127,7 @@
         gap: 0;
       }
     }
+
     .dashboard-outer {
       display: flex;
       flex-direction: column;
@@ -180,6 +193,7 @@
       text-align: center;
     }
 
+    /* Email e logout centralizados acima do título */
     .dashboard-top-center {
       width: 100%;
       display: flex;
@@ -214,6 +228,7 @@
     }
     .btn-logout:hover { background: #ff7b4d; }
 
+    /* Histórico fora da dashboard */
     .historico-externo {
       position: relative;
       margin-left: 40px;
@@ -261,12 +276,14 @@
         margin-bottom: 0;
       }
     }
+
     @media (max-width: 650px) {
       .dashboard-outer { width: 98vw; min-width: 0; }
       .dashboard { padding: 22px 2vw 16px 2vw; }
       .dashboard-title { font-size: 1.4em;}
       .historico { max-width: 100vw; min-width: 0;}
     }
+
     .pontuacao-section {
       text-align: center;
       margin-bottom: 10px;
@@ -476,7 +493,7 @@
 
   <!-- --------- DASHBOARD --------- -->
   <section style="padding:0;margin:0;">
-    <div id="painel-flex-container">
+    <div id="painel-flex-container" class="painel-centralizado">
       <div class="dashboard-outer" style="z-index:2;">
         <div class="dashboard-top-center" id="dashboard-top-center" style="display:none;">
           <div class="user-email" id="user-email"></div>
@@ -613,13 +630,13 @@
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
     const dashboardLogado = document.getElementById("dashboard-logado");
-    // NOVO: Top e histórico externo
     const dashboardTopCenter = document.getElementById('dashboard-top-center');
     const historicoExterno = document.getElementById('historico-externo');
     const painelFlexContainer = document.getElementById('painel-flex-container');
     let premios = [];
     let lojaPos = 0;
     const viewCount = 4; // Mostra 4 prêmios
+
     function showMessage(text, color = "lightgreen") {
       authMessage.style.color = color;
       authMessage.textContent = text;
@@ -723,6 +740,8 @@
     // --- Alterna dashboard (só login OU dashboard completa) ---
     auth.onAuthStateChanged(user => {
       if (user) {
+        painelFlexContainer.classList.add("dashboard-logado-ativo");
+        painelFlexContainer.classList.remove("painel-centralizado");
         dashboardTopCenter.style.display = "flex";
         historicoExterno.style.display = "flex";
         document.getElementById('dashboard-logado').style.display = "block";
@@ -731,9 +750,9 @@
         btnLogout.style.display = 'inline-block';
         carregarPontuacao(user.uid); carregarHistorico(user.uid); carregarLoja();
         btnQuiz.style.display = 'inline-block'; btnQuiz.onclick = () => window.open('quiz.html','_blank');
-        // Centralização LEFT após login
-        painelFlexContainer.classList.add("dashboard-logado-ativo");
       } else {
+        painelFlexContainer.classList.remove("dashboard-logado-ativo");
+        painelFlexContainer.classList.add("painel-centralizado");
         dashboardTopCenter.style.display = "none";
         historicoExterno.style.display = "none";
         document.getElementById('dashboard-logado').style.display = "none";
@@ -742,8 +761,6 @@
         btnLogout.style.display = 'none';
         pontuacaoContainer.style.display = 'none'; btnQuiz.style.display = 'none';
         historicoContainer.innerHTML = '<b>Histórico de Atividades</b><span>Faça login para visualizar</span>'; lojaCards.innerHTML = '';
-        // Centralização CENTER antes do login
-        painelFlexContainer.classList.remove("dashboard-logado-ativo");
       }
     });
     authForm.addEventListener('submit',e=>{e.preventDefault(); auth.signInWithEmailAndPassword(emailInput.value,passwordInput.value).catch(err=>showMessage(err.message,'tomato')); authForm.reset();});
@@ -753,4 +770,3 @@
   </script>
 </body>
 </html>
-
