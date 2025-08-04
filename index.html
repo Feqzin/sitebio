@@ -755,11 +755,13 @@
         const pts = uDoc.data().pontos||0;
         if (pts < custo) throw 'Pontos insuficientes';
         const rDoc = await tx.get(resgateRef);
-        const est = rDoc.data().estoque||0;
+        if (!rDoc.exists) throw 'Item não encontrado';
+        const rData = rDoc.data();
+        const est = rData.estoque||0;
         if (est<=0) throw 'Item esgotado';
         tx.update(userRef,{pontos:pts - custo});
         const histRef = userRef.collection("historico").doc();
-        tx.set(histRef,{data:firebase.firestore.FieldValue.serverTimestamp(),tipo:'resgate',descricao:`Resgatou ${rDoc.data().nome}`,pontos:-custo});
+        tx.set(histRef,{data:firebase.firestore.FieldValue.serverTimestamp(),tipo:'resgate',descricao:`Resgatou ${rData.nome}`,pontos:-custo});
         tx.update(resgateRef,{estoque:est -1});
       }).then(()=>{
         alert("Resgate efetuado!");
