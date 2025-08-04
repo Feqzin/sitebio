@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -703,25 +704,24 @@
     }
     function inicializarSwiperLoja() {
       if (window.lojaSwiper && window.lojaSwiper.destroy) window.lojaSwiper.destroy(true, true);
-     window.lojaSwiper = new Swiper('.loja-swiper', {
-  slidesPerView: window.innerWidth <= 700 ? 2 : 4,
-  spaceBetween: 18,
-  loop: true, // <--- Torna o carrossel infinito!
-  navigation: {
-    nextEl: '.loja-swiper-next',
-    prevEl: '.loja-swiper-prev',
-  },
-  pagination: {
-    el: '.loja-swiper-pagination',
-    clickable: true,
-  },
-  grabCursor: true,
-  breakpoints: {
-    0:    { slidesPerView: 2, spaceBetween: 8, loop: true },
-    701:  { slidesPerView: 4, spaceBetween: 18, loop: false }
-  }
-});
-
+      window.lojaSwiper = new Swiper('.loja-swiper', {
+        slidesPerView: window.innerWidth <= 700 ? 2 : 4,
+        spaceBetween: 18,
+        navigation: {
+          nextEl: '.loja-swiper-next',
+          prevEl: '.loja-swiper-prev',
+        },
+        pagination: {
+          el: '.loja-swiper-pagination',
+          clickable: true,
+        },
+        grabCursor: true,
+        breakpoints: {
+          0:    { slidesPerView: 2, spaceBetween: 8 },
+          701:  { slidesPerView: 4, spaceBetween: 18 }
+        }
+      });
+    }
     function carregarLoja() {
       db.collection("resgates").get()
         .then(snapshot => {
