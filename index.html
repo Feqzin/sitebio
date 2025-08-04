@@ -239,11 +239,12 @@
       font-size: 0.99em;
     }
 
+    /* === CENTRALIZAÇÃO CORRETA AQUI === */
     .pontuacao-section {
       width: 100%;
       display: flex;
       flex-direction: column;
-      align-items: center !important;
+      align-items: center;
       justify-content: center;
       margin: 0 0 12px 0;
     }
@@ -265,8 +266,9 @@
       text-align: center;
     }
     #start-quiz {
-      display: inline-block !important;
-      margin: 0 auto !important;
+      margin-top: 0;
+      margin-bottom: 8px;
+      display: block;
       font-weight: 700;
       font-size: 1.09em;
       padding: 13px 38px;
@@ -277,8 +279,7 @@
       border: none;
       transition: background .19s;
       text-align: center;
-      width: auto !important;
-      max-width: 100%;
+      width: auto;
     }
     #start-quiz:hover {
       background: #30ff99;
@@ -444,18 +445,6 @@
       transition: color 0.2s;
     }
     .senha-olho:hover { color: #1db954; }
-
-    /* Força o botão centralizado em qualquer caso */
-    #start-quiz {
-      display: inline-block !important;
-      margin: 0 auto !important;
-      width: auto !important;
-      max-width: 100%;
-      text-align: center !important;
-      float: none !important;
-      left: 0 !important;
-      right: 0 !important;
-    }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
@@ -655,12 +644,11 @@
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
     const dashboardLogado = document.getElementById("dashboard-logado");
-    // NOVO: Top e histórico externo
     const dashboardTopCenter = document.getElementById('dashboard-top-center');
     const historicoExterno = document.getElementById('historico-externo');
     let premios = [];
     let lojaPos = 0;
-    const viewCount = 4; // Mostra 4 prêmios
+    const viewCount = 4;
     function showMessage(text, color = "lightgreen") {
       authMessage.style.color = color;
       authMessage.textContent = text;
@@ -760,8 +748,6 @@
         carregarPontuacao(uid); carregarHistorico(uid); carregarLoja();
       }).catch(e=>alert("Erro: "+e));
     }
-
-    // --- Alterna dashboard (só login OU dashboard completa) ---
     auth.onAuthStateChanged(user => {
       if (user) {
         dashboardTopCenter.style.display = "flex";
