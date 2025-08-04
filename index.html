@@ -102,11 +102,11 @@
       align-items: center;
       min-height: 78vh;
       width: 100vw;
-      gap: 50px;
+      gap: 120px; /* MAIS ESPAÇO ENTRE DASHBOARD E HISTÓRICO */
     }
     /* DASHBOARD EM SI */
     .dashboard-outer {
-      width: 680px;
+      width: 750px;   /* DASHBOARD MAIS LARGA */
       min-width: 320px;
       max-width: 98vw;
       display: flex;
@@ -205,36 +205,37 @@
 
     /* HISTÓRICO AO LADO, ALINHADO AO CENTRO */
     .historico-externo {
-      min-width: 265px;
-      max-width: 350px;
+      min-width: 290px;
+      max-width: 370px;
       z-index: 1;
       display: flex;
       flex-direction: column;
       align-items: flex-start;
       margin: 0;
-      /* Alinha verticalmente ao centro do container */
       align-self: center;
     }
     .historico {
       background: #232726;
       color: #fff;
-      padding: 14px 22px 10px 18px;
-      border-radius: 12px;
-      min-width: 215px;
-      max-width: 310px;
+      padding: 18px 30px 16px 26px;
+      border-radius: 13px;
+      min-width: 260px;
+      max-width: 360px;
       margin-top: 0;
       box-shadow: 0 1px 14px #0002;
-      font-size: 1em;
+      font-size: 1.04em;
       display: flex;
       flex-direction: column;
-      gap: 3px;
+      gap: 6px;
       opacity: 0.98;
     }
     .historico b {
       color: #fff;
-      font-size: 1.04em;
+      font-size: 1.15em;
+      font-weight: 700;
       display: block;
-      margin-bottom: 5px;
+      margin-bottom: 7px;
+      letter-spacing: .01em;
     }
     .historico span {
       color: #f0f0f0a8;
@@ -252,19 +253,19 @@
       margin-top: 0;
     }
     .pontuacao-label {
-      font-size: 1.13em;
+      font-size: 1.19em;
       color: #fff;
       font-weight: 600;
-      margin-bottom: 0.5em;
+      margin-bottom: 0.35em;
       letter-spacing: 0.01em;
       text-align: center;
     }
     .pontuacao-valor {
-      font-size: 2.1em;
+      font-size: 2.23em;
       font-weight: 700;
       color: #fff;
       letter-spacing: .01em;
-      margin-bottom: 17px;
+      margin-bottom: 16px;
       margin-top: 0;
       text-align: center;
     }
@@ -272,8 +273,8 @@
       display: block;
       margin: 0 auto 0 auto;
       font-weight: 700;
-      font-size: 1.1em;
-      padding: 13px 36px;
+      font-size: 1.09em;
+      padding: 13px 38px;
       border-radius: 9px;
       background: #00ff55;
       color: #181818;
@@ -287,7 +288,7 @@
     }
     .loja-section {
       width: 100%;
-      margin-top: 17px;
+      margin-top: 22px;
       text-align: center;
     }
     .loja-title {
@@ -320,7 +321,7 @@
       flex-direction: row;
       gap: 17px;
       overflow: hidden;
-      width: 620px;
+      width: 690px;
       min-height: 170px;
       align-items: stretch;
       justify-content: center;
@@ -443,12 +444,9 @@
       color: #888;
       font-size: 1.18em;
       z-index: 2;
-      user-select: none;
-      transition: color .2s;
+      transition: color 0.2s;
     }
-    .senha-olho:active {
-      color: #1db954;
-    }
+    .senha-olho:hover { color: #1db954; }
   </style>
   <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
@@ -523,6 +521,7 @@
             <button type="button" id="btn-reset-password">Esqueci a senha</button>
           </form>
           <div id="auth-message"></div>
+          <!-- Dashboard completa: aparece só depois do login -->
           <div class="dashboard-completa" id="dashboard-logado">
             <div class="pontuacao-section" id="pontuacao-container">
               <div class="pontuacao-label">Sua Pontuação</div>
@@ -615,6 +614,7 @@
         }
       },1000);
     }
+    // --------- FIREBASE DASHBOARD ---------
     const firebaseConfig = {
       apiKey: "AIzaSyBhSmocbaARqU_pPM0Tqki8d11jm97IE4M",
       authDomain: "dashboardfeqzin.firebaseapp.com",
@@ -773,20 +773,11 @@
         document.getElementById('dashboard-flex-container').style.alignItems = "center";
       }
     });
-    authForm.addEventListener('submit',e=>{
-      e.preventDefault();
-      auth.signInWithEmailAndPassword(emailInput.value,passwordInput.value).catch(err=>showMessage(err.message,'tomato'));
-      authForm.reset();
-    });
-    btnSignup.addEventListener('click',()=>{
-      if(!emailInput.value||!passwordInput.value) return showMessage('Preencha email e senha','tomato');
-      auth.createUserWithEmailAndPassword(emailInput.value,passwordInput.value).then(()=>showMessage('Usuário criado!','lightgreen')).catch(err=>showMessage(err.message,'tomato'));
-    });
-    btnResetPassword.addEventListener('click',()=>{
-      if(!emailInput.value) return showMessage('Digite email','tomato');
-      auth.sendPasswordResetEmail(emailInput.value).then(()=>showMessage('Email enviado')).catch(err=>showMessage(err.message,'tomato'));
-    });
+    authForm.addEventListener('submit',e=>{e.preventDefault(); auth.signInWithEmailAndPassword(emailInput.value,passwordInput.value).catch(err=>showMessage(err.message,'tomato')); authForm.reset();});
+    btnSignup.addEventListener('click',()=>{ if(!emailInput.value||!passwordInput.value) return showMessage('Preencha email e senha','tomato'); auth.createUserWithEmailAndPassword(emailInput.value,passwordInput.value).then(()=>showMessage('Usuário criado!','lightgreen')).catch(err=>showMessage(err.message,'tomato')); });
+    btnResetPassword.addEventListener('click',()=>{ if(!emailInput.value) return showMessage('Digite email','tomato'); auth.sendPasswordResetEmail(emailInput.value).then(()=>showMessage('Email enviado')).catch(err=>showMessage(err.message,'tomato')); });
     btnLogout.addEventListener('click',()=>auth.signOut());
+    // Olho da senha
     const togglePassword = document.getElementById("togglePassword");
     togglePassword.addEventListener("click", function() {
       const input = passwordInput;
