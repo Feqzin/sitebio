@@ -16,23 +16,9 @@
       --cor-fundo-secundario: #111;
       --cor-borda-suave: #444;
     }
-    html, body {
-      height: 100%;
-      min-height: 100vh;
-      width: 100vw;
-      margin: 0;
-      padding: 0;
-      background: var(--cor-fundo);
-      box-sizing: border-box;
-    }
     body {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      min-width: 100vw;
-      overflow-x: hidden;
-      flex-direction: column;
+      margin: 0; font-family: 'Montserrat', Arial, sans-serif;
+      background: var(--cor-fundo); color: var(--cor-texto); line-height:1.6;
     }
     header {
       background-color:rgba(0,0,0,0.6);
@@ -108,14 +94,23 @@
       background:var(--cor-destaque-hover); transform:scale(1.05);
     }
 
+    /* Centralização real da dashboard no centro da tela */
+    .dashboard-center-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 78vh;
+      width: 100vw;
+      position: relative;
+      z-index: 10;
+    }
+    /* O container principal da dashboard-flex já não precisa justificar/alinhar, pois a centralização é feita pelo dashboard-center-wrapper */
     .dashboard-flex-container {
       display: flex;
       flex-direction: row;
-      justify-content: center;
-      align-items: center;
-      width: auto;
-      height: auto;
       gap: 120px;
+      width: auto;
+      max-width: 1500px;
     }
     .dashboard-outer {
       width: 750px;
@@ -252,16 +247,14 @@
       color: #f0f0f0a8;
       font-size: 0.99em;
     }
-
-   .pontuacao-section {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin: 0 0 12px 0;
-}
-
+    .pontuacao-section {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 0 0 12px 0;
+    }
     .pontuacao-label {
       font-size: 1.19em;
       color: #fff;
@@ -279,23 +272,27 @@
       margin-top: 0;
       text-align: center;
     }
-#start-quiz {
-  margin-top: 0;
-  margin-bottom: 8px;
-  display: block !important; /* <-- ESSENCIAL */
-  font-weight: 700;
-  font-size: 1.09em;
-  padding: 13px 38px;
-  border-radius: 9px;
-  background: #00ff55;
-  color: #181818;
-  box-shadow: 0 0 9px #00ff5555;
-  border: none;
-  transition: background .19s;
-  text-align: center;
-  width: auto;
-}
-
+    #start-quiz {
+      margin-top: 0;
+      margin-bottom: 8px;
+      display: block !important;
+      font-weight: 700;
+      font-size: 1.09em;
+      padding: 13px 38px;
+      border-radius: 9px;
+      background: #00ff55;
+      color: #181818;
+      box-shadow: 0 0 9px #00ff5555;
+      border: none;
+      transition: background .19s;
+      text-align: center;
+      width: auto;
+      margin-left: auto !important;
+      margin-right: auto !important;
+      left: 0 !important;
+      right: 0 !important;
+      float: none !important;
+    }
     #start-quiz:hover {
       background: #30ff99;
     }
@@ -340,12 +337,13 @@
       justify-content: center;
       transition: all 0.3s cubic-bezier(.6,-0.28,.74,.05);
     }
-    @media (max-width: 950px) {
-      body { flex-direction: column; }
+    @media (max-width: 1500px) {
+      .dashboard-center-wrapper {
+        min-height: unset;
+      }
       .dashboard-flex-container {
         flex-direction: column;
         align-items: center;
-        min-height: unset;
         gap: 0;
       }
       .historico-externo { margin-left: 0; margin-top: 28px; align-self: stretch; }
@@ -453,74 +451,113 @@
       position: absolute;
       right: 9px;
       top: 50%;
-      transform: translateY(-50%); cursor: pointer;
-      color: #888; font-size: 1.18em; z-index: 2; transition: color 0.2s;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: #888;
+      font-size: 1.18em;
+      z-index: 2;
+      transition: color 0.2s;
     }
     .senha-olho:hover { color: #1db954; }
-
-    /* Força o botão centralizado em qualquer caso */
-    #start-quiz {
-      display: block;
-      margin: 0 auto !important;
-      width: auto !important;
-      max-width: 100%;
-      text-align: center !important;
-      float: none !important;
-      left: 0 !important;
-      right: 0 !important;
-    }
   </style>
-  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
 </head>
 <body>
-  <section style="padding:0;margin:0;width:100vw;display:flex;justify-content:center;align-items:center;min-height:100vh;background:var(--cor-fundo);">
-    <div id="dashboard-flex-container" class="dashboard-flex-container">
-      <div class="dashboard-outer" style="z-index:2;">
-        <div class="dashboard-top-center" id="dashboard-top-center" style="display:none;">
-          <div class="user-email" id="user-email"></div>
-          <button class="btn-logout" id="btnLogout" style="display:none;">Logout</button>
-        </div>
-        <div class="dashboard">
-          <div class="dashboard-title">Dashboard do Fã</div>
-          <form id="auth-form" autocomplete="on">
-            <input type="email" id="email" placeholder="Digite seu email" required autocomplete="username"/>
-            <div class="input-senha-wrapper">
-              <input type="password" id="password" placeholder="Digite sua senha" required autocomplete="current-password"/>
-              <span class="senha-olho" id="togglePassword">
-                <i class="fa-solid fa-eye"></i>
-              </span>
-            </div>
-            <button type="submit" id="btn-login">Entrar</button>
-            <button type="button" id="btn-signup">Cadastrar</button>
-            <button type="button" id="btn-reset-password">Esqueci a senha</button>
-          </form>
-          <div id="auth-message"></div>
-          <!-- Dashboard completa: aparece só depois do login -->
-          <div class="dashboard-completa" id="dashboard-logado">
-            <div class="pontuacao-section" id="pontuacao-container">
-              <div class="pontuacao-label">Sua Pontuação</div>
-              <div class="pontuacao-valor" id="pontuacao-valor">0</div>
-              <button class="btn-green" id="start-quiz">Comece a ganhar pontos</button>
-            </div>
-            <div class="loja-section">
-              <div class="loja-title">Loja de Prêmios</div>
-              <div class="loja-carousel-container">
-                <button class="carousel-arrow" id="prevBtn">&#60;</button>
-                <div class="loja-cards" id="lojaCards"></div>
-                <button class="carousel-arrow" id="nextBtn">&#62;</button>
+  <header id="header-capa">
+    <h1>Feqzin</h1><p></p>
+  </header>
+  <img id="foto-perfil" class="profile-pic" src="" alt="Feqzin"/>
+  <section>
+    <h2>Sobre</h2>
+    <p>Feqzin é um artista nascido na zona norte de São Paulo, mais precisamente no bairro do Jardim Brasil. Desde 2017 canetando, iniciou sua trajetória oficialmente em 2022 com a primeira track produzida no celular. Traz autenticidade no vocal e está sempre inovando em suas produções.</p>
+  </section>
+  <section>
+    <h2>Meus Vídeos</h2>
+    <div class="swiper">
+      <div class="swiper-wrapper" id="youtube-carousel-wrapper"></div>
+      <div class="swiper-pagination"></div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
+    </div>
+  </section>
+  <section>
+    <h2>Último Lançamento</h2>
+    <div class="player">
+      <iframe style="border-radius:12px"
+        src="https://open.spotify.com/embed/track/1chtxFdUNshSXBjfrI8VmE?utm_source=generator"
+        width="100%" height="152" frameborder="0"
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+        loading="lazy"></iframe>
+    </div>
+    <div id="countdown" class="countdown"></div>
+    <div style="text-align:center;">
+      <a class="pre-save-button"
+         href="https://distrokid.com/hyperfollow/feqzin/se-a-bag-pesar"
+         target="_blank">FAÇA O PRE-SAVE</a>
+    </div>
+  </section>
+  <section>
+    <h2>Redes Sociais</h2>
+    <div class="socials">
+      <a href="https://www.instagram.com/feqzinn/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+      <a href="https://www.tiktok.com/@feqzinn" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
+      <a href="https://www.youtube.com/@feqzin" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+      <a href="https://open.spotify.com/intl-pt/artist/56eMJpXmR5veK1kOi2apO4" target="_blank"><i class="fa-brands fa-spotify"></i></a>
+      <a href="https://soundcloud.com/discordia-urban" target="_blank"><i class="fa-brands fa-soundcloud"></i></a>
+    </div>
+  </section>
+
+  <!-- --------- DASHBOARD --------- -->
+  <section style="padding:0;margin:0;">
+    <div class="dashboard-center-wrapper">
+      <div id="dashboard-flex-container" class="dashboard-flex-container">
+        <div class="dashboard-outer" style="z-index:2;">
+          <div class="dashboard-top-center" id="dashboard-top-center" style="display:none;">
+            <div class="user-email" id="user-email"></div>
+            <button class="btn-logout" id="btnLogout" style="display:none;">Logout</button>
+          </div>
+          <div class="dashboard">
+            <div class="dashboard-title">Dashboard do Fã</div>
+            <form id="auth-form" autocomplete="on">
+              <input type="email" id="email" placeholder="Digite seu email" required autocomplete="username"/>
+              <div class="input-senha-wrapper">
+                <input type="password" id="password" placeholder="Digite sua senha" required autocomplete="current-password"/>
+                <span class="senha-olho" id="togglePassword">
+                  <i class="fa-solid fa-eye"></i>
+                </span>
+              </div>
+              <button type="submit" id="btn-login">Entrar</button>
+              <button type="button" id="btn-signup">Cadastrar</button>
+              <button type="button" id="btn-reset-password">Esqueci a senha</button>
+            </form>
+            <div id="auth-message"></div>
+            <!-- Dashboard completa: aparece só depois do login -->
+            <div class="dashboard-completa" id="dashboard-logado">
+              <div class="pontuacao-section" id="pontuacao-container">
+                <div class="pontuacao-label">Sua Pontuação</div>
+                <div class="pontuacao-valor" id="pontuacao-valor">0</div>
+                <button class="btn-green" id="start-quiz">Comece a ganhar pontos</button>
+              </div>
+              <div class="loja-section">
+                <div class="loja-title">Loja de Prêmios</div>
+                <div class="loja-carousel-container">
+                  <button class="carousel-arrow" id="prevBtn">&#60;</button>
+                  <div class="loja-cards" id="lojaCards"></div>
+                  <button class="carousel-arrow" id="nextBtn">&#62;</button>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <!-- Histórico FIXO à direita da dashboard -->
-      <div class="historico-externo" id="historico-externo" style="display:none;">
-        <div class="historico" id="historico-container">
-          <b>Histórico de Atividades</b>
-          <span>Faça login para visualizar</span>
+        <!-- Histórico FIXO à direita da dashboard -->
+        <div class="historico-externo" id="historico-externo" style="display:none;">
+          <div class="historico" id="historico-container">
+            <b>Histórico de Atividades</b>
+            <span>Faça login para visualizar</span>
+          </div>
         </div>
       </div>
     </div>
@@ -740,8 +777,6 @@
         btnLogout.style.display = 'inline-block';
         carregarPontuacao(user.uid); carregarHistorico(user.uid); carregarLoja();
         btnQuiz.style.display = 'inline-block'; btnQuiz.onclick = () => window.open('quiz.html','_blank');
-        document.getElementById('dashboard-flex-container').style.justifyContent = "center";
-        document.getElementById('dashboard-flex-container').style.alignItems = "center";
       } else {
         dashboardTopCenter.style.display = "none";
         historicoExterno.style.display = "none";
@@ -751,8 +786,6 @@
         btnLogout.style.display = 'none';
         pontuacaoContainer.style.display = 'none'; btnQuiz.style.display = 'none';
         historicoContainer.innerHTML = '<b>Histórico de Atividades</b><span>Faça login para visualizar</span>'; lojaCards.innerHTML = '';
-        document.getElementById('dashboard-flex-container').style.justifyContent = "center";
-        document.getElementById('dashboard-flex-container').style.alignItems = "center";
       }
     });
     authForm.addEventListener('submit',e=>{e.preventDefault(); auth.signInWithEmailAndPassword(emailInput.value,passwordInput.value).catch(err=>showMessage(err.message,'tomato')); authForm.reset();});
@@ -777,3 +810,4 @@
   </script>
 </body>
 </html>
+
