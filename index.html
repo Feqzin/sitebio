@@ -93,13 +93,18 @@
     .pre-save-button:hover {
       background:var(--cor-destaque-hover); transform:scale(1.05);
     }
+
+    /* FLEX CONTAINER DA DASHBOARD + HISTÓRICO */
     .dashboard-flex-container {
       display: flex;
+      flex-direction: row;
       justify-content: center;
       align-items: center;
       min-height: 78vh;
       width: 100vw;
+      gap: 50px;
     }
+    /* DASHBOARD EM SI */
     .dashboard-outer {
       width: 680px;
       min-width: 320px;
@@ -197,13 +202,18 @@
       margin-top: 2px;
     }
     .btn-logout:hover { background: #ff7b4d; }
+
+    /* HISTÓRICO AO LADO, ALINHADO AO CENTRO */
     .historico-externo {
       min-width: 265px;
+      max-width: 350px;
       z-index: 1;
       display: flex;
       flex-direction: column;
       align-items: flex-start;
       margin: 0;
+      /* Alinha verticalmente ao centro do container */
+      align-self: center;
     }
     .historico {
       background: #232726;
@@ -230,23 +240,8 @@
       color: #f0f0f0a8;
       font-size: 0.99em;
     }
-    @media (max-width: 950px) {
-      .dashboard-flex-container {
-        flex-direction: column;
-        align-items: center;
-        min-height: unset;
-        gap: 0;
-      }
-      .historico-externo { margin-left: 0; margin-top: 28px; }
-    }
-    @media (max-width: 650px) {
-      .dashboard-outer { width: 98vw; min-width: 0; }
-      .dashboard { padding: 22px 2vw 16px 2vw; }
-      .dashboard-title { font-size: 1.4em;}
-      .historico { max-width: 100vw; min-width: 0;}
-    }
 
-    /* --- NOVO ALINHAMENTO DO BOTÃO E PONTUAÇÃO --- */
+    /* ALINHAMENTO EXATO DO BOTÃO E PONTUAÇÃO */
     .pontuacao-section {
       width: 100%;
       display: flex;
@@ -256,9 +251,26 @@
       margin-bottom: 0;
       margin-top: 0;
     }
+    .pontuacao-label {
+      font-size: 1.13em;
+      color: #fff;
+      font-weight: 600;
+      margin-bottom: 0.5em;
+      letter-spacing: 0.01em;
+      text-align: center;
+    }
+    .pontuacao-valor {
+      font-size: 2.1em;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: .01em;
+      margin-bottom: 17px;
+      margin-top: 0;
+      text-align: center;
+    }
     #start-quiz {
       display: block;
-      margin: 0 auto 18px auto;
+      margin: 0 auto 0 auto;
       font-weight: 700;
       font-size: 1.1em;
       padding: 13px 36px;
@@ -268,21 +280,14 @@
       box-shadow: 0 0 9px #00ff5555;
       border: none;
       transition: background .19s;
+      text-align: center;
     }
     #start-quiz:hover {
       background: #30ff99;
     }
-    .pontuacao-valor {
-      font-size: 2.1em;
-      font-weight: 700;
-      color: #fff;
-      letter-spacing: .01em;
-      margin-bottom: 0;
-    }
-
     .loja-section {
       width: 100%;
-      margin-top: 7px;
+      margin-top: 17px;
       text-align: center;
     }
     .loja-title {
@@ -321,7 +326,20 @@
       justify-content: center;
       transition: all 0.3s cubic-bezier(.6,-0.28,.74,.05);
     }
+    @media (max-width: 950px) {
+      .dashboard-flex-container {
+        flex-direction: column;
+        align-items: center;
+        min-height: unset;
+        gap: 0;
+      }
+      .historico-externo { margin-left: 0; margin-top: 28px; align-self: stretch; }
+    }
     @media (max-width: 700px) {
+      .dashboard-outer { width: 98vw; min-width: 0; }
+      .dashboard { padding: 22px 2vw 16px 2vw; }
+      .dashboard-title { font-size: 1.4em;}
+      .historico { max-width: 100vw; min-width: 0;}
       .loja-cards { width: 98vw; min-width: 0; gap: 4px; }
       .loja-card { width: 68px; min-width: 60px;}
     }
@@ -481,6 +499,7 @@
       <a href="https://soundcloud.com/discordia-urban" target="_blank"><i class="fa-brands fa-soundcloud"></i></a>
     </div>
   </section>
+
   <!-- --------- DASHBOARD --------- -->
   <section style="padding:0;margin:0;">
     <div id="dashboard-flex-container" class="dashboard-flex-container">
@@ -506,8 +525,9 @@
           <div id="auth-message"></div>
           <div class="dashboard-completa" id="dashboard-logado">
             <div class="pontuacao-section" id="pontuacao-container">
-              <button class="btn-green" id="start-quiz">Comece a ganhar pontos</button>
+              <div class="pontuacao-label">Sua Pontuação</div>
               <div class="pontuacao-valor" id="pontuacao-valor">0</div>
+              <button class="btn-green" id="start-quiz">Comece a ganhar pontos</button>
             </div>
             <div class="loja-section">
               <div class="loja-title">Loja de Prêmios</div>
@@ -530,6 +550,7 @@
     </div>
   </section>
   <footer>© 2025 Feqzin. Todos os direitos reservados.</footer>
+
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
