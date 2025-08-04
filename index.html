@@ -94,23 +94,20 @@
       background:var(--cor-destaque-hover); transform:scale(1.05);
     }
 
-    /* Centralização real da dashboard no centro da tela */
-    .dashboard-center-wrapper {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 78vh;
-      width: 100vw;
-      position: relative;
-      z-index: 10;
-    }
-    /* O container principal da dashboard-flex já não precisa justificar/alinhar, pois a centralização é feita pelo dashboard-center-wrapper */
+    /* DASHBOARD CENTRALIZADA */
     .dashboard-flex-container {
       display: flex;
       flex-direction: row;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 78vh;
+      width: 100vw;
       gap: 120px;
-      width: auto;
-      max-width: 1500px;
+      /* NOVO: centralização absoluta horizontal */
+      position: relative;
+      left: 50%;
+      transform: translateX(-50%);
+      margin-top: 30px;
     }
     .dashboard-outer {
       width: 750px;
@@ -247,6 +244,7 @@
       color: #f0f0f0a8;
       font-size: 0.99em;
     }
+
     .pontuacao-section {
       width: 100%;
       display: flex;
@@ -255,6 +253,7 @@
       justify-content: center;
       margin: 0 0 12px 0;
     }
+
     .pontuacao-label {
       font-size: 1.19em;
       color: #fff;
@@ -275,7 +274,7 @@
     #start-quiz {
       margin-top: 0;
       margin-bottom: 8px;
-      display: block !important;
+      display: block !important; /* <-- ESSENCIAL */
       font-weight: 700;
       font-size: 1.09em;
       padding: 13px 38px;
@@ -289,9 +288,6 @@
       width: auto;
       margin-left: auto !important;
       margin-right: auto !important;
-      left: 0 !important;
-      right: 0 !important;
-      float: none !important;
     }
     #start-quiz:hover {
       background: #30ff99;
@@ -337,14 +333,14 @@
       justify-content: center;
       transition: all 0.3s cubic-bezier(.6,-0.28,.74,.05);
     }
-    @media (max-width: 1500px) {
-      .dashboard-center-wrapper {
-        min-height: unset;
-      }
+    @media (max-width: 950px) {
       .dashboard-flex-container {
         flex-direction: column;
         align-items: center;
+        min-height: unset;
         gap: 0;
+        left: 0;
+        transform: none;
       }
       .historico-externo { margin-left: 0; margin-top: 28px; align-self: stretch; }
     }
@@ -355,6 +351,7 @@
       .historico { max-width: 100vw; min-width: 0;}
       .loja-cards { width: 98vw; min-width: 0; gap: 4px; }
       .loja-card { width: 68px; min-width: 60px;}
+      .dashboard-flex-container { left: 0; transform: none;}
     }
     .loja-card {
       background: #191c1c;
@@ -459,8 +456,20 @@
       transition: color 0.2s;
     }
     .senha-olho:hover { color: #1db954; }
+
+    /* Força o botão centralizado em qualquer caso */
+    #start-quiz {
+      display: block;
+      margin: 0 auto !important;
+      width: auto !important;
+      max-width: 100%;
+      text-align: center !important;
+      float: none !important;
+      left: 0 !important;
+      right: 0 !important;
+    }
   </style>
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
@@ -512,52 +521,50 @@
 
   <!-- --------- DASHBOARD --------- -->
   <section style="padding:0;margin:0;">
-    <div class="dashboard-center-wrapper">
-      <div id="dashboard-flex-container" class="dashboard-flex-container">
-        <div class="dashboard-outer" style="z-index:2;">
-          <div class="dashboard-top-center" id="dashboard-top-center" style="display:none;">
-            <div class="user-email" id="user-email"></div>
-            <button class="btn-logout" id="btnLogout" style="display:none;">Logout</button>
-          </div>
-          <div class="dashboard">
-            <div class="dashboard-title">Dashboard do Fã</div>
-            <form id="auth-form" autocomplete="on">
-              <input type="email" id="email" placeholder="Digite seu email" required autocomplete="username"/>
-              <div class="input-senha-wrapper">
-                <input type="password" id="password" placeholder="Digite sua senha" required autocomplete="current-password"/>
-                <span class="senha-olho" id="togglePassword">
-                  <i class="fa-solid fa-eye"></i>
-                </span>
-              </div>
-              <button type="submit" id="btn-login">Entrar</button>
-              <button type="button" id="btn-signup">Cadastrar</button>
-              <button type="button" id="btn-reset-password">Esqueci a senha</button>
-            </form>
-            <div id="auth-message"></div>
-            <!-- Dashboard completa: aparece só depois do login -->
-            <div class="dashboard-completa" id="dashboard-logado">
-              <div class="pontuacao-section" id="pontuacao-container">
-                <div class="pontuacao-label">Sua Pontuação</div>
-                <div class="pontuacao-valor" id="pontuacao-valor">0</div>
-                <button class="btn-green" id="start-quiz">Comece a ganhar pontos</button>
-              </div>
-              <div class="loja-section">
-                <div class="loja-title">Loja de Prêmios</div>
-                <div class="loja-carousel-container">
-                  <button class="carousel-arrow" id="prevBtn">&#60;</button>
-                  <div class="loja-cards" id="lojaCards"></div>
-                  <button class="carousel-arrow" id="nextBtn">&#62;</button>
-                </div>
+    <div id="dashboard-flex-container" class="dashboard-flex-container">
+      <div class="dashboard-outer" style="z-index:2;">
+        <div class="dashboard-top-center" id="dashboard-top-center" style="display:none;">
+          <div class="user-email" id="user-email"></div>
+          <button class="btn-logout" id="btnLogout" style="display:none;">Logout</button>
+        </div>
+        <div class="dashboard">
+          <div class="dashboard-title">Dashboard do Fã</div>
+          <form id="auth-form" autocomplete="on">
+            <input type="email" id="email" placeholder="Digite seu email" required autocomplete="username"/>
+            <div class="input-senha-wrapper">
+              <input type="password" id="password" placeholder="Digite sua senha" required autocomplete="current-password"/>
+              <span class="senha-olho" id="togglePassword">
+                <i class="fa-solid fa-eye"></i>
+              </span>
+            </div>
+            <button type="submit" id="btn-login">Entrar</button>
+            <button type="button" id="btn-signup">Cadastrar</button>
+            <button type="button" id="btn-reset-password">Esqueci a senha</button>
+          </form>
+          <div id="auth-message"></div>
+          <!-- Dashboard completa: aparece só depois do login -->
+          <div class="dashboard-completa" id="dashboard-logado">
+            <div class="pontuacao-section" id="pontuacao-container">
+              <div class="pontuacao-label">Sua Pontuação</div>
+              <div class="pontuacao-valor" id="pontuacao-valor">0</div>
+              <button class="btn-green" id="start-quiz">Comece a ganhar pontos</button>
+            </div>
+            <div class="loja-section">
+              <div class="loja-title">Loja de Prêmios</div>
+              <div class="loja-carousel-container">
+                <button class="carousel-arrow" id="prevBtn">&#60;</button>
+                <div class="loja-cards" id="lojaCards"></div>
+                <button class="carousel-arrow" id="nextBtn">&#62;</button>
               </div>
             </div>
           </div>
         </div>
-        <!-- Histórico FIXO à direita da dashboard -->
-        <div class="historico-externo" id="historico-externo" style="display:none;">
-          <div class="historico" id="historico-container">
-            <b>Histórico de Atividades</b>
-            <span>Faça login para visualizar</span>
-          </div>
+      </div>
+      <!-- Histórico FIXO à direita da dashboard -->
+      <div class="historico-externo" id="historico-externo" style="display:none;">
+        <div class="historico" id="historico-container">
+          <b>Histórico de Atividades</b>
+          <span>Faça login para visualizar</span>
         </div>
       </div>
     </div>
@@ -777,6 +784,8 @@
         btnLogout.style.display = 'inline-block';
         carregarPontuacao(user.uid); carregarHistorico(user.uid); carregarLoja();
         btnQuiz.style.display = 'inline-block'; btnQuiz.onclick = () => window.open('quiz.html','_blank');
+        document.getElementById('dashboard-flex-container').style.justifyContent = "center";
+        document.getElementById('dashboard-flex-container').style.alignItems = "flex-start";
       } else {
         dashboardTopCenter.style.display = "none";
         historicoExterno.style.display = "none";
@@ -786,6 +795,8 @@
         btnLogout.style.display = 'none';
         pontuacaoContainer.style.display = 'none'; btnQuiz.style.display = 'none';
         historicoContainer.innerHTML = '<b>Histórico de Atividades</b><span>Faça login para visualizar</span>'; lojaCards.innerHTML = '';
+        document.getElementById('dashboard-flex-container').style.justifyContent = "center";
+        document.getElementById('dashboard-flex-container').style.alignItems = "flex-start";
       }
     });
     authForm.addEventListener('submit',e=>{e.preventDefault(); auth.signInWithEmailAndPassword(emailInput.value,passwordInput.value).catch(err=>showMessage(err.message,'tomato')); authForm.reset();});
@@ -810,4 +821,3 @@
   </script>
 </body>
 </html>
-
