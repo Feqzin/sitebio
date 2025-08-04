@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -206,6 +207,7 @@
       margin-top: 2px;
     }
     .btn-logout:hover { background: #ff7b4d; }
+
     .pontuacao-section {
       width: 100%;
       display: flex;
@@ -267,37 +269,23 @@
       margin-bottom: 13px;
     }
     .loja-carousel-container {
+      width: 100%;
+      margin: 0 auto;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 13px;
+    }
+    .loja-swiper {
       width: 100%;
+      max-width: 720px;
+      padding-bottom: 38px;
+      padding-top: 5px;
     }
-    .carousel-arrow {
-      background: none;
-      border: none;
-      color: #00ff55;
-      font-size: 2.6em;
-      font-weight: 700;
-      cursor: pointer;
-      padding: 0 11px;
-      transition: color .18s;
-      user-select: none;
-    }
-    .carousel-arrow:active { color: #30ff99; }
-    .loja-cards {
+    .loja-swiper .swiper-slide {
       display: flex;
-      flex-direction: row;
-      gap: 17px;
-      overflow: hidden;
-      width: 270px; /* 2 cards de 120px + gap */
-      min-height: 170px;
-      align-items: stretch;
       justify-content: center;
-      transition: all 0.3s cubic-bezier(.6,-0.28,.74,.05);
-    }
-    @media (min-width: 701px) {
-      .loja-cards { width: 520px; } /* 4 cards desktop */
+      align-items: stretch;
+      height: auto;
     }
     .loja-card {
       background: #191c1c;
@@ -365,19 +353,25 @@
       color: #888;
       cursor: not-allowed;
     }
+    .swiper-button-prev.loja-swiper-prev, .swiper-button-next.loja-swiper-next {
+      color: #00ff55;
+      font-size: 2.2em;
+      font-weight: 700;
+      top: 43%;
+    }
+    .swiper-button-prev.loja-swiper-prev { left: 0; }
+    .swiper-button-next.loja-swiper-next { right: 0; }
     @media (max-width: 1100px) {
       .dashboard-flex-container { flex-direction: column; align-items: center; gap: 0; }
-      .historico-externo { margin-left: 0; margin-top: 28px; align-self: stretch; }
     }
     @media (max-width: 700px) {
       .dashboard-outer { width: 98vw; min-width: 0; }
       .dashboard { padding: 22px 2vw 16px 2vw; }
       .dashboard-title { font-size: 1.4em;}
-      .historico { max-width: 100vw; min-width: 0;}
-      .loja-cards { width: 135px; gap: 4px; }
-      .loja-card { width: 80px; min-width: 60px; padding: 6px 2px 7px 2px; }
-      .loja-card img { width: 38px; height: 38px;}
-      .carousel-arrow { font-size: 1.3em;}
+      .loja-swiper { max-width: 99vw; }
+      .loja-card { width: 90px; min-width: 74px; max-width: 99px; padding: 8px 2px 8px 2px; }
+      .loja-card img { width: 38px; height: 38px; }
+      .swiper-button-prev.loja-swiper-prev, .swiper-button-next.loja-swiper-next { display: none !important; }
     }
     .input-senha-wrapper {
       position: relative;
@@ -403,14 +397,17 @@
       transition: color 0.2s;
     }
     .senha-olho:hover { color: #1db954; }
+
+    /* Histórico sempre embaixo da dashboard */
     .historico-externo {
       width: 100%;
-      z-index: 1;
       display: flex;
-      flex-direction: column;
+      justify-content: center;
       align-items: flex-start;
-      margin: 0;
-      align-self: center;
+      margin-top: 38px;
+      margin-left: 0;
+      align-self: stretch;
+      max-width: 900px;
     }
     .historico {
       background: #232726;
@@ -418,34 +415,43 @@
       padding: 18px 30px 16px 26px;
       border-radius: 13px;
       min-width: 260px;
-      max-width: 100vw;
-      margin-top: 35px;
-      margin-bottom: 12px;
+      max-width: 360px;
+      margin-top: 0;
       box-shadow: 0 1px 14px #0002;
-      font-size: 1.14em;
+      font-size: 1.04em;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 6px;
       opacity: 0.98;
     }
     .historico b {
       color: #fff;
-      font-size: 1.25em;
+      font-size: 1.15em;
       font-weight: 700;
       display: block;
-      margin-bottom: 9px;
+      margin-bottom: 7px;
       letter-spacing: .01em;
     }
     .historico span {
       color: #f0f0f0a8;
       font-size: 0.99em;
     }
+    @media (max-width: 700px) {
+      .historico-externo {
+        padding: 0 3vw;
+        margin-top: 29px;
+      }
+      .historico {
+        max-width: 99vw;
+        min-width: 0;
+        padding: 16px 6vw 12px 6vw;
+      }
+    }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore
--compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
 </head>
 <body>
   <header id="header-capa">
@@ -526,17 +532,21 @@
               <div class="loja-section">
                 <div class="loja-title">Loja de Prêmios</div>
                 <div class="loja-carousel-container">
-                  <button class="carousel-arrow" id="prevBtn">&#60;</button>
-                  <div class="loja-cards" id="lojaCards"></div>
-                  <button class="carousel-arrow" id="nextBtn">&#62;</button>
+                  <div class="swiper loja-swiper">
+                    <div class="swiper-wrapper" id="lojaCards"></div>
+                    <div class="swiper-pagination loja-swiper-pagination"></div>
+                    <div class="swiper-button-prev loja-swiper-prev"></div>
+                    <div class="swiper-button-next loja-swiper-next"></div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+        <!-- histórico foi para baixo -->
       </div>
     </div>
-    <!-- Histórico abaixo do container da dashboard -->
+    <!-- Histórico sempre abaixo da dashboard -->
     <div class="historico-externo" id="historico-externo" style="display:none;">
       <div class="historico" id="historico-container">
         <b>Histórico de Atividades</b>
@@ -640,15 +650,10 @@
     const lojaCards = document.getElementById('lojaCards');
     const userEmailShow = document.getElementById("user-email");
     const dashboardLogado = document.getElementById("dashboard-logado");
-    // NOVO: Top e histórico externo
     const dashboardTopCenter = document.getElementById('dashboard-top-center');
     const historicoExterno = document.getElementById('historico-externo');
     let premios = [];
-    let lojaPos = 0;
-    // 2 itens mobile, 4 desktop
-    function getViewCount() {
-      return window.innerWidth <= 700 ? 2 : 4;
-    }
+
     function showMessage(text, color = "lightgreen") {
       authMessage.style.color = color;
       authMessage.textContent = text;
@@ -671,64 +676,52 @@
           let html = "<b>Histórico de Atividades</b>";
           snapshot.forEach(doc => {
             const item = doc.data();
+            const data = item.data?.toDate ? item.data.toDate().toLocaleString() : "";
             html += `<span style="color:${item.pontos<0?'#ffa6a6':'#b6ffce'}">${item.pontos>0?'+':''}${item.pontos} pts</span>
             <span style="font-size:0.97em; color:#f2fff2ad">${item.descricao}</span>`;
           });
           historicoContainer.innerHTML = html;
         }).catch(err => historicoContainer.innerHTML = `<b>Histórico de Atividades</b><span>Erro: ${err.message}</span>`);
     }
-    // ----------- LOJA CARDS CONTROLES -----------
+    // ----------- LOJA COM SWIPER -----------
     function renderLoja() {
       lojaCards.innerHTML = '';
-      const viewCount = getViewCount();
-      // Não deixar espaço vazio no fim/início
-      let maxPos = Math.max(0, premios.length - viewCount);
-      if (lojaPos > maxPos) lojaPos = maxPos;
-      if (lojaPos < 0) lojaPos = 0;
-      for (let i = lojaPos; i < Math.min(lojaPos + viewCount, premios.length); i++) {
-        const item = premios[i];
+      premios.forEach(item => {
         lojaCards.innerHTML += `
-          <div class="loja-card">
-            <img src="${item.imagemUrl}" alt="${item.nome}">
-            <div class="loja-card-nome">${item.nome}</div>
-            <div class="loja-card-desc">${item.descricao}</div>
-            <div class="loja-card-pontos">${item.custoPontos} pts</div>
-            <button class="btn-resgatar" ${item.estoque === 0 ? "disabled" : ""}
-              onclick="resgatarItem('${item.id}',${item.custoPontos})">${item.estoque === 0 ? "Esgotado" : "Resgatar"}</button>
+          <div class="swiper-slide">
+            <div class="loja-card">
+              <img src="${item.imagemUrl}" alt="${item.nome}">
+              <div class="loja-card-nome">${item.nome}</div>
+              <div class="loja-card-desc">${item.descricao}</div>
+              <div class="loja-card-pontos">${item.custoPontos} pts</div>
+              <button class="btn-resgatar" ${item.estoque === 0 ? "disabled" : ""}
+                onclick="resgatarItem('${item.id}',${item.custoPontos})">${item.estoque === 0 ? "Esgotado" : "Resgatar"}</button>
+            </div>
           </div>
         `;
-      }
-      // seta controles
-      document.getElementById('prevBtn').disabled = lojaPos === 0;
-      document.getElementById('nextBtn').disabled = lojaPos >= premios.length - viewCount;
-      document.getElementById('prevBtn').style.opacity = lojaPos === 0 ? 0.4 : 1;
-      document.getElementById('nextBtn').style.opacity = lojaPos >= premios.length - viewCount ? 0.4 : 1;
+      });
+      inicializarSwiperLoja();
     }
-    document.getElementById('prevBtn').onclick = () => {
-      lojaPos -= getViewCount();
-      renderLoja();
-    };
-    document.getElementById('nextBtn').onclick = () => {
-      lojaPos += getViewCount();
-      renderLoja();
-    };
-    // Swipe para mobile
-    let touchStartX = 0;
-    lojaCards.addEventListener('touchstart', e => {
-      touchStartX = e.touches[0].clientX;
-    });
-    lojaCards.addEventListener('touchend', e => {
-      let dx = e.changedTouches[0].clientX - touchStartX;
-      if (Math.abs(dx) > 30) {
-        if (dx < 0 && lojaPos < premios.length - getViewCount()) {
-          lojaPos += getViewCount();
-          renderLoja();
-        } else if (dx > 0 && lojaPos > 0) {
-          lojaPos -= getViewCount();
-          renderLoja();
+    function inicializarSwiperLoja() {
+      if (window.lojaSwiper && window.lojaSwiper.destroy) window.lojaSwiper.destroy(true, true);
+      window.lojaSwiper = new Swiper('.loja-swiper', {
+        slidesPerView: window.innerWidth <= 700 ? 2 : 4,
+        spaceBetween: 18,
+        navigation: {
+          nextEl: '.loja-swiper-next',
+          prevEl: '.loja-swiper-prev',
+        },
+        pagination: {
+          el: '.loja-swiper-pagination',
+          clickable: true,
+        },
+        grabCursor: true,
+        breakpoints: {
+          0:    { slidesPerView: 2, spaceBetween: 8 },
+          701:  { slidesPerView: 4, spaceBetween: 18 }
         }
-      }
-    });
+      });
+    }
     function carregarLoja() {
       db.collection("resgates").get()
         .then(snapshot => {
@@ -740,7 +733,6 @@
               id: doc.id
             });
           });
-          lojaPos = 0;
           renderLoja();
         });
     }
@@ -774,21 +766,21 @@
     auth.onAuthStateChanged(user => {
       if (user) {
         dashboardTopCenter.style.display = "flex";
-        historicoExterno.style.display = "flex";
         document.getElementById('dashboard-logado').style.display = "block";
         authForm.style.display = "none";
         userEmailShow.innerHTML = user.email;
         btnLogout.style.display = 'inline-block';
         carregarPontuacao(user.uid); carregarHistorico(user.uid); carregarLoja();
         btnQuiz.style.display = 'inline-block'; btnQuiz.onclick = () => window.open('quiz.html','_blank');
+        historicoExterno.style.display = "flex";
       } else {
         dashboardTopCenter.style.display = "none";
-        historicoExterno.style.display = "none";
         document.getElementById('dashboard-logado').style.display = "none";
         authForm.style.display = "flex";
         userEmailShow.innerHTML = "";
         btnLogout.style.display = 'none';
         pontuacaoContainer.style.display = 'none'; btnQuiz.style.display = 'none';
+        historicoExterno.style.display = "none";
         historicoContainer.innerHTML = '<b>Histórico de Atividades</b><span>Faça login para visualizar</span>'; lojaCards.innerHTML = '';
       }
     });
@@ -811,10 +803,12 @@
         icon.classList.add("fa-eye");
       }
     });
-    // Responsivo: loja re-render ao resize
-    window.addEventListener('resize', () => {
-      renderLoja();
+
+    // Swiper loja reconfigura ao redimensionar
+    window.addEventListener('resize', ()=>{
+      if (window.lojaSwiper && window.lojaSwiper.update) window.lojaSwiper.update();
     });
+
   </script>
 </body>
 </html>
