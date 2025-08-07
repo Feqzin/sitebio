@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -6,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Quiz Feqzin</title>
 
-  <!-- Ícones (usados nos botões) -->
+  <!-- Ícones -->
   <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
         integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
@@ -15,15 +14,16 @@
   <style>
     /* ---------- Base visual moderna ---------- */
     :root{
-      --bg: #0b0b0b;
+      --bg:#0b0b0b;
       --txt:#f1f1f1;
       --muted:#bdbdbd;
       --brand:#1DB954;
       --brand-2:#1ED760;
-      --card:#121212cc; /* vidro */
+      --card:#121212cc;
       --stroke:#2a2a2a;
       --error:#ff6b6b;
       --ok:#49e68a;
+      --shadow:0 10px 30px #00000066;
     }
     *{ box-sizing:border-box; }
     html,body{ height:100%; }
@@ -37,46 +37,54 @@
       padding:28px;
     }
 
-    .shell{
-      width:min(940px, 100%);
-    }
+    .shell{ width:min(940px, 100%); }
 
-    .header{
-      text-align:center; margin-bottom:18px;
-    }
+    .header{ text-align:center; margin-bottom:18px; }
     .title{
       font-size: clamp(24px, 3.2vw, 34px);
-      line-height:1.15; margin:0 0 6px;
-      letter-spacing:.3px;
+      line-height:1.15; margin:0 0 6px; letter-spacing:.3px;
     }
-    .subtitle{
-      margin:0; color:var(--muted); font-size:14px;
-    }
+    .subtitle{ margin:0; color:var(--muted); font-size:14px; }
 
     .card{
       background: var(--card);
       border:1px solid #ffffff12;
       backdrop-filter: blur(8px);
       border-radius:16px;
-      box-shadow: 0 10px 30px #00000066, inset 0 1px 0 #ffffff12;
+      box-shadow: var(--shadow), inset 0 1px 0 #ffffff12;
       overflow:hidden;
+      position:relative;
     }
 
-    /* ---------- Abas (Seleção / Quiz) ---------- */
-    .view{
-      padding: 22px;
-      display:none;
-    }
+    /* ---------- Abas ---------- */
+    .view{ padding:22px; display:none; }
     .view.active{ display:block; }
 
-    /* ---------- Seleção de Variações ---------- */
+    /* ---------- Top bar da Seleção ---------- */
+    .topbar{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:12px; margin-bottom:10px;
+    }
+    .home-btn{
+      border:1px solid var(--stroke);
+      background:linear-gradient(180deg, #1a1a1a, #151515);
+      color:#fff; border-radius:12px; padding:10px 14px;
+      display:inline-flex; align-items:center; gap:8px;
+      text-decoration:none; transition:transform .18s ease, background .18s ease, border-color .18s ease;
+      box-shadow: 0 6px 18px #00000040;
+    }
+    .home-btn:hover{ transform:translateY(-1px); background:#1f1f1f; border-color:#2f2f2f; }
+    .home-btn i{
+      width:24px; height:24px; display:grid; place-items:center;
+      color:var(--brand);
+    }
+
+    /* ---------- Seleção ---------- */
     .grid{
       display:grid; gap:14px;
       grid-template-columns: repeat(2, minmax(0,1fr));
     }
-    @media (max-width:640px){
-      .grid{ grid-template-columns: 1fr; }
-    }
+    @media (max-width:640px){ .grid{ grid-template-columns:1fr; } }
 
     .quiz-btn{
       border:1px solid var(--stroke);
@@ -84,8 +92,7 @@
       color:#fff; border-radius:12px;
       padding:16px 14px; text-align:left; position:relative;
       transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
-      cursor:pointer;
-      display:flex; align-items:center; gap:12px;
+      cursor:pointer; display:flex; align-items:center; gap:12px;
     }
     .quiz-btn:hover{
       transform: translateY(-2px);
@@ -97,14 +104,10 @@
       background: #1db95422; color: var(--brand);
       border:1px solid #1db95433; border-radius:10px;
     }
-    .quiz-btn .label{
-      font-weight:600; letter-spacing:.2px;
-    }
-    .quiz-btn .hint{
-      display:block; color:var(--muted); font-size:12px; margin-top:3px;
-    }
+    .quiz-btn .label{ font-weight:600; letter-spacing:.2px; }
+    .quiz-btn .hint{ display:block; color:var(--muted); font-size:12px; margin-top:3px; }
 
-    /* Estado de já respondido */
+    /* Estado respondido */
     .quiz-btn.respondido{
       background: linear-gradient(180deg, #151515, #111);
       color:#cfcfcf; border-color:#2a2a2a; cursor:not-allowed; opacity:.85;
@@ -118,81 +121,81 @@
     }
 
     /* ---------- Tela do Quiz ---------- */
-    .quiz-head{
-      display:flex; align-items:center; justify-content:space-between;
-      gap:12px; margin-bottom:14px;
-    }
+    .quiz-head{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:14px; }
     .back-btn{
-      border:1px solid var(--stroke);
-      background:#161616; color:#fff; border-radius:10px;
-      padding:10px 12px; display:flex; align-items:center; gap:8px;
-      cursor:pointer; transition: background .18s ease, transform .18s ease;
+      border:1px solid var(--stroke); background:#161616; color:#fff; border-radius:10px;
+      padding:10px 12px; display:flex; align-items:center; gap:8px; cursor:pointer;
+      transition: background .18s ease, transform .18s ease;
     }
     .back-btn:hover{ background:#1c1c1c; transform:translateY(-1px); }
-    .quiz-title{
-      margin:0; font-size:18px; letter-spacing:.3px;
-      opacity:.92;
-    }
+    .quiz-title{ margin:0; font-size:18px; letter-spacing:.3px; opacity:.92; }
 
     /* Barra de progresso */
-    .progress-wrap{
-      width:100%; height:10px; border-radius:999px;
-      background:#1a1a1a; border:1px solid #262626; overflow:hidden;
-      margin: 6px 0 14px;
-    }
-    .progress{
-      height:100%; width:0%;
-      background: linear-gradient(90deg, var(--brand), var(--brand-2));
-      transition: width .25s ease;
-    }
+    .progress-wrap{ width:100%; height:10px; border-radius:999px; background:#1a1a1a; border:1px solid #262626; overflow:hidden; margin:6px 0 14px; }
+    .progress{ height:100%; width:0%; background: linear-gradient(90deg, var(--brand), var(--brand-2)); transition: width .25s ease; }
 
-    /* Pergunta */
-    #message{
-      text-align:center; font-size:16px;
-      background:#141414; border:1px solid #1f1f1f;
-      padding:14px 16px; border-radius:12px; margin:10px 0 14px;
-    }
+    /* Mensagem/Enunciado */
+    #message{ text-align:center; font-size:16px; background:#141414; border:1px solid #1f1f1f; padding:14px 16px; border-radius:12px; margin:10px 0 14px; }
 
     /* Respostas */
     #quiz-container{ display:none; }
-    .answers{
-      display:grid; gap:10px;
-    }
+    .answers{ display:grid; gap:10px; }
     .answers button{
-      border:1px solid var(--stroke);
-      background: linear-gradient(180deg, #181818, #121212);
-      color:#fff; border-radius:12px;
-      padding:14px 14px; text-align:left;
+      border:1px solid var(--stroke); background: linear-gradient(180deg, #181818, #121212);
+      color:#fff; border-radius:12px; padding:14px 14px; text-align:left;
       transition: border-color .18s ease, transform .08s ease, background .18s ease;
       cursor:pointer; position:relative; overflow:hidden;
     }
-    .answers button:hover{
-      border-color:#2e2e2e; transform: translateY(-1px);
-    }
+    .answers button:hover{ border-color:#2e2e2e; transform: translateY(-1px); }
     .answers button.correct{ box-shadow: inset 0 0 0 999px #49e68a1a; border-color:#2b5; }
     .answers button.wrong  { box-shadow: inset 0 0 0 999px #ff6b6b1a; border-color:#c44; }
 
     /* Rodapé do quiz */
-    .quiz-foot{
-      display:flex; justify-content:flex-end; margin-top:12px;
-    }
+    .quiz-foot{ display:flex; justify-content:flex-end; margin-top:12px; }
     #btn-voltar{
-      background:#232323; border:1px solid var(--stroke);
-      color:#eaeaea; border-radius:10px; padding:10px 14px; cursor:pointer;
-      transition: background .18s ease, transform .18s ease;
-      display:none;
+      background:#232323; border:1px solid var(--stroke); color:#eaeaea; border-radius:10px; padding:10px 14px;
+      cursor:pointer; transition: background .18s ease, transform .18s ease; display:none;
     }
     #btn-voltar:hover{ background:#2a2a2a; transform:translateY(-1px); }
 
-    /* Animação de fade suave entre telas */
-    .fade-in{ animation: fade .24s ease both; }
-    @keyframes fade{
-      from{ opacity:0; transform: translateY(4px); }
-      to  { opacity:1; transform: translateY(0); }
+    /* Badge animado de feedback */
+    .result-badge{
+      position: fixed; left:50%; top:18%;
+      transform: translate(-50%, -30%) scale(.8);
+      display:none; z-index:999;
+      width:110px; height:110px; border-radius:50%;
+      display:grid; place-items:center;
+      box-shadow: 0 12px 40px #0008, inset 0 0 0 1px #ffffff12;
+      animation: pop .32s ease forwards;
     }
+    .result-badge i{ font-size:48px; }
+    .result-badge.ok{
+      background: radial-gradient(80px 80px at 50% 45%, #49e68a33, transparent 70%), #0f1a13;
+      border:1px solid #2b5;
+      color:#6dffb0;
+    }
+    .result-badge.err{
+      background: radial-gradient(80px 80px at 50% 45%, #ff6b6b33, transparent 70%), #1a1010;
+      border:1px solid #c44;
+      color:#ff8a8a;
+    }
+    @keyframes pop{
+      0%{ opacity:0; transform: translate(-50%, -30%) scale(.65); }
+      60%{ opacity:1; transform: translate(-50%, -32%) scale(1.06); }
+      100%{ opacity:1; transform: translate(-50%, -30%) scale(1); }
+    }
+    .fade-away{ animation: fadeout .5s ease .6s forwards; }
+    @keyframes fadeout{ to{ opacity:0; transform: translate(-50%, -30%) scale(.92);} }
+
+    /* Fade suave entre telas */
+    .fade-in{ animation: fade .24s ease both; }
+    @keyframes fade{ from{ opacity:0; transform: translateY(4px);} to{ opacity:1; transform: translateY(0);} }
   </style>
 </head>
 <body>
+  <!-- Badge de feedback -->
+  <div id="result-badge" class="result-badge"><i class="fa-solid fa-check"></i></div>
+
   <div class="shell">
     <div class="header">
       <h1 class="title">Quiz Feqzin</h1>
@@ -200,25 +203,23 @@
     </div>
 
     <div class="card">
-
-      <!-- 1) Seleção de variações -->
+      <!-- 1) Seleção -->
       <div id="variation-selection" class="view active">
-        <h2 style="margin:6px 6px 16px;">Escolha seu Quiz</h2>
+        <div class="topbar">
+          <h2 style="margin:6px 6px 12px;">Escolha seu Quiz</h2>
+          <a class="home-btn" href="index.html"><i class="fa-solid fa-house"></i> Voltar para o Início</a>
+        </div>
         <div id="variations-grid" class="grid"></div>
       </div>
 
       <!-- 2) Quiz -->
       <div id="quiz-screen" class="view">
         <div class="quiz-head">
-          <button id="btn-back-top" class="back-btn">
-            <i class="fa-solid fa-arrow-left"></i> Voltar
-          </button>
+          <button id="btn-back-top" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Voltar</button>
           <h3 id="quiz-title" class="quiz-title">Respondendo…</h3>
         </div>
 
-        <div class="progress-wrap">
-          <div id="progress" class="progress"></div>
-        </div>
+        <div class="progress-wrap"><div id="progress" class="progress"></div></div>
 
         <div id="message"></div>
 
@@ -236,7 +237,6 @@
           <button id="btn-voltar">Voltar para seleção</button>
         </div>
       </div>
-
     </div>
   </div>
 
@@ -246,7 +246,7 @@
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
 
   <script>
-    // 0) Configuração Firebase (inalterada)
+    // 0) Firebase
     const firebaseConfig = {
       apiKey: "AIzaSyBhSmocbaARqU_pPM0Tqki8d11jm97IE4M",
       authDomain: "dashboardfeqzin.firebaseapp.com",
@@ -261,7 +261,7 @@
     const db   = firebase.firestore();
     const adminEmail = "fernandoq87@gmail.com";
 
-    // 1) Definição das variações de quiz (inalterado)
+    // 1) Variações
     const quizVariations = {
       quizA: {
         label: "Quiz A: Geografia",
@@ -269,10 +269,10 @@
           {
             question: "Qual é a capital do Brasil?",
             answers: [
-              { text: "Rio de Janeiro", correct: false },
-              { text: "São Paulo",      correct: false },
-              { text: "Brasília",       correct: true  },
-              { text: "Salvador",       correct: false }
+              { text: "Rio de Janeiro", correct:false },
+              { text: "São Paulo",      correct:false },
+              { text: "Brasília",       correct:true  },
+              { text: "Salvador",       correct:false }
             ]
           }
         ]
@@ -283,10 +283,10 @@
           {
             question: "Quem pintou a Mona Lisa?",
             answers: [
-              { text: "Vincent van Gogh",  correct: false },
-              { text: "Leonardo da Vinci", correct: true  },
-              { text: "Pablo Picasso",     correct: false },
-              { text: "Claude Monet",      correct: false }
+              { text: "Vincent van Gogh",  correct:false },
+              { text: "Leonardo da Vinci", correct:true  },
+              { text: "Pablo Picasso",     correct:false },
+              { text: "Claude Monet",      correct:false }
             ]
           }
         ]
@@ -297,10 +297,10 @@
           {
             question: "Qual elemento tem símbolo químico O?",
             answers: [
-              { text: "Oxigênio", correct: true  },
-              { text: "Ozônio",   correct: false },
-              { text: "Ósmio",    correct: false },
-              { text: "Ouro",     correct: false }
+              { text: "Oxigênio", correct:true  },
+              { text: "Ozônio",   correct:false },
+              { text: "Ósmio",    correct:false },
+              { text: "Ouro",     correct:false }
             ]
           }
         ]
@@ -311,10 +311,10 @@
           {
             question: "Em que série aparece o personagem Jon Snow?",
             answers: [
-              { text: "Vikings",         correct: false },
-              { text: "Game of Thrones", correct: true  },
-              { text: "The Witcher",     correct: false },
-              { text: "Mandalorian",     correct: false }
+              { text: "Vikings",         correct:false },
+              { text: "Game of Thrones", correct:true  },
+              { text: "The Witcher",     correct:false },
+              { text: "Mandalorian",     correct:false }
             ]
           }
         ]
@@ -326,25 +326,20 @@
     let currentIndex     = 0;
     let userData         = {};
 
-    // Util: alternar telas
-    function showView(idToShow){
+    // util: alternar telas
+    function showView(id){
       document.querySelectorAll('.view').forEach(v => v.classList.remove('active','fade-in'));
-      const el = document.getElementById(idToShow);
-      if(el){ el.classList.add('active','fade-in'); }
+      const el = document.getElementById(id);
+      if (el){ el.classList.add('active','fade-in'); }
     }
 
-    // Monta botões de seleção de variação (visual novo)
-    async function montarVariations() {
+    // montar seleção
+    async function montarVariations(){
       const grid = document.getElementById("variations-grid");
       grid.innerHTML = "";
       const user = auth.currentUser;
 
-      const icons = {
-        quizA: "fa-location-dot",
-        quizB: "fa-palette",
-        quizC: "fa-flask",
-        quizD: "fa-film"
-      };
+      const icons = { quizA:"fa-location-dot", quizB:"fa-palette", quizC:"fa-flask", quizD:"fa-film" };
 
       const entries = Object.entries(quizVariations);
       entries.forEach(([key, quizObj]) => {
@@ -358,7 +353,7 @@
           </div>
         `;
         const respondido = userData.quizRespondido?.[key];
-        if (respondido && user.email !== adminEmail) {
+        if (respondido && user.email !== adminEmail){
           btn.classList.add("respondido");
           btn.disabled = true;
         } else {
@@ -367,15 +362,15 @@
         grid.appendChild(btn);
       });
 
-      if (!entries.length) {
+      if (!entries.length){
         grid.innerHTML = `<p style="grid-column:1/-1; text-align:center; color:#cfcfcf;">Nenhum quiz disponível.</p>`;
       }
     }
 
-    // Inicia quiz escolhido
-    function iniciarVariation(key) {
+    // iniciar quiz
+    function iniciarVariation(key){
       currentVariation = key;
-      currentIndex     = 0;
+      currentIndex = 0;
       document.getElementById("quiz-title").textContent = quizVariations[key].label;
       atualizarProgresso();
       showView("quiz-screen");
@@ -384,18 +379,15 @@
       showQuestion();
     }
 
-    // Exibe a pergunta atual
-    function showQuestion() {
+    // pergunta
+    function showQuestion(){
       const q = quizVariations[currentVariation].questions[currentIndex];
-      const message = document.getElementById("message");
-      const qEl     = document.getElementById("question");
-      message.textContent = "Selecione a alternativa correta:";
-      qEl.textContent     = q.question;
+      document.getElementById("message").textContent = "Selecione a alternativa correta:";
+      document.getElementById("question").textContent = q.question;
 
-      // zera estados visuais
       ["a1","a2","a3","a4"].forEach(id=>{
         const b = document.getElementById(id);
-        b.classList.remove("correct","wrong");
+        b.className = ""; // limpa correct/wrong
         b.style.display = "none";
         b.onclick = null;
       });
@@ -403,81 +395,93 @@
       q.answers.forEach((ans, i) => {
         const btn = document.getElementById(`a${i+1}`);
         btn.style.display = "block";
-        btn.textContent   = ans.text;
+        btn.textContent = ans.text;
         btn.onclick = async () => {
-          // feedback visual rápido (sem alterar sua lógica)
-          btn.classList.add(ans.correct ? "correct" : "wrong");
-          await responder(ans.correct);
+          btn.classList.add(ans.correct ? "correct":"wrong");
+          showBadge(ans.correct);           // animação visual
+          await responder(ans.correct);     // lógica de pontos/controle
         };
       });
     }
 
-    // Atualiza barra de progresso
+    // progresso
     function atualizarProgresso(){
       const total = quizVariations[currentVariation]?.questions.length || 1;
       const pct = Math.round((currentIndex) / total * 100);
       document.getElementById("progress").style.width = `${pct}%`;
     }
 
-    // Processa resposta (lógica intacta)
-    async function responder(correct) {
+    // badge animado
+    function showBadge(isOk){
+      const badge = document.getElementById("result-badge");
+      badge.className = "result-badge " + (isOk ? "ok" : "err");
+      badge.innerHTML = `<i class="fa-solid ${isOk ? "fa-check" : "fa-xmark"}"></i>`;
+      badge.style.display = "grid";
+      // fade e esconder
+      badge.classList.remove("fade-away");
+      // força reflow para reiniciar animação
+      void badge.offsetWidth;
+      badge.classList.add("fade-away");
+      setTimeout(()=>{ badge.style.display="none"; }, 1100);
+    }
+
+    // responder
+    async function responder(correct){
       const user = auth.currentUser;
       if (!user) return;
+
       const ref  = db.collection("usuarios").doc(user.uid);
       const snap = await ref.get();
       const data = snap.exists ? snap.data() : { pontos:0, quizRespondido:{} };
-      if (data.quizRespondido?.[currentVariation] && user.email !== adminEmail) {
+
+      if (data.quizRespondido?.[currentVariation] && user.email !== adminEmail){
         alert("Você já respondeu este quiz.");
         return;
       }
+
       const pontosGanhos = correct ? 10 : 0;
       const updates = { pontos: firebase.firestore.FieldValue.increment(pontosGanhos) };
-      if (user.email !== adminEmail) {
+      if (user.email !== adminEmail){
         updates[`quizRespondido.${currentVariation}`] = true;
       }
-      await ref.set(updates, { merge: true });
+      await ref.set(updates, { merge:true });
 
       const questions = quizVariations[currentVariation].questions;
-      if (currentIndex < questions.length - 1) {
+      if (currentIndex < questions.length - 1){
         currentIndex++;
         atualizarProgresso();
-        // pequena pausa para o efeito antes de trocar
-        setTimeout(showQuestion, 150);
+        setTimeout(showQuestion, 250);
       } else {
-        // Fim do quiz: volta para seleção após feedback
         const finalSnap = await ref.get();
         userData = finalSnap.data();
+
         document.getElementById("quiz-container").style.display = "none";
         document.getElementById("btn-voltar").style.display = "none";
         document.getElementById("progress").style.width = "100%";
         document.getElementById("message").textContent = `Quiz finalizado! Seus pontos: ${userData.pontos}`;
-        setTimeout(() => {
-          showView("variation-selection");
-          montarVariations();
-        }, 1300);
+
+        setTimeout(()=>{ showView("variation-selection"); montarVariations(); }, 1200);
       }
     }
 
-    // Botões Voltar (topo e rodapé)
+    // botões voltar (volta para seleção)
     document.getElementById("btn-back-top").onclick =
     document.getElementById("btn-voltar").onclick = () => {
       showView("variation-selection");
       montarVariations();
     };
 
-    // Inicializa após autenticação
+    // init (requer login)
     auth.onAuthStateChanged(async user => {
       const grid = document.getElementById("variations-grid");
-      if (!user) {
+      if (!user){
         document.getElementById("variation-selection").classList.add("active");
         grid.innerHTML = `<p style="text-align:center; margin:14px 0 6px;">Faça login no dashboard primeiro.</p>`;
         return;
       }
       const snap = await db.collection("usuarios").doc(user.uid).get();
       userData = snap.exists ? snap.data() : { pontos:0, quizRespondido:{} };
-      if (!snap.exists) {
-        await db.collection("usuarios").doc(user.uid).set(userData);
-      }
+      if (!snap.exists){ await db.collection("usuarios").doc(user.uid).set(userData); }
       showView("variation-selection");
       montarVariations();
     });
