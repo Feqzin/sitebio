@@ -4,248 +4,205 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Quiz Feqzin</title>
-
-  <!-- Ícones (usados nos botões) -->
-  <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"/>
-
   <style>
-    /* ---------- Base visual moderna ---------- */
     :root{
-      --bg: #0b0b0b;
-      --txt:#f1f1f1;
+      --bg:#0e0e0e;
+      --card:#121212;
+      --soft:#1a1a1a;
+      --text:#f1f1f1;
       --muted:#bdbdbd;
-      --brand:#1DB954;
-      --brand-2:#1ED760;
-      --card:#121212cc; /* vidro */
-      --stroke:#2a2a2a;
-      --error:#ff6b6b;
-      --ok:#49e68a;
+      --brand:#1db954;
+      --brand-2:#1ed760;
+      --red:#ff4d4f;
+      --green:#22c55e;
+      --border:#262626;
     }
-    *{ box-sizing:border-box; }
-    html,body{ height:100%; }
+    *{box-sizing:border-box}
+    html,body{height:100%}
     body{
-      margin:0; font-family: Inter, Arial, Helvetica, sans-serif; color:var(--txt);
-      background:
-        radial-gradient(1200px 600px at 15% -10%, #1db95415, transparent 60%),
-        radial-gradient(1000px 600px at 85% 110%, #1ed76010, transparent 65%),
-        var(--bg);
-      display:flex; align-items:center; justify-content:center;
-      padding:28px;
+      margin:0;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial;
+      background: radial-gradient(1200px 600px at 50% -200px, rgba(29,185,84,.18), transparent 60%), var(--bg);
+      color:var(--text);
+      display:flex;
+      align-items:flex-start;
+      justify-content:center;
+      padding:24px;
     }
 
     .shell{
-      width:min(940px, 100%);
+      width:min(920px,100%);
+      display:grid;
+      gap:20px;
     }
 
-    .header{
-      text-align:center; margin-bottom:18px;
-    }
-    .title{
-      font-size: clamp(24px, 3.2vw, 34px);
-      line-height:1.15; margin:0 0 6px;
-      letter-spacing:.3px;
-    }
-    .subtitle{
-      margin:0; color:var(--muted); font-size:14px;
-    }
-
-    .card{
-      background: var(--card);
-      border:1px solid #ffffff12;
-      backdrop-filter: blur(8px);
+    /* Header */
+    .hero{
+      background:linear-gradient(135deg, rgba(29,185,84,.12), rgba(29,185,84,.05));
+      border:1px solid var(--border);
       border-radius:16px;
-      box-shadow: 0 10px 30px #00000066, inset 0 1px 0 #ffffff12;
-      overflow:hidden;
+      padding:22px 20px;
+      display:flex; align-items:center; justify-content:space-between;
+      gap:12px;
     }
+    .hero h1{margin:0; font-size:1.5rem; letter-spacing:.2px}
+    .hero p{margin:4px 0 0; color:var(--muted); font-size:.95rem}
 
-    /* ---------- Abas (Seleção / Quiz) ---------- */
-    .view{
-      padding: 22px;
-      display:none;
+    /* Cards */
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:20px;
     }
-    .view.active{ display:block; }
+    .card h2{margin:0 0 14px; font-size:1.15rem}
+    .hint{color:var(--muted); font-size:.93rem}
 
-    /* ---------- Seleção de Variações ---------- */
+    /* Botões base */
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:10px; width:100%;
+      padding:12px 14px; border:1px solid var(--border);
+      border-radius:10px; background:#1b1b1b; color:#fff;
+      cursor:pointer; font-weight:600; letter-spacing:.2px;
+      transition:transform .08s ease, background .18s ease, border-color .18s ease, opacity .18s ease;
+      user-select:none;
+    }
+    .btn:hover{ background:#202020; border-color:#2d2d2d }
+    .btn:active{ transform: translateY(1px) }
+    .btn[disabled]{ opacity:.6; cursor:not-allowed }
+
+    /* Botões especiais */
+    .btn-brand{ background:var(--brand); border-color:transparent; color:#041307 }
+    .btn-brand:hover{ background:var(--brand-2) }
+    .btn-ghost{ background:#161616 }
+    .btn-danger{ background:#231a1a; border-color:#3a2a2a }
+    .btn-danger:hover{ background:#2a2020 }
+    .btn-soft{ background:#171717 }
+
+    /* Grid seleção */
     .grid{
-      display:grid; gap:14px;
-      grid-template-columns: repeat(2, minmax(0,1fr));
+      display:grid; gap:10px;
+      grid-template-columns:1fr; 
     }
-    @media (max-width:640px){
-      .grid{ grid-template-columns: 1fr; }
-    }
-
-    .quiz-btn{
-      border:1px solid var(--stroke);
-      background: linear-gradient(180deg, #171717, #121212);
-      color:#fff; border-radius:12px;
-      padding:16px 14px; text-align:left; position:relative;
-      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
-      cursor:pointer;
-      display:flex; align-items:center; gap:12px;
-    }
-    .quiz-btn:hover{
-      transform: translateY(-2px);
-      border-color:#2d2d2d;
-      box-shadow: 0 6px 18px #00000066;
-    }
-    .quiz-btn i{
-      width:36px; height:36px; min-width:36px; display:grid; place-items:center;
-      background: #1db95422; color: var(--brand);
-      border:1px solid #1db95433; border-radius:10px;
-    }
-    .quiz-btn .label{
-      font-weight:600; letter-spacing:.2px;
-    }
-    .quiz-btn .hint{
-      display:block; color:var(--muted); font-size:12px; margin-top:3px;
+    @media (min-width:560px){
+      .grid{ grid-template-columns: 1fr 1fr; }
     }
 
-    /* Estado de já respondido */
+    /* Estado "respondido" na seleção */
     .quiz-btn.respondido{
-      background: linear-gradient(180deg, #151515, #111);
-      color:#cfcfcf; border-color:#2a2a2a; cursor:not-allowed; opacity:.85;
+      background:#161616 !important; color:#cfcfcf !important;
+      position:relative; opacity:.8; border-style:dashed;
     }
-    .quiz-btn.respondido:hover{ transform:none; box-shadow:none; }
     .quiz-btn.respondido::after{
       content:"Respondido";
       position:absolute; right:12px; top:50%; transform:translateY(-50%);
-      background:#2f2f2f; border:1px solid #3a3a3a; color:#b6ffce;
-      font-size:11px; padding:4px 8px; border-radius:999px;
+      color:#b6ffce; font-size:.9rem; opacity:.95; pointer-events:none;
     }
 
-    /* ---------- Tela do Quiz ---------- */
-    .quiz-head{
-      display:flex; align-items:center; justify-content:space-between;
-      gap:12px; margin-bottom:14px;
+    /* Área Quiz */
+    #question{
+      font-size:1.15rem; line-height:1.5; margin:0 0 12px;
     }
-    .back-btn{
-      border:1px solid var(--stroke);
-      background:#161616; color:#fff; border-radius:10px;
-      padding:10px 12px; display:flex; align-items:center; gap:8px;
-      cursor:pointer; transition: background .18s ease, transform .18s ease;
-    }
-    .back-btn:hover{ background:#1c1c1c; transform:translateY(-1px); }
-    .quiz-title{
-      margin:0; font-size:18px; letter-spacing:.3px;
-      opacity:.92;
-    }
+    .answers{ display:grid; gap:10px }
+    .answers .btn{ text-align:left; position:relative; overflow:hidden }
 
-    /* Barra de progresso */
-    .progress-wrap{
-      width:100%; height:10px; border-radius:999px;
-      background:#1a1a1a; border:1px solid #262626; overflow:hidden;
-      margin: 6px 0 14px;
+    /* Efeitos de acerto/erro */
+    @keyframes pulseWin {
+      0%{ box-shadow:0 0 0 0 rgba(34,197,94,.45) }
+      100%{ box-shadow:0 0 0 12px rgba(34,197,94,0) }
     }
-    .progress{
-      height:100%; width:0%;
-      background: linear-gradient(90deg, var(--brand), var(--brand-2));
-      transition: width .25s ease;
+    @keyframes shakeLose {
+      10%, 90% { transform: translateX(-1px) }
+      20%, 80% { transform: translateX( 2px) }
+      30%, 50%, 70% { transform: translateX(-4px) }
+      40%, 60% { transform: translateX( 4px) }
     }
+    .correct{
+      border-color: rgba(34,197,94,.9) !important;
+      background: linear-gradient(0deg, rgba(34,197,94,.14), rgba(34,197,94,.08)) !important;
+      animation: pulseWin .6s ease-out;
+    }
+    .wrong{
+      border-color: rgba(255,77,79,.9) !important;
+      background: linear-gradient(0deg, rgba(255,77,79,.16), rgba(255,77,79,.08)) !important;
+      animation: shakeLose .32s ease both;
+    }
+    /* Ícones animados */
+    .fx{
+      position:absolute; right:10px; top:50%; transform:translateY(-50%) scale(.6);
+      width:22px; height:22px; border-radius:50%;
+      display:grid; place-items:center; opacity:0; transition:opacity .18s, transform .18s;
+      font-weight:900; font-size:14px;
+    }
+    .correct .fx{ background:rgba(34,197,94,.9); color:#041307; opacity:1; transform:translateY(-50%) scale(1) }
+    .wrong .fx{ background:rgba(255,77,79,.95); color:#1a0e0e; opacity:1; transform:translateY(-50%) scale(1) }
 
-    /* Pergunta */
-    #message{
-      text-align:center; font-size:16px;
-      background:#141414; border:1px solid #1f1f1f;
-      padding:14px 16px; border-radius:12px; margin:10px 0 14px;
+    /* Barra de ações do quiz */
+    .actions{
+      display:flex; gap:10px; margin-top:12px; flex-wrap:wrap;
     }
+    .actions .btn{ flex:1 1 220px }
 
-    /* Respostas */
-    #quiz-container{ display:none; }
-    .answers{
-      display:grid; gap:10px;
-    }
-    .answers button{
-      border:1px solid var(--stroke);
-      background: linear-gradient(180deg, #181818, #121212);
-      color:#fff; border-radius:12px;
-      padding:14px 14px; text-align:left;
-      transition: border-color .18s ease, transform .08s ease, background .18s ease;
-      cursor:pointer; position:relative; overflow:hidden;
-    }
-    .answers button:hover{
-      border-color:#2e2e2e; transform: translateY(-1px);
-    }
-    .answers button.correct{ box-shadow: inset 0 0 0 999px #49e68a1a; border-color:#2b5; }
-    .answers button.wrong  { box-shadow: inset 0 0 0 999px #ff6b6b1a; border-color:#c44; }
+    /* Avisos */
+    #message{ margin:10px 0 0; color:var(--muted); min-height:20px }
 
-    /* Rodapé do quiz */
-    .quiz-foot{
-      display:flex; justify-content:flex-end; margin-top:12px;
-    }
-    #btn-voltar{
-      background:#232323; border:1px solid var(--stroke);
-      color:#eaeaea; border-radius:10px; padding:10px 14px; cursor:pointer;
-      transition: background .18s ease, transform .18s ease;
-      display:none;
-    }
-    #btn-voltar:hover{ background:#2a2a2a; transform:translateY(-1px); }
-
-    /* Animação de fade suave entre telas */
-    .fade-in{ animation: fade .24s ease both; }
-    @keyframes fade{
-      from{ opacity:0; transform: translateY(4px); }
-      to  { opacity:1; transform: translateY(0); }
-    }
+    /* Invisível helper */
+    .hide{ display:none !important }
   </style>
 </head>
 <body>
   <div class="shell">
-    <div class="header">
-      <h1 class="title">Quiz Feqzin</h1>
-      <p class="subtitle">Responda, ganhe pontos e desbloqueie benefícios no site.</p>
-    </div>
+    <!-- HERO -->
+    <section class="hero">
+      <div>
+        <h1>Quiz Feqzin</h1>
+        <p>Responda, ganhe pontos e troque por itens exclusivos. Admin pode jogar à vontade, os demais jogam 1x por variação.</p>
+      </div>
+      <a class="btn btn-brand" href="index.html" style="max-width:220px;">Voltar para o Início</a>
+    </section>
 
-    <div class="card">
+    <!-- SELEÇÃO DE VARIAÇÕES -->
+    <section id="variation-card" class="card">
+      <h2>Escolha seu Quiz</h2>
+      <p class="hint">Selecione uma variação. Itens já respondidos ficam em cinza.</p>
 
-      <!-- 1) Seleção de variações -->
-      <div id="variation-selection" class="view active">
-        <h2 style="margin:6px 6px 16px;">Escolha seu Quiz</h2>
-        <div id="variations-grid" class="grid"></div>
+      <!-- Botão extra ANTES de entrar no quiz -->
+      <div style="margin:10px 0 16px;">
+        <a class="btn btn-ghost" href="index.html">Voltar para o Início</a>
       </div>
 
-      <!-- 2) Quiz -->
-      <div id="quiz-screen" class="view">
-        <div class="quiz-head">
-          <button id="btn-back-top" class="back-btn">
-            <i class="fa-solid fa-arrow-left"></i> Voltar
-          </button>
-          <h3 id="quiz-title" class="quiz-title">Respondendo…</h3>
-        </div>
+      <div id="variation-selection" class="grid"><!-- botões via JS --></div>
+      <div id="not-logged" class="hint hide" style="margin-top:12px;">Faça login no dashboard primeiro.</div>
+    </section>
 
-        <div class="progress-wrap">
-          <div id="progress" class="progress"></div>
-        </div>
-
-        <div id="message"></div>
-
-        <div id="quiz-container">
-          <p id="question" style="margin: 8px 0 12px; font-weight:600; letter-spacing:.2px;"></p>
-          <div class="answers">
-            <button id="a1"></button>
-            <button id="a2"></button>
-            <button id="a3"></button>
-            <button id="a4"></button>
-          </div>
-        </div>
-
-        <div class="quiz-foot">
-          <button id="btn-voltar">Voltar para seleção</button>
+    <!-- TELA DO QUIZ -->
+    <section id="quiz-card" class="card hide">
+      <h2 id="quiz-title">Respondendo…</h2>
+      <div id="message"></div>
+      <div id="quiz-container">
+        <p id="question"></p>
+        <div class="answers">
+          <button id="a1" class="btn btn-soft"><span class="label"></span><span class="fx">✓</span></button>
+          <button id="a2" class="btn btn-soft"><span class="label"></span><span class="fx">✓</span></button>
+          <button id="a3" class="btn btn-soft"><span class="label"></span><span class="fx">✓</span></button>
+          <button id="a4" class="btn btn-soft"><span class="label"></span><span class="fx">✓</span></button>
         </div>
       </div>
 
-    </div>
+      <div class="actions">
+        <button id="btn-voltar" class="btn">Voltar para Seleção</button>
+        <a href="index.html" class="btn">Voltar para o Início</a>
+      </div>
+    </section>
   </div>
 
   <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
-
   <script>
-    // 0) Configuração Firebase (inalterada)
+    /* ===== Firebase ===== */
     const firebaseConfig = {
       apiKey: "AIzaSyBhSmocbaARqU_pPM0Tqki8d11jm97IE4M",
       authDomain: "dashboardfeqzin.firebaseapp.com",
@@ -260,7 +217,7 @@
     const db   = firebase.firestore();
     const adminEmail = "fernandoq87@gmail.com";
 
-    // 1) Definição das variações de quiz (inalterado)
+    /* ===== Variações do Quiz ===== */
     const quizVariations = {
       quizA: {
         label: "Quiz A: Geografia",
@@ -268,10 +225,10 @@
           {
             question: "Qual é a capital do Brasil?",
             answers: [
-              { text: "Rio de Janeiro", correct: false },
-              { text: "São Paulo",      correct: false },
-              { text: "Brasília",       correct: true  },
-              { text: "Salvador",       correct: false }
+              { text:"Rio de Janeiro", correct:false },
+              { text:"São Paulo",      correct:false },
+              { text:"Brasília",       correct:true  },
+              { text:"Salvador",       correct:false },
             ]
           }
         ]
@@ -280,12 +237,12 @@
         label: "Quiz B: Arte",
         questions: [
           {
-            question: "Quem pintou a Mona Lisa?",
-            answers: [
-              { text: "Vincent van Gogh",  correct: false },
-              { text: "Leonardo da Vinci", correct: true  },
-              { text: "Pablo Picasso",     correct: false },
-              { text: "Claude Monet",      correct: false }
+            question:"Quem pintou a Mona Lisa?",
+            answers:[
+              { text:"Vincent van Gogh",  correct:false },
+              { text:"Leonardo da Vinci", correct:true  },
+              { text:"Pablo Picasso",     correct:false },
+              { text:"Claude Monet",      correct:false },
             ]
           }
         ]
@@ -294,12 +251,12 @@
         label: "Quiz C: Ciências",
         questions: [
           {
-            question: "Qual elemento tem símbolo químico O?",
-            answers: [
-              { text: "Oxigênio", correct: true  },
-              { text: "Ozônio",   correct: false },
-              { text: "Ósmio",    correct: false },
-              { text: "Ouro",     correct: false }
+            question:"Qual elemento tem símbolo químico O?",
+            answers:[
+              { text:"Oxigênio", correct:true  },
+              { text:"Ozônio",   correct:false },
+              { text:"Ósmio",    correct:false },
+              { text:"Ouro",     correct:false },
             ]
           }
         ]
@@ -308,176 +265,177 @@
         label: "Quiz D: Cultura Pop",
         questions: [
           {
-            question: "Em que série aparece o personagem Jon Snow?",
-            answers: [
-              { text: "Vikings",         correct: false },
-              { text: "Game of Thrones", correct: true  },
-              { text: "The Witcher",     correct: false },
-              { text: "Mandalorian",     correct: false }
+            question:"Em que série aparece o personagem Jon Snow?",
+            answers:[
+              { text:"Vikings",         correct:false },
+              { text:"Game of Thrones", correct:true  },
+              { text:"The Witcher",     correct:false },
+              { text:"Mandalorian",     correct:false },
             ]
           }
         ]
       }
     };
 
-    // ---------- Estado ----------
+    /* ===== Estado ===== */
     let currentVariation = null;
-    let currentIndex     = 0;
-    let userData         = {};
+    let currentIndex = 0;
+    let userData = {};
+    let lockingAnswers = false;
 
-    // Util: alternar telas
-    function showView(idToShow){
-      document.querySelectorAll('.view').forEach(v => v.classList.remove('active','fade-in'));
-      const el = document.getElementById(idToShow);
-      if(el){ el.classList.add('active','fade-in'); }
-    }
+    /* ===== Helpers DOM ===== */
+    const $variationCard = document.getElementById('variation-card');
+    const $selectGrid    = document.getElementById('variation-selection');
+    const $notLogged     = document.getElementById('not-logged');
 
-    // Monta botões de seleção de variação (visual novo)
-    async function montarVariations() {
-      const grid = document.getElementById("variations-grid");
-      grid.innerHTML = "";
+    const $quizCard      = document.getElementById('quiz-card');
+    const $quizTitle     = document.getElementById('quiz-title');
+    const $message       = document.getElementById('message');
+    const $question      = document.getElementById('question');
+    const $btnVoltar     = document.getElementById('btn-voltar');
+
+    const answerButtons  = [
+      document.getElementById('a1'),
+      document.getElementById('a2'),
+      document.getElementById('a3'),
+      document.getElementById('a4'),
+    ];
+
+    function setHide(el, hide){ el.classList.toggle('hide', !!hide); }
+
+    /* ===== Monta Seleção ===== */
+    async function montarVariations(){
+      $selectGrid.innerHTML = '';
       const user = auth.currentUser;
 
-      const icons = {
-        quizA: "fa-location-dot",
-        quizB: "fa-palette",
-        quizC: "fa-flask",
-        quizD: "fa-film"
-      };
+      Object.entries(quizVariations).forEach(([key, q])=>{
+        const btn = document.createElement('button');
+        btn.className = 'btn quiz-btn';
+        btn.textContent = q.label;
 
-      const entries = Object.entries(quizVariations);
-      entries.forEach(([key, quizObj]) => {
-        const btn = document.createElement("button");
-        btn.className = "quiz-btn";
-        btn.innerHTML = `
-          <i class="fa-solid ${icons[key] || "fa-circle-question"}"></i>
-          <div>
-            <span class="label">${quizObj.label}</span>
-            <span class="hint">${quizObj.questions.length} pergunta(s)</span>
-          </div>
-        `;
-        const respondido = userData.quizRespondido?.[key];
-        if (respondido && user.email !== adminEmail) {
-          btn.classList.add("respondido");
+        const ja = userData.quizRespondido?.[key];
+        if (ja && user && user.email !== adminEmail){
+          btn.classList.add('respondido');
           btn.disabled = true;
         } else {
-          btn.onclick = () => iniciarVariation(key);
+          btn.onclick = ()=> iniciarVariation(key);
         }
-        grid.appendChild(btn);
+        $selectGrid.appendChild(btn);
       });
-
-      if (!entries.length) {
-        grid.innerHTML = `<p style="grid-column:1/-1; text-align:center; color:#cfcfcf;">Nenhum quiz disponível.</p>`;
-      }
     }
 
-    // Inicia quiz escolhido
-    function iniciarVariation(key) {
+    /* ===== Inicia Quiz ===== */
+    function iniciarVariation(key){
       currentVariation = key;
-      currentIndex     = 0;
-      document.getElementById("quiz-title").textContent = quizVariations[key].label;
-      atualizarProgresso();
-      showView("quiz-screen");
-      document.getElementById("quiz-container").style.display = "block";
-      document.getElementById("btn-voltar").style.display     = "inline-flex";
+      currentIndex = 0;
+      setHide($variationCard, true);
+      setHide($quizCard, false);
+      $quizTitle.textContent = quizVariations[key].label;
       showQuestion();
     }
 
-    // Exibe a pergunta atual
-    function showQuestion() {
+    /* ===== Exibe Pergunta ===== */
+    function showQuestion(){
       const q = quizVariations[currentVariation].questions[currentIndex];
-      const message = document.getElementById("message");
-      const qEl     = document.getElementById("question");
-      message.textContent = "Selecione a alternativa correta:";
-      qEl.textContent     = q.question;
+      $message.textContent = "Selecione uma alternativa:";
+      $question.textContent = q.question;
 
-      // zera estados visuais
-      ["a1","a2","a3","a4"].forEach(id=>{
-        const b = document.getElementById(id);
-        b.classList.remove("correct","wrong");
-        b.style.display = "none";
-        b.onclick = null;
-      });
-
-      q.answers.forEach((ans, i) => {
-        const btn = document.getElementById(`a${i+1}`);
-        btn.style.display = "block";
-        btn.textContent   = ans.text;
-        btn.onclick = async () => {
-          // feedback visual rápido (sem alterar sua lógica)
-          btn.classList.add(ans.correct ? "correct" : "wrong");
-          await responder(ans.correct);
-        };
+      // reset estado botões
+      lockingAnswers = false;
+      answerButtons.forEach((btn,i)=>{
+        btn.classList.remove('correct','wrong');
+        btn.disabled = false;
+        const label = btn.querySelector('.label');
+        const fx    = btn.querySelector('.fx');
+        fx.textContent = ''; // reset ícone
+        btn.style.display = q.answers[i] ? 'inline-flex' : 'none';
+        if (q.answers[i]){
+          label.textContent = q.answers[i].text;
+          btn.onclick = ()=> responder(q.answers[i].correct, btn);
+        }
       });
     }
 
-    // Atualiza barra de progresso
-    function atualizarProgresso(){
-      const total = quizVariations[currentVariation]?.questions.length || 1;
-      const pct = Math.round((currentIndex) / total * 100);
-      document.getElementById("progress").style.width = `${pct}%`;
-    }
+    /* ===== Feedback + Pontos ===== */
+    async function responder(correct, btnEl){
+      if (lockingAnswers) return;
+      lockingAnswers = true;
 
-    // Processa resposta (lógica intacta)
-    async function responder(correct) {
+      // trava todos imediatamente
+      answerButtons.forEach(b=> b.disabled = true);
+
+      // aplica classe e ícone animado
+      if (correct){
+        btnEl.classList.add('correct');
+        btnEl.querySelector('.fx').textContent = '✓';
+      } else {
+        btnEl.classList.add('wrong');
+        btnEl.querySelector('.fx').textContent = '✗';
+      }
+
+      // atualiza pontos no Firestore (com regra de 1x por variação p/ não-admin)
       const user = auth.currentUser;
       if (!user) return;
-      const ref  = db.collection("usuarios").doc(user.uid);
+
+      const ref  = db.collection('usuarios').doc(user.uid);
       const snap = await ref.get();
       const data = snap.exists ? snap.data() : { pontos:0, quizRespondido:{} };
-      if (data.quizRespondido?.[currentVariation] && user.email !== adminEmail) {
-        alert("Você já respondeu este quiz.");
-        return;
-      }
-      const pontosGanhos = correct ? 10 : 0;
-      const updates = { pontos: firebase.firestore.FieldValue.increment(pontosGanhos) };
-      if (user.email !== adminEmail) {
-        updates[`quizRespondido.${currentVariation}`] = true;
-      }
-      await ref.set(updates, { merge: true });
 
-      const questions = quizVariations[currentVariation].questions;
-      if (currentIndex < questions.length - 1) {
-        currentIndex++;
-        atualizarProgresso();
-        // pequena pausa para o efeito antes de trocar
-        setTimeout(showQuestion, 150);
+      const ja = data.quizRespondido?.[currentVariation];
+      if (ja && user.email !== adminEmail){
+        // já respondeu, não computa novamente
       } else {
-        // Fim do quiz: volta para seleção após feedback
-        const finalSnap = await ref.get();
-        userData = finalSnap.data();
-        document.getElementById("quiz-container").style.display = "none";
-        document.getElementById("btn-voltar").style.display = "none";
-        document.getElementById("progress").style.width = "100%";
-        document.getElementById("message").textContent = `Quiz finalizado! Seus pontos: ${userData.pontos}`;
-        setTimeout(() => {
-          showView("variation-selection");
-          montarVariations();
-        }, 1300);
+        const pts = correct ? 10 : 0;
+        const updates = { pontos: firebase.firestore.FieldValue.increment(pts) };
+        if (user.email !== adminEmail){
+          updates[`quizRespondido.${currentVariation}`] = true;
+        }
+        await ref.set(updates, { merge:true });
       }
+
+      // aguarda um pouquinho para o usuário ver o efeito
+      setTimeout(async ()=>{
+        const questions = quizVariations[currentVariation].questions;
+        if (currentIndex < questions.length - 1){
+          currentIndex++;
+          showQuestion();
+        } else {
+          // terminou - volta p/ seleção
+          const finalSnap = await ref.get();
+          userData = finalSnap.data() || userData;
+          $message.textContent = `Quiz finalizado! Seus pontos: ${userData.pontos ?? 0}`;
+          setTimeout(()=>{
+            setHide($quizCard, true);
+            setHide($variationCard, false);
+            montarVariations();
+          }, 1200);
+        }
+      }, 540);
     }
 
-    // Botões Voltar (topo e rodapé)
-    document.getElementById("btn-back-top").onclick =
-    document.getElementById("btn-voltar").onclick = () => {
-      showView("variation-selection");
+    /* ===== Botões de navegação internos ===== */
+    $btnVoltar.onclick = ()=>{
+      setHide($quizCard, true);
+      setHide($variationCard, false);
       montarVariations();
     };
 
-    // Inicializa após autenticação
-    auth.onAuthStateChanged(async user => {
-      const grid = document.getElementById("variations-grid");
-      if (!user) {
-        document.getElementById("variation-selection").classList.add("active");
-        grid.innerHTML = `<p style="text-align:center; margin:14px 0 6px;">Faça login no dashboard primeiro.</p>`;
+    /* ===== Autenticação ===== */
+    auth.onAuthStateChanged(async user=>{
+      if (!user){
+        setHide($variationCard, false);
+        setHide($quizCard, true);
+        $notLogged.classList.remove('hide');
+        $selectGrid.innerHTML = '';
         return;
       }
-      const snap = await db.collection("usuarios").doc(user.uid).get();
+      $notLogged.classList.add('hide');
+
+      const snap = await db.collection('usuarios').doc(user.uid).get();
       userData = snap.exists ? snap.data() : { pontos:0, quizRespondido:{} };
-      if (!snap.exists) {
-        await db.collection("usuarios").doc(user.uid).set(userData);
+      if (!snap.exists){
+        await db.collection('usuarios').doc(user.uid).set(userData);
       }
-      showView("variation-selection");
       montarVariations();
     });
   </script>
